@@ -1,0 +1,6 @@
+dependencies:
+- name: falco
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.0.9
+digest: sha256:c6c4f8b919b8d2b3d84964136f1cd4c4a67845c166ef3ad029e940a1f970897b
+generated: "2019-10-31T17:00:30.771274Z"

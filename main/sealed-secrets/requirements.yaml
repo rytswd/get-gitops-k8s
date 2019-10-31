@@ -1,0 +1,4 @@
+dependencies:
+  - name: sealed-secrets
+    version: 1.4.3
+    repository: "alias:stable"

@@ -1,0 +1,7 @@
+# Ref: https://github.com/helm/charts/tree/master/stable/falco
+# NOTE: Make sure you check the right version of the values file
+
+falco:
+  ebpf:
+    # Enable eBPF support for Falco
+    enabled: true

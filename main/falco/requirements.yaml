@@ -1,0 +1,5 @@
+dependencies:
+  - name: falco
+    version: 1.0.9
+    repository: "alias:stable"
+    condition: falco.enabled

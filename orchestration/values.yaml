@@ -1,0 +1,20 @@
+env: staging
+
+metadata:
+  finalizers:
+    enabled: true
+
+spec:
+  source:
+    targetRevision: master
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune:
+        enabled: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+      selfHeal:
+        enabled: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+
+falco:
+  enabled: false

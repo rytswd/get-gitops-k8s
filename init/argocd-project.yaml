@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd-setup
+  namespace: argocd
+spec:
+  description: Project for ArgoCD setup
+  sourceRepos:
+    - "https://github.com/rytswd/get-declarative-k8s.git"
+  destinations:
+    - namespace: "*"
+      server: https://kubernetes.default.svc
