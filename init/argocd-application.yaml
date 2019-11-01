@@ -9,6 +9,9 @@ spec:
     repoURL: https://github.com/rytswd/get-declarative-k8s.git
     targetRevision: master
     path: orchestration
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

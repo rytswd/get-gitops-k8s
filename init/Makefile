@@ -56,9 +56,10 @@ k8s-namespace:
 argocd:
 	@echo "$(boldGreen)4. Installing ArgoCD...$(normal)"
 	@echo
-	helm template argo-cd-0.7.2.tgz -n argocd | kubectl -n argocd apply -f -
+	helm template ../main/argocd/charts/argo-cd-0.7.2.tgz -n argocd --namespace argocd | kubectl -n argocd apply -f -
 	@echo
 	@read -r -p "completed."
+	@clear
 
 github-token:
 	@echo "$(boldGreen)5. Setting up access token for git repo...$(normal)"
@@ -76,6 +77,7 @@ github-token:
 		--from-literal=token=$(userToken)
 	@echo
 	@read -r -p "completed."
+	@clear
 
 argocd-app:
 	@echo "$(boldGreen)5. Set up ArgoCD with \`main\` folder$(normal)"
