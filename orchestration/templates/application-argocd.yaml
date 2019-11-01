@@ -8,6 +8,7 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
   {{- end }}
 spec:
+  project: argocd-setup
   source:
     path: main/argocd
     repoURL: https://github.com/rytswd/get-declarative-k8s.git

@@ -8,6 +8,7 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
   {{- end }}
 spec:
+  project: default
   source:
     path: main/falco
     repoURL: https://github.com/rytswd/get-declarative-k8s.git
