@@ -4,7 +4,7 @@ falco:
   enabled: false
 nats:
   enabled: true
-sealed-secrets:
+sealedSecrets:
   enabled: true
 
 metadata:
