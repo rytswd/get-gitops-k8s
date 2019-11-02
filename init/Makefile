@@ -48,7 +48,7 @@ helm-tillerless:
 k8s-namespace:
 	@echo "$(boldGreen)3. Applying K8s namespace for ArgoCD...$(normal)"
 	@echo
-	kubectl apply -f ../main/argocd/templates/namespace-argocd.yaml
+	kubectl apply -f namespace-argocd.yaml
 	@echo
 	@read -r -p "completed."
 	@clear
@@ -84,5 +84,16 @@ argocd-app:
 	@echo
 	kubectl apply -f argocd-project.yaml
 	kubectl apply -f argocd-application.yaml
+	@echo
+	@read -r -p "completed."
+
+argocd-refresh:
+	@echo "$(boldGreen)6. Refresh ArgoCD by deleting application controller$(normal)"
+	@echo
+	kubectl delete -n argocd \
+		$(kubectl get pod \
+			-l app.kubernetes.io/name=argo-cd-application-controller \
+			-n argocd \
+			-o name)
 	@echo
 	@read -r -p "completed."
