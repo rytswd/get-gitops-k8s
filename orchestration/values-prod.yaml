@@ -1,5 +1,12 @@
 env: prod
 
+falco:
+  enabled: false
+nats:
+  enabled: true
+sealed-secrets:
+  enabled: true
+
 metadata:
   finalizers:
     enabled: true
