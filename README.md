@@ -1,6 +1,6 @@
 # Get Declarative K8s
 
-This repository aims to provide all you need to get started with K8s setup, that's fully "declarative".
+This repository aims to provide all you need to get started with K8s setup, that's truly "declarative".
 
 ## WHAT: No Command, Just Declare
 
@@ -36,7 +36,7 @@ These are just a few examples to get started with.
 
 ## HOW: Fork -> Replace -> Ready!
 
-This repository is meant to be **fork**ed.
+This repository is meant to be **fork**ed, so that you can deploy your own Kubernetes stack with GitOps way.
 
 ## WHY: What's the State of World?
 
