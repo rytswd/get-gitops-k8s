@@ -16,5 +16,5 @@ spec:
       selfHeal:
         enabled: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
 
-falco:
-  enabled: false
+# falco:
+#   enabled: false
