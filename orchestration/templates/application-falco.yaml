@@ -1,4 +1,5 @@
-{{- if and .Values.falco .Values.falco.enabled }}
+{{- if .Values.falco }}
+{{- if .Values.falco.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -32,4 +33,5 @@ spec:
       selfHeal: true 
       {{- end }}
   {{- end }}
+{{- end }}
 {{- end }}
