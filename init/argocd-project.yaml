@@ -6,7 +6,7 @@ metadata:
 spec:
   description: Project for ArgoCD setup
   sourceRepos:
-    - "https://github.com/rytswd/get-declarative-k8s.git"
+    - https://github.com/rytswd/get-declarative-k8s.git
   destinations:
     - namespace: "*"
       server: https://kubernetes.default.svc
