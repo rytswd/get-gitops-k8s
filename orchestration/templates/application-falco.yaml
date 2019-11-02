@@ -1,4 +1,4 @@
-{{- if .Values.falco.enabled }}
+{{- if and .Values.falco .Values.falco.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
