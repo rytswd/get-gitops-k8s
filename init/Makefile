@@ -48,7 +48,7 @@ helm-tillerless:
 k8s-namespace:
 	@echo "$(boldGreen)3. Applying K8s namespace for ArgoCD...$(normal)"
 	@echo
-	kubectl apply -f namespace-argocd.yaml
+	kubectl apply -f ../main/argocd/templates/namespace-argocd.yaml
 	@echo
 	@read -r -p "completed."
 	@clear
@@ -82,7 +82,7 @@ argocd:
 argocd-app:
 	@echo "$(boldGreen)5. Set up ArgoCD with \`main\` folder$(normal)"
 	@echo
-	kubectl apply -f argocd-project.yaml
-	kubectl apply -f argocd-application.yaml
+	kubectl apply -f ../main/argocd/templates/argocd-project.yaml
+	kubectl apply -f ../main/argocd/templates/argocd-application.yaml
 	@echo
 	@read -r -p "completed."

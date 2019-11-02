@@ -10,32 +10,27 @@ There are 3 pieces in this repository.
 
 This repository uses the power of [GitOps](https://www.weave.works/technologies/gitops/), and thus once everything is set up, all updates will be done via Git.
 
-[Flux](https://github.com/fluxcd/flux) was born with such an idea, and has been a popular GitOps solution, thanks to Weaveworks.
+Although [Flux](https://github.com/fluxcd/flux) by Weaveworks is most commonly known for a GitOps solution, I have chosen [Argo CD](https://argoproj.github.io/argo-cd/) by Intuit over it, because of its simplicity and clean architecture. With Argo CD, everything happens only from Git, no magic around Docker repository - if any additional features outside of Git control is needed, those should be a separate setup such as [Argo Events](https://argoproj.github.io/argo-events/), making Argo CD a purely dependent on Git as single source of truth. This [issue](https://github.com/argoproj/argo-cd/issues/1648) also has some clear mention of the Argo CD intention.
 
-I have chosen [Argo CD](https://argoproj.github.io/argo-cd/) by Intuit over Flux, because of its simplicity and clean architecture. With Argo CD, everything happens only from Git, no magic around Docker repository - if any fancy features like that is needed, those will be a separate setup such as [Argo Events](https://argoproj.github.io/argo-events/), for instance.
-
-Also, Argo CD has a great UI to visualise GitOps in action, which is great for starter, and also long term management.
+Also, Argo CD has a great UI to visualise GitOps in action, which is great for starter, and also for long term management.
 
 ### `orchestration`: Orchestrate Dependencies
 
-Kubernetes is a container orchestration solution. Why do I need another orchestration layer?
+Argo CD has a notion of "application", which is a bundle of K8s resources. `orchestration` directory is used as a parent application, which has multiple applications underneath it.
 
-The term `orchestration` is only meant to wire up the dependencies in GitOps.
-
-When you add a new dependency, GitOps should be able to pick it up in a meaningful way.
+As you can see in `get-declarative-k8s/orchestration/templates/` directory, you simply need to add a new application definition here for Argo CD to pick up the new application setup.
 
 ### `main`: All Goodies In Here
 
-So, `init` and `orchestration` are more of Argo CD and GitOps specific setup. Now, here comes the meaty bits.
-
-As long as you have the orchestration template in place, all your updates would happen in this `main` folder.
+Based on the definitions in `orchestration`, the resources in `main` directory will be deployed to Kubernetes.
 
 You can see that, in this repo, I have added the following dependencies:
 
-- argocd
-- falco
-- nats
-- sealed-secrets
+- `argocd` (based on Helm)
+- `falco` (based on Helm)
+- `nats` (based on Helm)
+- `playground` (single directory structure)
+- `sealed-secrets` (based on Helm)
 
 These are just a few examples to get started with.
 
