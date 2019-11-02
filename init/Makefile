@@ -1,11 +1,11 @@
 boldGreen := $(shell tput bold)$(shell tput setaf 2)
 normal := $(shell tput sgr0)
 
-all: note-1 helm install setup
+all: note-1 helm setup install
 
 helm: helm-setup helm-tillerless 
-install: k8s-namespace argocd
-setup: github-token argocd-app
+setup: k8s-namespace github-token
+install: argocd argocd-app
 
 note-1:
 	@clear
@@ -53,28 +53,28 @@ k8s-namespace:
 	@read -r -p "completed."
 	@clear
 
-argocd:
-	@echo "$(boldGreen)4. Installing ArgoCD...$(normal)"
-	@echo
-	helm template ../main/argocd/charts/argo-cd-0.7.2.tgz -n argocd --namespace argocd | kubectl -n argocd apply -f -
-	@echo
-	@read -r -p "completed."
-	@clear
-
 github-token:
-	@echo "$(boldGreen)5. Setting up access token for git repo...$(normal)"
+	@echo "$(boldGreen)4. Setting up access token for git repo...$(normal)"
 	@echo
 	@echo "Make sure you have updated the repository addresses before proceeding."
 	@echo "If you need to make modifications to the files, exit this with Ctrl-C, and run"
 	@echo "    make setup"
 	@echo
 	@echo "If you are ready to proceed, provide the following information:"
-	@read -r -p "    Your username: " username
-	@read -s -p "    Your token: " userToken
+	@read -r -p "    Your username: " username;\
+		read -s -p "    Your token: " userToken;\
+		echo "";\
+		kubectl -n argocd create secret generic access-secret \
+			--from-literal=username=$$username \
+			--from-literal=token=$$userToken
 	@echo
-	@kubectl -n argocd create secret generic access-secret \
-		--from-literal=username=$(username) \
-		--from-literal=token=$(userToken)
+	@read -r -p "completed."
+	@clear
+
+argocd:
+	@echo "$(boldGreen)5. Installing ArgoCD...$(normal)"
+	@echo
+	helm template ../main/argocd -n argocd --namespace argocd | kubectl -n argocd apply -f -
 	@echo
 	@read -r -p "completed."
 	@clear
