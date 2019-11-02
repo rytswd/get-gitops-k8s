@@ -1,5 +1,6 @@
 env: staging
 
+# Helm based applications
 falco:
   enabled: false
 nats:
@@ -7,10 +8,16 @@ nats:
 sealedSecrets:
   enabled: true
 
+# Single directory structure applications
+playground:
+  enabled: true
+
+# Argo CD metadata
 metadata:
   finalizers:
     enabled: true
 
+# Argo CD overrides
 spec:
   source:
     targetRevision: master

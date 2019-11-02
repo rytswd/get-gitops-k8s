@@ -82,7 +82,7 @@ argocd:
 argocd-app:
 	@echo "$(boldGreen)5. Set up ArgoCD with \`main\` folder$(normal)"
 	@echo
-	kubectl apply -f ../main/argocd/templates/argocd-project.yaml
-	kubectl apply -f ../main/argocd/templates/argocd-application.yaml
+	kubectl apply -f argocd-project.yaml
+	kubectl apply -f argocd-application.yaml
 	@echo
 	@read -r -p "completed."
