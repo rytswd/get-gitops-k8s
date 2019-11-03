@@ -12,7 +12,7 @@ metadata:
 spec:
   project: default
   source:
-    path: main/nats
+    path: state/nats
     repoURL: https://github.com/rytswd/get-declarative-k8s.git
     targetRevision: {{ .Values.spec.source.targetRevision }}
   destination:

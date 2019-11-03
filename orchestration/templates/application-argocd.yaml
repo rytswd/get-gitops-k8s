@@ -10,7 +10,7 @@ metadata:
 spec:
   project: argocd-setup
   source:
-    path: main/argocd
+    path: state/argocd
     repoURL: https://github.com/rytswd/get-declarative-k8s.git
     targetRevision: {{ .Values.spec.source.targetRevision }}
   destination:
