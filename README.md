@@ -38,6 +38,25 @@ These are just a few examples to get started with.
 
 This repository is meant to be **fork**ed, so that you can deploy your own Kubernetes stack with GitOps way.
 
+There is a simple script `replace.sh` to replace all the existing setup. You can simply run without any argument, and it will interactively replace the setup so that it works with forks.
+
+Once the replacement is completed, push that to your fork, and you can simply run the following, it will go into the interactive mode:
+
+```bash
+$ cd init
+$ make
+```
+
+If you want to test on your local machine, the easiest way would be to use [`kind`](https://kind.sigs.k8s.io/) to start a local Kubernetes, and run the setup command, such that:
+
+```bash
+$ kind create cluster
+...
+$ export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
+$ cd init
+$ make
+```
+
 ## WHY: What's the State of World?
 
 When getting started with Kubernetes, you often see documents like following:
