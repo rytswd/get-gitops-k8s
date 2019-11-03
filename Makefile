@@ -16,14 +16,14 @@ note-1:
 	@echo "	- helm (Homebrew: kubernetes-helm)"
 	@echo
 	@echo "The following steps will be taken:"
-	@echo "	1. Add ArgoCD repository, and update repository to latest"
+	@echo "	1. Add ArgoCD repository into your Helm repo setup"
 	@echo "	2. Init Helm without Tiller"
 	@echo "	3. Apply prerequisite namespace definition"
 	@echo "	4. Set up access token for git repo"
 	@echo "	5. Install ArgoCD"
-	@echo "	6. Set up ArgoCD with \`stack\` folder"
+	@echo "	6. Set up ArgoCD with \`stack\` directory"
 	@echo
-	@read -r -p "If you are ready to get started, press enter"
+	@read -r -p "If you are ready to get started, press enter "
 	@clear
 
 helm-setup:

@@ -20,9 +20,9 @@ Argo CD has a notion of "application", which is a bundle of K8s resources. `orch
 
 As you can see in `get-declarative-k8s/orchestration/templates/` directory, you simply need to add a new application definition here for Argo CD to pick up the new application setup.
 
-### `main`: All Goodies In Here
+### `stack`: Any Tech Stack In Here
 
-Based on the definitions in `orchestration`, the resources in `main` directory will be deployed to Kubernetes.
+Based on the definitions in `orchestration`, the resources in `stack` directory will be deployed to Kubernetes.
 
 You can see that, in this repo, I have added the following dependencies:
 
@@ -32,7 +32,13 @@ You can see that, in this repo, I have added the following dependencies:
 - `playground` (single directory structure)
 - `sealed-secrets` (based on Helm)
 
-These are just a few examples to get started with.
+These are just a few examples to get started with, and you can add more as you like.
+
+Argo CD supports 3 types of K8s resource bundle:
+
+- single directory with K8s yamls
+- Helm Chart
+- Kustomize
 
 ## HOW: Fork -> Replace -> Ready!
 
@@ -43,8 +49,14 @@ There is a simple script `replace.sh` to replace all the existing setup. You can
 Once the replacement is completed, push that to your fork, and you can simply run the following, it will go into the interactive mode:
 
 ```bash
-$ cd init
 $ make
+Starting K8s Installation
+
+You need the following tools installed on your machine:
+	- kubectl (Homebrew: kubernetes-cli)
+	- helm (Homebrew: kubernetes-helm)
+
+...
 ```
 
 If you want to test on your local machine, the easiest way would be to use [`kind`](https://kind.sigs.k8s.io/) to start a local Kubernetes, and run the setup command, such that:
@@ -53,7 +65,6 @@ If you want to test on your local machine, the easiest way would be to use [`kin
 $ kind create cluster
 ...
 $ export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
-$ cd init
 $ make
 ```
 
