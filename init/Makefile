@@ -19,8 +19,9 @@ note-1:
 	@echo "	1. Add ArgoCD repository, and update repository to latest"
 	@echo "	2. Init Helm without Tiller"
 	@echo "	3. Apply prerequisite namespace definition"
-	@echo "	4. Install ArgoCD"
-	@echo "	5. Set up ArgoCD with \`main\` folder"
+	@echo "	4. Set up access token for git repo"
+	@echo "	5. Install ArgoCD"
+	@echo "	6. Set up ArgoCD with \`main\` folder"
 	@echo
 	@read -r -p "If you are ready to get started, press enter"
 	@clear
@@ -80,20 +81,9 @@ argocd:
 	@clear
 
 argocd-app:
-	@echo "$(boldGreen)5. Set up ArgoCD with \`main\` folder$(normal)"
+	@echo "$(boldGreen)6. Set up ArgoCD with \`main\` folder$(normal)"
 	@echo
 	kubectl apply -f argocd-project.yaml
 	kubectl apply -f argocd-application.yaml
-	@echo
-	@read -r -p "completed."
-
-argocd-refresh:
-	@echo "$(boldGreen)6. Refresh ArgoCD by deleting application controller$(normal)"
-	@echo
-	kubectl delete -n argocd \
-		$(kubectl get pod \
-			-l app.kubernetes.io/name=argo-cd-application-controller \
-			-n argocd \
-			-o name)
 	@echo
 	@read -r -p "completed."
