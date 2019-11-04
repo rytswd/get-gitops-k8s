@@ -44,7 +44,7 @@ Argo CD supports 3 types of K8s resource bundle:
 
 This repository is meant to be **fork**ed, so that you can deploy your own Kubernetes stack with GitOps way.
 
-There is a simple script `replace.sh` to replace all the existing setup. You can simply run without any argument, and it will interactively replace the setup so that it works with forks.
+There is a simple script `replace-for-fork.sh` to replace all the existing setup. You can simply run without any argument, and it will interactively replace the setup so that it works with forks.
 
 Once the replacement is completed, push that to your fork, and you can simply run the following, it will go into the interactive mode:
 

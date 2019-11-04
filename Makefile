@@ -58,9 +58,9 @@ k8s-namespace:
 github-token:
 	@echo "$(boldGreen)4. Setting up access token for git repo...$(normal)"
 	@echo
-	@echo "NOTE: For using a forked repository, you need to run \`replace.sh\` script before this."
+	@echo "NOTE: For using a forked repository, you need to run \`replace-for-fork.sh\` script before this."
 	@echo "      If you have not done yet, exit with Ctrl-C now, and run the followings"
-	@echo "    ./replace.sh"
+	@echo "    ./replace-for-fork.sh"
 	@echo "    make resume"
 	@echo
 	@echo "If you are ready to proceed, provide the following information:"
