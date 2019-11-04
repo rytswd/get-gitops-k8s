@@ -2,6 +2,7 @@ boldGreen := $(shell tput bold)$(shell tput setaf 2)
 normal := $(shell tput sgr0)
 
 all: note-1 helm setup install
+resume: note-2 setup install
 
 helm: helm-setup helm-tillerless 
 setup: k8s-namespace github-token
@@ -57,9 +58,10 @@ k8s-namespace:
 github-token:
 	@echo "$(boldGreen)4. Setting up access token for git repo...$(normal)"
 	@echo
-	@echo "Make sure you have updated the repository addresses before proceeding."
-	@echo "If you need to make modifications to the files, exit this with Ctrl-C, and run"
-	@echo "    make setup"
+	@echo "NOTE: For using a forked repository, you need to run \`replace.sh\` script before this."
+	@echo "      If you have not done yet, exit with Ctrl-C now, and run the followings"
+	@echo "    ./replace.sh"
+	@echo "    make resume"
 	@echo
 	@echo "If you are ready to proceed, provide the following information:"
 	@read -r -p "    Your username: " username;\
@@ -87,3 +89,17 @@ argocd-app:
 	kubectl apply -f ./init/argocd-application.yaml
 	@echo
 	@read -r -p "completed."
+
+note-2:
+	@clear
+	@echo "$(boldGreen)Resuming K8s Installation$(normal)"
+	@echo
+	@echo "You are about to resume the K8s installation"
+	@echo
+	@echo "The following steps will be taken:"
+	@echo "	4. Set up access token for git repo"
+	@echo "	5. Install ArgoCD"
+	@echo "	6. Set up ArgoCD with \`stack\` directory"
+	@echo
+	@read -r -p "If you are ready to get started, press enter "
+	@clear
