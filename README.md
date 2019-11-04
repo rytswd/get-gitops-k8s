@@ -44,9 +44,9 @@ Argo CD supports 3 types of K8s resource bundle:
 
 This repository is meant to be **fork**ed, so that you can deploy your own Kubernetes stack with GitOps way.
 
-There is a simple script `replace-for-fork.sh` to replace all the existing setup. You can simply run without any argument, and it will interactively replace the setup so that it works with forks.
+There is a simple script `replace-for-fork.sh` to replace all the existing setup. You can simply run without any argument, and it will ask you for interactive input to replace for fork repositories.
 
-Once the replacement is completed, push that to your fork, and you can simply run the following, it will go into the interactive mode:
+Once the replacement is completed, push that change to your fork. You can then simply run the following, which will go into its interactive installation steps:
 
 ```bash
 $ make
@@ -59,7 +59,7 @@ You need the following tools installed on your machine:
 ...
 ```
 
-If you want to test on your local machine, the easiest way would be to use [`kind`](https://kind.sigs.k8s.io/) to start a local Kubernetes, and run the setup command, such that:
+If you want to test on your local machine, one of the easiest ways would be to use [`kind`](https://kind.sigs.k8s.io/) to start a local Kubernetes, and run the setup command, such that:
 
 ```bash
 $ kind create cluster
@@ -68,7 +68,7 @@ $ export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
 $ make
 ```
 
-## WHY: What's the State of World?
+## WHY: Single Source Of Truth, Even in Dev
 
 When getting started with Kubernetes, you often see documents like following:
 
@@ -92,6 +92,10 @@ $ cd istio-1.3.3
 $ for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
 ```
 
-All of the above works, provided you have followed everything in correct order.
+All of the above works, provided you have followed everything in correct order. I have been bitten by Helm's Tiller for a number of times, such as [Error: could not find tiller](https://github.com/helm/helm/issues/4685), [Error: could not find a ready tiller pod](https://github.com/helm/helm/issues/2064), [Error: Unauthorized](https://github.com/helm/helm/issues/6315) to name a few.
 
-I have been bitten by Helm's Tiller for a number of times, such as [Error: could not find tiller](https://github.com/helm/helm/issues/4685), [Error: could not find a ready tiller pod](https://github.com/helm/helm/issues/2064), [Error: Unauthorized](https://github.com/helm/helm/issues/6315) to name a few.
+These are also unclear which steps have been taken, and how to delete them when you don't need them anymore.
+
+GitOps solution provides a very easily understandable model - whatever is in Git is what Kubernetes has.
+
+After using GitOps for production, it was cumbersome how development experience was not at the same standard due to lack of GitOps setup. This repository is meant to bridge that gap.
