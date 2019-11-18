@@ -4,7 +4,7 @@
 
 Let's walk through an example case to install Jetstack's `cert-manager`.
 
-1. Create a Helm Chart
+#### 1. Create a Helm Chart
 
 Helm CLI provides a template for creating a custom chart. Simply run that to create `cert-manager` directory. You will be updating many of the auto-generated files later, so you can leave the files untouched for now.
 
@@ -13,7 +13,7 @@ $ helm create cert-manager
 $ cd cert-manager
 ```
 
-2. Add Helm Chart Repository (Optional for some)
+#### 2. Add Helm Chart Repository (Optional for some)
 
 If you need to pull down a Helm Chart from some custom location, you need to make that available on your local machine.
 
@@ -29,7 +29,7 @@ And then you can update to get the latest charts.
 $ helm repo update
 ```
 
-3. Add a `requirements.yaml`
+#### 3. Add a `requirements.yaml`
 
 In order to specify a dependency, you need to add a new file to the directory. Create a file called `requirements.yaml`, and copy the following content:
 
@@ -42,7 +42,7 @@ dependencies:
 
 This assumes that you have added a `jetstack` Helm Chart repository by following the above step#2.
 
-4. Build Dependency
+#### 4. Build Dependency
 
 Helm uses this `requirements.yaml` to build out all the dependencies you have.
 
@@ -60,7 +60,7 @@ $ helm dep build
 
 After this is complete, you should see `requirements.lock` file created next to `requirements.yaml`, and `cert-manager-v0.11.0.tgz` file created under `charts` directory.
 
-5. Update Definition and Clean Up
+#### 5. Update Definition and Clean Up
 
 You can update some definition information in `Chart.yaml`, and add `cert-manager` specific definitions in `values.yaml`.
 
@@ -71,7 +71,7 @@ $ : > values.yaml
 $ rm -rf templates
 ```
 
-6. Create ArgoCD "Application" Definition
+#### 6. Create ArgoCD "Application" Definition
 
 This new chart definition will not be picked up by ArgoCD until you tell it to.
 
@@ -82,7 +82,7 @@ $ cd ../orchestration
 $ ./add-new-application.sh # TODO: To be added
 ```
 
-7. Commit and Push
+#### 7. Commit and Push
 
 Make sure to commit all the files under `cert-manager` and the new Application CRD definition.
 
