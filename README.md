@@ -2,7 +2,7 @@
 
 This repository gets you [GitOps](https://www.weave.works/technologies/gitops/) based Kubernetes environment.
 
-## Make Use of Template
+### Make Use of Template
 
 This repository is set up as a [template repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-template-repository). Because it uses the Git commits to sync Kubernetes setup, you cannot make any modifications using a simple clone (it would only install the default set).
 
