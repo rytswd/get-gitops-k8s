@@ -11,13 +11,13 @@ etcdOperator:
 falco:
   enabled: false
 natsOperators:
-  enabled: true
+  enabled: false
 playground:
-  enabled: true
+  enabled: false
 sealedSecrets:
   enabled: false
 vitess:
-  enabled: false
+  enabled: true
 #
 # =========================================================================== #
 
