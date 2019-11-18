@@ -8,7 +8,7 @@ This repository is set up as a [template repository](https://help.github.com/en/
 
 In order to benefit from GitOps, [use this template](https://github.com/rytswd/get-gitops-k8s/generate) to create a new repository which you have full control over.
 
-## Example: Deploy to KinD (Kubernetes in Docker) with Default
+### Example: Deploy to KinD (Kubernetes in Docker) with Default
 
 ```bash
 # Create a local cluster using kind
@@ -47,15 +47,15 @@ The following steps will be taken:
 ...
 ```
 
-## Example: Deploy to production
+### Example: Deploy to production
 
 You can mostly use the same set of files to manage PROD, Staging, and Dev clusters.
 
 _To be added_
 
-# Details
+## Details
 
-## WHY: Single Source of Truth, Even in Dev
+### WHY: Single Source of Truth, Even in Dev
 
 GitOps is gaining popularity thanks to [Flux](https://github.com/fluxcd/flux) by Weaveworks, [Argo CD](https://argoproj.github.io/argo-cd/) by Intuit, and other Open Source projects. There is also a joint "Argo Flux" project, which has been recently announced as of Nov 2019 ([blog](https://www.weave.works/blog/argo-flux-join-forces) from Weaveworks, [blog](https://www.intuit.com/blog/technology/introducing-argo-flux/) from Intuit, [blog](https://aws.amazon.com/blogs/containers/help-us-write-a-new-chapter-for-gitops-kubernetes-and-open-source-collaboration/) from Amazon EKS team). GitOps concept is simple - Git repo as the single source of truth for Kubernetes environment. All changes will be based on Git commits, and no commands should be run manually.
 
@@ -93,23 +93,23 @@ GitOps solution provides a very easily understandable model - whatever is in Git
 
 After using GitOps for production, I needed the same development experience even for local development with [kind](https://kind.sigs.k8s.io/), and that's how I decided to set this up.
 
-## HOW: Directory Setup and Orchestration
+### HOW: Directory Setup and Orchestration
 
 There are 4 directories in this repository, and each has very clear responsibility.
 
-### `init`: Initial GitOps setup with Argo CD
+#### `init`: Initial GitOps setup with Argo CD
 
 This repository uses [Argo CD](https://argoproj.github.io/argo-cd/) to support GitOps workflow. `init` directory contains only a few files that are used by the initial setup, and these are _not part of GitOps itself_. That means, any commit touching files under this directory will have no effect. Argo CD documentation covers [App of Apps](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#app-of-apps) support, and also [Managing Argo CD using Argo CD](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#manage-argo-cd-using-argo-cd). This repository uses both techniques to provide full control of cluster with clarity, auditability, and simplicity.
 
 I chose Argo CD over other GitOps solutions for several reasons including some usage mentioned above, but one of the biggest reasons was the great UI support to visualise GitOps in action.
 
-### `orchestration`: Orchestrate Dependencies
+#### `orchestration`: Orchestrate Dependencies
 
 Argo CD has a notion of "Application", which is a bundle of K8s resources. `orchestration` directory is used as a parent Application, which defines Applications underneath it. Applications allow multiple formats, and `orchestration` uses Helm Chart format. This allows enabling and disabling Application by defining a flag in `values.yaml` file, provided that a template is made to handle it.
 
 As you can see in `orchestration/templates/` directory, you simply need to add a new application definition here for Argo CD to pick up the new application setup. You can also make use of `values.yaml` such as enabled flag.
 
-### `stack`: Resource Definitions for Each Application
+#### `stack`: Resource Definitions for Each Application
 
 Each Application can contain as many resources as it needs, and it allows a few formats:
 
@@ -143,7 +143,7 @@ You can see that, in this repo, I have added the following dependencies:
 
 These are just a few examples to get started with, and you can add more as you like.
 
-### `tools`: Tools for Frequently Used Setup
+#### `tools`: Tools for Frequently Used Setup
 
 This repository also comes with simplistic scripts to help set up the cluster.
 
@@ -154,6 +154,6 @@ This repository also comes with simplistic scripts to help set up the cluster.
   Create a new Application definition in `orchestration/template/`.  
   Also, create a new directory under `stack`.
 
-# Other
+## Other
 
 Argo CD is not designed to write back to Git. It cannot listen to Docker registry changes, as that falls outside of their GitOps design. If any additional features outside of Git control such as Docker registry is needed, those should be a separate setup utilising systems such as [Argo Events](https://argoproj.github.io/argo-events/), making Argo CD a purely dependent on Git as single source of truth. This [issue](https://github.com/argoproj/argo-cd/issues/1648) also has some clear mention of the Argo CD intention.
