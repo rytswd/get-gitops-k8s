@@ -1,9 +1,9 @@
-{{- if .Values.nats }}
-{{- if .Values.nats.enabled }}
+{{- if .Values.etcdOperator }}
+{{- if .Values.etcdOperator.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nats
+  name: etcd-operator
   namespace: argocd
   {{- if .Values.metadata.finalizers.enabled }}
   finalizers:
@@ -12,7 +12,7 @@ metadata:
 spec:
   project: default
   source:
-    path: stack/nats
+    path: stack/etcd-operator
     repoURL: https://github.com/rytswd/get-declarative-k8s.git
     targetRevision: {{ .Values.spec.source.targetRevision }}
   destination:

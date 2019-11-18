@@ -1,24 +1,48 @@
 env: prod
 
+# === Helm based applications =============================================== #
+#
+#   In order to be able to add Helm template files and control their
+#   install status, you can add the 'enabled' flag here, and handle within
+#   the template.
+#
+etcdOperator:
+  enabled: false
 falco:
   enabled: false
-nats:
-  enabled: true
+natsOperators:
+  enabled: false
+playground:
+  enabled: false
 sealedSecrets:
-  enabled: true
+  enabled: false
+vitess:
+  enabled: false
+#
+# =========================================================================== #
 
+# === ArgoCD Setup ========================================================== #
+#
+# Metadata
 metadata:
   finalizers:
     enabled: true
-
+# Overrides
 spec:
   source:
-    targetRevision: prod # This assumes 'prod' branch or tag exists
+    targetRevision: prod
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
       prune:
-        enabled: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+        # Specifies if resources should be pruned during auto-syncing
+        # ( false by default ).
+        enabled: true
       selfHeal:
-        enabled: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+        # Specifies if partial app sync should be executed when resources
+        # are changed only in target Kubernetes cluster and no git change
+        # detected ( false by default ).
+        enabled: true
+#
+# =========================================================================== #

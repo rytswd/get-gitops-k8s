@@ -1,23 +1,34 @@
 env: staging
 
-# Helm based applications
+# === Helm based applications =============================================== #
+#
+#   In order to be able to add Helm template files and control their
+#   install status, you can add the 'enabled' flag here, and handle within
+#   the template.
+#
+etcdOperator:
+  enabled: true
 falco:
   enabled: false
-nats:
+natsOperators:
   enabled: true
-sealedSecrets:
-  enabled: true
-
-# Single directory structure applications
 playground:
   enabled: true
+sealedSecrets:
+  enabled: false
+vitess:
+  enabled: false
+#
+# =========================================================================== #
 
-# Argo CD metadata
+
+# === ArgoCD Setup ========================================================== #
+#
+# Metadata
 metadata:
   finalizers:
     enabled: true
-
-# Argo CD overrides
+# Overrides
 spec:
   source:
     targetRevision: master
@@ -26,6 +37,13 @@ spec:
   syncPolicy:
     automated:
       prune:
-        enabled: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+        # Specifies if resources should be pruned during auto-syncing 
+        # ( false by default ).
+        enabled: true 
       selfHeal:
-        enabled: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+        # Specifies if partial app sync should be executed when resources
+        # are changed only in target Kubernetes cluster and no git change 
+        # detected ( false by default ).
+        enabled: true
+#
+# =========================================================================== #
