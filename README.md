@@ -105,7 +105,7 @@ I chose Argo CD over other GitOps solutions for several reasons including some u
 
 ### `orchestration`: Orchestrate Dependencies
 
-Argo CD has a notion of "Application", which is a bundle of K8s resources. `orchestration` directory is used as a parent Application, which defines Applications underneath it. Applications allow multiple formats, and `orchestration` uses Helm Chart format. This allows enabling and disabling Application by defining a flag in `values.yaml` file, provided that a template is made to handle it.
+Argo CD has a notion of "Application", which is a bundle of K8s resources, defined under a Git repository. `orchestration` directory is used as a parent Application, which defines Applications underneath it. Applications allow multiple formats, and `orchestration` uses Helm Chart format. This allows enabling and disabling Application by defining a flag in `values.yaml` file, provided that a template is made to handle it.
 
 As you can see in `orchestration/templates/` directory, you simply need to add a new application definition here for Argo CD to pick up the new application setup. You can also make use of `values.yaml` such as enabled flag.
 
