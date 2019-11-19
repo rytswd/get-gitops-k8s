@@ -4,7 +4,7 @@ This repository gets you [GitOps](https://www.weave.works/technologies/gitops/) 
 
 ### Make Use of Template
 
-This repository is set up as a [template repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-template-repository). Because it uses the Git commits to sync Kubernetes setup, you cannot make any modifications using a simple clone (it would only install the default set).
+This repository is set up as a [template repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-template-repository). Because GitOps uses the remote Git repo to sync Kubernetes setup, a direct clone of this repository won't be fit for modifications (it would only install the default set).
 
 In order to benefit from GitOps, [use this template](https://github.com/rytswd/get-gitops-k8s/generate) to create a new repository which you have full control over.
 
