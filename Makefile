@@ -23,6 +23,10 @@ note-1:
 	@echo "	4. Install ArgoCD"
 	@echo "	5. Set up ArgoCD with \`stack\` directory"
 	@echo
+	@echo "NOTE: If you used template to generate the repo, you need to run the following first:"
+	@echo "      	tools/replace-repo-ref.sh"
+	@echo "      This will replace all the repository references"
+	@echo
 	@echo "Current Kubernetes Setup"
 	@kubectl cluster-info
 	@echo
@@ -51,9 +55,9 @@ k8s-namespace:
 github-token:
 	@echo "$(boldGreen)3. Setting up access token for git repo...$(normal)"
 	@echo
-	@echo "NOTE: For using a forked repository, you need to run \`replace-for-fork.sh\` script before this."
-	@echo "      If you have not done yet, exit with Ctrl-C now, and run the followings"
-	@echo "    ./replace-for-fork.sh"
+	@echo "NOTE: For using a forked repository, you need to run \`tools/replace-repo-ref.sh\` script before this."
+	@echo "      If you have not done this yet, exit with Ctrl-C now, and run the followings"
+	@echo "    tools/replace-repo-ref.sh"
 	@echo "    make resume"
 	@echo
 	@echo "If you are ready to proceed, provide the following information:"

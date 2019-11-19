@@ -4,7 +4,7 @@
 argo-cd:
   config:
     repositories:
-      - url: https://github.com/rytswd/get-declarative-k8s.git
+      - url: https://github.com/rytswd/get-gitops-k8s.git
         usernameSecret:
             name: access-secret
             key: username

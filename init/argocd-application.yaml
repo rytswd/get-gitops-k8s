@@ -6,7 +6,7 @@ metadata:
 spec:
   project: argocd-setup
   source:
-    repoURL: https://github.com/rytswd/get-declarative-k8s.git
+    repoURL: https://github.com/rytswd/get-gitops-k8s.git
     targetRevision: master
     path: orchestration
     helm:

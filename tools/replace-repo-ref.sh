@@ -18,7 +18,7 @@ confirm() {
     esac
 }
 
-echo "${__bg__}Replace all repository reference of 'rytswd/get-declarative-k8s'${__cl__}"
+echo "${__bg__}Replace all repository reference of 'rytswd/get-gitops-k8s'${__cl__}"
 echo
 
 remote=$(git remote -v | awk '{print $2}' | head -1)
@@ -31,19 +31,19 @@ fi
 
 if [[ -z $repo ]]; then
     read -r -p "  Enter your GitHub username for your forked repository: " username
-    read -r -p "  Enter the name of forked repository (defaults to 'get-declarative-k8s'): " reponame
-    [[ -z $reponame ]] && reponame='get-declarative-k8s' # Fall back to 'get-declarative-k8s'
+    read -r -p "  Enter the name of forked repository (defaults to 'get-gitops-k8s'): " reponame
+    [[ -z $reponame ]] && reponame='get-gitops-k8s' # Fall back to 'get-gitops-k8s'
     repo="${username}/${reponame}"
 fi
 
 echo
-confirm "About to replace '${__b__}rytswd/get-declarative-k8s${__cl__}' with '${__by__}${username}/${reponame}${__cl__}', are you sure to proceed? [y/N] " || {
+confirm "About to replace '${__b__}rytswd/get-gitops-k8s${__cl__}' with '${__by__}${username}/${reponame}${__cl__}', are you sure to proceed? [y/N] " || {
     echo "Canceled."
     exit
 }
 
 find . -type f -name '*.yaml' -print0 |
-    xargs -0 -n 1 perl -pi -e "s/rytswd\/get-declarative-k8s/${username}\/${reponame}/g"
+    xargs -0 -n 1 perl -pi -e "s/rytswd\/get-gitops-k8s/${username}\/${reponame}/g"
 
 echo
 echo "Replace complete."
