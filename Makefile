@@ -1,12 +1,8 @@
 boldGreen := $(shell tput bold)$(shell tput setaf 2)
 normal := $(shell tput sgr0)
 
-all: note-1 helm setup install
-resume: note-2 setup install
-
-helm: helm-tillerless 
-setup: k8s-namespace github-token
-install: argocd argocd-app
+all: note-1 helm-tillerless k8s-namespace github-token argocd argocd-app
+resume: note-2 github-token argocd argocd-app
 
 note-1:
 	@clear
@@ -94,9 +90,9 @@ note-2:
 	@echo "You are about to resume the K8s installation"
 	@echo
 	@echo "The following steps will be taken:"
-	@echo "	4. Set up access token for git repo"
-	@echo "	5. Install ArgoCD"
-	@echo "	6. Set up ArgoCD with \`stack\` directory"
+	@echo "	3. Set up access token for git repo"
+	@echo "	4. Install ArgoCD"
+	@echo "	5. Set up ArgoCD with \`stack\` directory"
 	@echo
 	@read -r -p "If you are ready to get started, press enter "
 	@clear
