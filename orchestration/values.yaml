@@ -9,15 +9,15 @@ env: staging
 etcdOperator:
   enabled: true
 falco:
-  enabled: false
+  enabled: true
 natsOperators:
-  enabled: false
+  enabled: true
 playground:
-  enabled: false
+  enabled: true
 sealedSecrets:
   enabled: false
 vitess:
-  enabled: true
+  enabled: false
 #
 # =========================================================================== #
 
