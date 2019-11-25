@@ -2,20 +2,20 @@
 # NOTE: Make sure you check the right version of the values file
 
 argo-cd:
-  config:
-    repositories:
-      - url: https://github.com/rytswd/get-gitops-k8s.git
-        usernameSecret:
-            name: access-secret
-            key: username
-        passwordSecret:
-            name: access-secret
-            key: token
-    helm.repositories: |
-      - url: https://storage.googleapis.com/istio-release/releases/1.2.5/charts/
-        name: istio.io
-      - url: https://charts.bitnami.com/bitnami
-        name: bitnami
-  # server:
-  #   extraArgs:
-  #     - --insecure
+  server:
+    # extraArgs:
+    #   insecure: true
+    config:
+      repositories:
+        - url: https://github.com/rytswd/get-gitops-k8s.git
+          usernameSecret:
+              name: access-secret
+              key: username
+          passwordSecret:
+              name: access-secret
+              key: token
+      helm.repositories: |
+        - url: https://storage.googleapis.com/istio-release/releases/1.2.5/charts/
+          name: istio.io
+        - url: https://charts.bitnami.com/bitnami
+          name: bitnami
