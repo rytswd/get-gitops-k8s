@@ -6,7 +6,9 @@ argo-cd:
     # extraArgs:
     #   insecure: true
     config:
-      repositories:
+      repositories: |
+        - url: https://github.com/rytswd/get-gitops-k8s.git
+      repository.credentials: |
         - url: https://github.com/rytswd/get-gitops-k8s.git
           usernameSecret:
               name: access-secret
