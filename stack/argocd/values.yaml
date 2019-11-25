@@ -2,7 +2,7 @@
 # NOTE: Make sure you check the right version of the values file
 
 argo-cd:
-  nameOverride: argocd
+  fullnameOverride: argocd
   server:
     # extraArgs:
     #   insecure: true
