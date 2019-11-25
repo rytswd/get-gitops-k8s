@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-int
+  name: argocd
   namespace: argocd
   {{- if .Values.metadata.finalizers.enabled }}
   finalizers:
