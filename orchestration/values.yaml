@@ -31,6 +31,7 @@ metadata:
 # Overrides
 spec:
   source:
+    gitRepoUrl: https://github.com/rytswd/get-gitops-k8s.git
     targetRevision: master
   destination:
     server: https://kubernetes.default.svc

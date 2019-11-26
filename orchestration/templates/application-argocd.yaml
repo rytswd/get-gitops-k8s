@@ -11,7 +11,7 @@ spec:
   project: argocd-setup
   source:
     path: stack/argocd
-    repoURL: https://github.com/rytswd/get-gitops-k8s.git
+    repoURL: {{ .Values.spec.source.gitRepoUrl }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
   destination:
     server: {{ .Values.spec.destination.server }}
