@@ -9,7 +9,7 @@ env: staging
 etcdOperator:
   enabled: true
 falco:
-  enabled: true
+  enabled: false
 natsOperators:
   enabled: false
 playground:
