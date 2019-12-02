@@ -57,11 +57,11 @@ github-token:
 	@echo "    make resume"
 	@echo
 	@echo "If you are ready to proceed, provide the following information:"
-	@read -r -p "    Your username: " username;\
-		read -s -p "    Your token: " userToken;\
+# @read -r -p "    Your username: " username; # When user token is used, the username can be any non-empty string
+	@read -s -p "    Your token: " userToken;\
 		echo "";\
 		kubectl -n argocd create secret generic access-secret \
-			--from-literal=username=$$username \
+			--from-literal=username=placeholder \
 			--from-literal=token=$$userToken
 	@echo
 	@read -r -p "completed."
