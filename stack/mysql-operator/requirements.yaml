@@ -1,4 +1,0 @@
-dependencies:
-  - name: mysql-operator
-    version: 0.3.5
-    repository: "alias:presslabs"
