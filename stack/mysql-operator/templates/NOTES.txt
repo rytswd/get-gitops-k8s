@@ -1,5 +1,0 @@
-Thanks for installing the MySQL Operator.
-
-Check if the operator is running with
-
-kubectl -n {{.Values.operator.namespace}} get po
