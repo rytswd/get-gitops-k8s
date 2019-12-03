@@ -10,7 +10,7 @@ etcdOperator:
   enabled: false
 falco:
   enabled: false
-mysqlOperators:
+mysqlOperator:
   enabled: false
 natsOperators:
   enabled: false
