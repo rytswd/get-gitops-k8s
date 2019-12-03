@@ -15,9 +15,9 @@ natsOperators:
 playground:
   enabled: false
 sealedSecrets:
-  enabled: true
-vitess:
   enabled: false
+vitess:
+  enabled: true
 #
 # =========================================================================== #
 
