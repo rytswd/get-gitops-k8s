@@ -3,7 +3,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mysql-operators
+  name: mysql-operator
   namespace: argocd
   {{- if .Values.metadata.finalizers.enabled }}
   finalizers:
@@ -12,7 +12,7 @@ metadata:
 spec:
   project: default
   source:
-    path: stack/mysql-operators
+    path: stack/mysql-operator
     repoURL: {{ .Values.spec.source.gitRepoUrl }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
   destination:
