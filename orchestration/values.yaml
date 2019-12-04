@@ -17,7 +17,7 @@ playground:
 sealedSecrets:
   enabled: false
 vitess:
-  enabled: false
+  enabled: true
 #
 # =========================================================================== #
 
