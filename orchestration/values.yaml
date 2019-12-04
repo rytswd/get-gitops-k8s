@@ -7,7 +7,7 @@ env: staging
 #   the template.
 #
 etcdOperator:
-  enabled: true
+  enabled: false
 falco:
   enabled: false
 natsOperators:
@@ -17,7 +17,7 @@ playground:
 sealedSecrets:
   enabled: false
 vitess:
-  enabled: false
+  enabled: true
 #
 # =========================================================================== #
 
