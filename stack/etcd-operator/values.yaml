@@ -1,5 +1,3 @@
 # Ref: https://github.com/helm/charts/blob/master/stable/etcd-operator/values.yaml
 # NOTE: Make sure you check the right version of the values file
 
-etcd-operator:
-  nameOverride: etcd-operator
