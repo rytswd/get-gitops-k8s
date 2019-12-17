@@ -18,6 +18,8 @@ playground:
   enabled: true
 sealedSecrets:
   enabled: false
+vault:
+  enabled: false
 vitess:
   enabled: false
 #
