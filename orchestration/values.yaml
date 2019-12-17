@@ -15,11 +15,11 @@ natsOperators:
 natsJetstream:
   enabled: true
 playground:
-  enabled: true
+  enabled: false
 sealedSecrets:
   enabled: false
 vault:
-  enabled: false
+  enabled: true
 vitess:
   enabled: false
 #
