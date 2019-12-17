@@ -13,7 +13,7 @@ falco:
 natsOperators:
   enabled: false
 natsJetstream:
-  enabled: false
+  enabled: true
 playground:
   enabled: true
 sealedSecrets:
