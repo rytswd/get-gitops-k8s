@@ -1,7 +1,7 @@
 boldGreen := $(shell tput bold)$(shell tput setaf 2)
 normal := $(shell tput sgr0)
 
-all: note-1 helm-tillerless k8s-namespace github-token argocd argocd-app
+all: note-1 k8s-namespace github-token argocd argocd-app
 resume: note-2 github-token argocd argocd-app
 
 note-1:
@@ -10,14 +10,12 @@ note-1:
 	@echo
 	@echo "You need the following tools installed on your machine:"
 	@echo "	- kubectl (Homebrew: kubernetes-cli)"
-	@echo "	- helm (Homebrew: kubernetes-helm)"
 	@echo
 	@echo "The following steps will be taken:"
-	@echo "	1. Init Helm without Tiller"
-	@echo "	2. Apply prerequisite namespace definition"
-	@echo "	3. Set up access token for git repo"
-	@echo "	4. Install ArgoCD"
-	@echo "	5. Set up ArgoCD with \`stack\` directory"
+	@echo "	1. Apply prerequisite namespace definition"
+	@echo "	2. Set up access token for git repo"
+	@echo "	3. Install ArgoCD"
+	@echo "	4. Set up ArgoCD with \`stack\` directory"
 	@echo
 	@echo "NOTE: If you used template to generate the repo, you need to run the following first:"
 	@echo "      	tools/replace-repo-ref.sh"
@@ -30,18 +28,8 @@ note-1:
 	@read -r -p "If you are ready to get started, press enter "
 	@clear
 
-helm-tillerless:
-	@echo "$(boldGreen)1. Setting up Helm without Tiller...$(normal)"
-	@echo
-	helm init --client-only
-	@echo
-	kubectl get all --all-namespaces
-	@echo
-	@read -r -p "completed."
-	@clear
-
 k8s-namespace:
-	@echo "$(boldGreen)2. Applying K8s namespace for ArgoCD...$(normal)"
+	@echo "$(boldGreen)1. Applying K8s namespace for ArgoCD...$(normal)"
 	@echo
 	kubectl apply -f ./init/namespace-argocd.yaml
 	@echo
@@ -49,7 +37,7 @@ k8s-namespace:
 	@clear
 
 github-token:
-	@echo "$(boldGreen)3. Setting up access token for git repo...$(normal)"
+	@echo "$(boldGreen)2. Setting up access token for git repo...$(normal)"
 	@echo
 	@echo "NOTE: For using a forked repository, you need to run \`tools/replace-repo-ref.sh\` script before this."
 	@echo "      If you have not done this yet, exit with Ctrl-C now, and run the followings"
@@ -68,15 +56,15 @@ github-token:
 	@clear
 
 argocd:
-	@echo "$(boldGreen)4. Installing ArgoCD...$(normal)"
+	@echo "$(boldGreen)3. Installing ArgoCD...$(normal)"
 	@echo
-	helm template ./stack/argocd -n argocd --namespace argocd | kubectl -n argocd apply -f -
+	kubectl apply -f ./stack/argocd/argocd-install.yaml -n argocd
 	@echo
 	@read -r -p "completed."
 	@clear
 
 argocd-app:
-	@echo "$(boldGreen)5. Set up ArgoCD with \`stack\` folder$(normal)"
+	@echo "$(boldGreen)4. Set up ArgoCD with \`stack\` folder$(normal)"
 	@echo
 	kubectl apply -f ./init/argocd-project.yaml
 	kubectl apply -f ./init/argocd-application.yaml
