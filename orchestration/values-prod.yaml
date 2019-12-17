@@ -10,9 +10,9 @@ etcdOperator:
   enabled: false
 falco:
   enabled: false
-mysqlOperator:
-  enabled: false
 natsOperators:
+  enabled: false
+natsJetstream:
   enabled: false
 playground:
   enabled: false

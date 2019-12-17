@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jetstream
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: jetstream
+      version: preview
+  template:
+    metadata:
+      labels:
+        app: jetstream
+        version: preview
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: synadia/nats-server:2.2.0-JS-preview
+          imagePullPolicy: IfNotPresent
+          name: jetstream
+          ports:
+            - containerPort: 4222
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+            limits:
+              cpu: 600m
+              memory: 600Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jetstream
+spec:
+  selector:
+    app: jetstream
+  ports:
+    - port: 4222
+      protocol: TCP
+      targetPort: 4222
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: jetstream
+spec:
+  minAvailable: 70%
+  selector:
+    matchLabels:
+      name: jetstream

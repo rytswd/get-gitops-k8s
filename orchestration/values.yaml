@@ -12,6 +12,8 @@ falco:
   enabled: false
 natsOperators:
   enabled: false
+natsJetstream:
+  enabled: false
 playground:
   enabled: true
 sealedSecrets:
