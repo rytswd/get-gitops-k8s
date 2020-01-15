@@ -25,6 +25,8 @@ spec:
         - image: synadia/nats-server:2.2.0-JS-preview
           imagePullPolicy: IfNotPresent
           name: jetstream
+          command: ["/nats-server"]
+          args: ["-js"]
           ports:
             - containerPort: 4222
               protocol: TCP
