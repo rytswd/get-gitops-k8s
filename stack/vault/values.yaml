@@ -1,0 +1,8 @@
+vault:
+  server:
+    image:
+      repository: "vault"
+      tag: "1.3.1"
+      
+    dataStorage:
+      storageClass: local
