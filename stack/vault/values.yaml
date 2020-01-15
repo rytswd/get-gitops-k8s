@@ -6,3 +6,4 @@ vault:
 
     dataStorage:
       storageClass: some-test-class
+      accessMode: ReadWriteMany
