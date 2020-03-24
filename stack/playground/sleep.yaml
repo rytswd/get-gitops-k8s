@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sleep
+  # namespace: playground
   labels:
     app: sleep
 spec:
@@ -16,6 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sleep
+  # namespace: playground
 spec:
   replicas: 1
   selector:
