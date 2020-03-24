@@ -1,29 +1,13 @@
 env: staging
 
-# === Helm based applications =============================================== #
+# === Application Onboarding with ArgoCD ==================================== #
 #
-#   In order to be able to add Helm template files and control their
-#   install status, you can add the 'enabled' flag here, and handle within
-#   the template.
+#   Once you provide the `key`, ArgoCD template setup is going to search
+#   for the same name directory inside `get-gitops-k8s/stack/`. If the
+#   boolean value is set to `true`, ArgoCD will ignore.
 #
-etcdOperator:
-  enabled: false
-falco:
-  enabled: false
-istio:
-  enabled: true
-natsOperators:
-  enabled: false
-natsJetstream:
-  enabled: true
-playground:
-  enabled: false
-sealedSecrets:
-  enabled: false
-vault:
-  enabled: true
-vitess:
-  enabled: false
+#   If `stack` does not comply with the directory format ArgoCD expects,
+#   ArgoCD sync will be halted until it is fixed.
 #
 apps:
   etcd-operator: false
@@ -35,7 +19,7 @@ apps:
   sealed-secrets: false
   vault: false
   vitess: false
-
+#
 # =========================================================================== #
 
 
