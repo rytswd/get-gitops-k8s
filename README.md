@@ -36,14 +36,12 @@ Starting K8s Installation
 
 You need the following tools installed on your machine:
 	- kubectl (Homebrew: kubernetes-cli)
-	- helm (Homebrew: kubernetes-helm)
 
 The following steps will be taken:
-	1. Init Helm without Tiller
-	2. Apply prerequisite namespace definition
-	3. Set up access token for git repo
-	4. Install ArgoCD
-	5. Set up ArgoCD with `stack` directory
+	1. Apply prerequisite namespace definition
+	2. Set up access token for git repo
+	3. Install ArgoCD
+	4. Set up ArgoCD with \`stack\` directory
 ...
 ```
 
