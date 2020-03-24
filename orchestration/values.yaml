@@ -25,6 +25,17 @@ vault:
 vitess:
   enabled: false
 #
+apps:
+  etcd-operator: false
+  falco: false
+  istio: false
+  nats-operators: false
+  nats-jetstream: false
+  playground: false
+  sealed-secrets: false
+  vault: false
+  vitess: false
+
 # =========================================================================== #
 
 
