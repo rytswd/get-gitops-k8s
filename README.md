@@ -103,9 +103,9 @@ I chose Argo CD over other GitOps solutions for several reasons including some u
 
 ### `orchestration`: Orchestrate Dependencies
 
-Argo CD has a notion of "Application", which is a bundle of K8s resources, defined under a Git repository. `orchestration` directory is used as a parent Application, which defines Applications underneath it. Applications allow multiple formats, and `orchestration` uses Helm Chart format. This allows enabling and disabling Application by defining a flag in `values.yaml` file, provided that a template is made to handle it.
+Argo CD has a notion of "Application", which is a bundle of K8s resources, defined under a Git repository. `orchestration` directory is used as a parent Application, which defines Applications underneath it. Applications allow multiple formats, and `orchestration` uses Helm Chart format. This allows enabling and disabling Application by defining a flag in `values.yaml` file, provided that a dependency directory is ready for integration.
 
-As you can see in `orchestration/templates/` directory, you simply need to add a new application definition here for Argo CD to pick up the new application setup. You can also make use of `values.yaml` such as enabled flag.
+As you can see in `orchestration/templates/` directory, it checks against `maps:` stanza you see in `values.yaml`. ArgoCD will then pick up whichever dependency that's set to `true`, and assumes that the matching directory name exists under `stack` directory.
 
 ### `stack`: Resource Definitions for Each Application
 
@@ -132,12 +132,15 @@ spec:
 
 You can see that, in this repo, I have added the following dependencies:
 
-- `argocd` (based on Helm)
+- `argocd` (based on single directory with K8s YAML)
 - `etcd-operator` (based on Helm)
 - `falco` (based on Helm)
-- `nats` (based on Helm)
-- `playground` (single directory structure)
+- `istio` (based on single directory with K8s YAML)
+- `nats-jetstream` (based on single directory with K8s YAML)
+- `playground` (single directory with K8s YAML)
 - `sealed-secrets` (based on Helm)
+- `vault` (based on Helm)
+- `vitess` (based on Helm)
 
 These are just a few examples to get started with, and you can add more as you like.
 
@@ -148,9 +151,6 @@ This repository also comes with simplistic scripts to help set up the cluster.
 - `tools/replace-repo-ref.sh`  
   Replaces all `github.com/rytswd/get-gitops-k8s` with your repo.  
   You can set both username and repository name with this.
-- `tools/create-new-stack.sh` (_To be added_)  
-  Create a new Application definition in `orchestration/template/`.  
-  Also, create a new directory under `stack`.
 
 # Other
 
