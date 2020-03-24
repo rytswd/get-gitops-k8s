@@ -15,7 +15,7 @@ apps:
   istio: true
   nats-operators: false
   nats-jetstream: false
-  playground: false
+  playground: true
   sealed-secrets: false
   vault: false
   vitess: false
