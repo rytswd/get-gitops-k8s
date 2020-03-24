@@ -28,7 +28,7 @@ vitess:
 apps:
   etcd-operator: false
   falco: false
-  istio: false
+  istio: true
   nats-operators: false
   nats-jetstream: false
   playground: false
