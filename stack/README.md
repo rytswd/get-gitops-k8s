@@ -13,6 +13,8 @@ $ helm create cert-manager
 $ cd cert-manager
 ```
 
+Note that the chart created will be a "parent" chart. If you want to pull some external dependency from Helm Chart Hub, etc., you still need to perform this step, in order to wire up that dependent chart under a chart you have control over.
+
 #### 2. Add Helm Chart Repository (Optional for some)
 
 If you need to pull down a Helm Chart from some custom location, you need to make that available on your local machine.
@@ -71,15 +73,19 @@ $ : > values.yaml
 $ rm -rf templates
 ```
 
-#### 6. Create ArgoCD "Application" Definition
+#### 6. Update ArgoCD Orchestration
 
 This new chart definition will not be picked up by ArgoCD until you tell it to.
 
-In order to add a new "Application" CRD definition, head to `orchestration` directory, and create a new `application-cert-manager.yaml` under `templates` directory.
+In order to add a new "Application" CRD definition, head to `orchestration` directory, and add a line in `values.yaml` file, such that:
 
-```bash
-$ cd ../orchestration
-$ ./add-new-application.sh # TODO: To be added
+```yaml
+apps:
+  etcd-operator: false
+  falco: false
+  istio: true
+  cert-manager: true // This is new
+  // more apps ...
 ```
 
 #### 7. Commit and Push
