@@ -25,7 +25,10 @@ note-1:
 	@kubectl cluster-info
 	@echo
 
-	@read -r -p "If you are ready to get started, press enter "
+	@echo "Make sure you are working with the right Kubernetes cluster"
+	@echo
+
+	@read -r -p "If you are ready to proceed, press enter. Otherwise exit with Ctrl-C. "
 	@clear
 
 k8s-namespace:
