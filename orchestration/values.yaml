@@ -14,7 +14,6 @@ apps:
   etcd-operator: false
   falco: false
   istio: false
-  nats-operators: false
   nats-jetstream: false
   playground: true
   sealed-secrets: false

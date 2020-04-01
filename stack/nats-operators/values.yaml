@@ -1,4 +1,0 @@
-# None, custom Helm Chart created with
-# https://github.com/nats-io/nats-operator#cluster-scoped-installation-experimental
-
-namespace: nats-io
