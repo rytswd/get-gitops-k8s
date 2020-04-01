@@ -53,6 +53,25 @@ _To be added_
 
 # Details
 
+## WHAT: Predefined Application Stacks
+
+This repo holds some popular application YAML / Helm definitions.  
+It is only meant for quick testing rather than production grade stability.
+
+| Name                                                             |   Type   | Version | Default | Verified? |
+| ---------------------------------------------------------------- | :------: | :-----: | :-----: | :-------: |
+| [argo-cd](https://github.com/argoproj/argo-cd)                   | K8s YAML |  1.4.2  |  true   |    Yes    |
+| [argo-workflows](https://github.com/argoproj/argo)               | K8s YAML |  2.7.0  |  false  |    No     |
+| [etcd-operator](https://github.com/coreos/etcd-operator)         |   Helm   | 0.10.0  |  false  |    No     |
+| [falco](https://github.com/falcosecurity/falco)                  |   Helm   |  1.0.9  |  false  |    No     |
+| [istio](https://github.com/istio/istio)                          | K8s YAML |  1.5.1  |  true   |  Yes/No   |
+| [nats-jetstream](https://github.com/nats-io/nats-server)         | K8s YAML |   NA    |  false  |    Yes    |
+| playground                                                       | K8s YAML |   NA    |  true   |    NA     |
+| [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets) |   Helm   |  1.4.3  |  false  |    Yes    |
+| [tekton-pipeline](https://github.com/tektoncd/pipeline)          | K8s YAML | 0.11.0  |  false  |    No     |
+| [vault](https://github.com/hashicorp/vault-helm)                 |   Helm   |   NA    |  false  |    No     |
+| [vitess](https://github.com/vitessio/vitess)                     |   Helm   |         |  false  |    No     |
+
 ## WHY: Single Source of Truth, Even in Dev
 
 GitOps is gaining popularity thanks to [Flux](https://github.com/fluxcd/flux) by Weaveworks, [Argo CD](https://argoproj.github.io/argo-cd/) by Intuit, and other Open Source projects. There is also a joint "Argo Flux" project, which has been recently announced as of Nov 2019 ([blog](https://www.weave.works/blog/argo-flux-join-forces) from Weaveworks, [blog](https://www.intuit.com/blog/technology/introducing-argo-flux/) from Intuit, [blog](https://aws.amazon.com/blogs/containers/help-us-write-a-new-chapter-for-gitops-kubernetes-and-open-source-collaboration/) from Amazon EKS team). GitOps concept is simple - Git repo as the single source of truth for Kubernetes environment. All changes will be based on Git commits, and no commands should be run manually.
