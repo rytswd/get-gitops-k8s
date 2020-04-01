@@ -13,7 +13,7 @@ apps:
   argo-workflows: true
   etcd-operator: false
   falco: false
-  istio: true
+  istio: false
   nats-operators: false
   nats-jetstream: false
   playground: true
