@@ -34,7 +34,7 @@ note-1:
 k8s-namespace:
 	@echo "$(boldGreen)1. Applying K8s namespace for Argo CD...$(normal)"
 	@echo
-	kubectl apply -f ./init/namespace-argo-cd.yaml
+	kubectl apply -f ./init/namespace-argocd.yaml
 	@echo
 	@read -r -p "completed."
 	@clear
@@ -51,7 +51,7 @@ github-token:
 # @read -r -p "    Your username: " username; # When user token is used, the username can be any non-empty string
 	@read -s -p "    Your token: " userToken;\
 		echo "";\
-		kubectl -n argo-cd create secret generic access-secret \
+		kubectl -n argocd create secret generic access-secret \
 			--from-literal=username=placeholder \
 			--from-literal=token=$$userToken
 	@echo
@@ -61,7 +61,7 @@ github-token:
 argocd:
 	@echo "$(boldGreen)3. Installing Argo CD...$(normal)"
 	@echo
-	kubectl apply -f ./stack/argo-cd/argo-cd-install.yaml -n argo-cd
+	kubectl apply -f ./stack/argo-cd/argo-cd-install.yaml -n argocd
 	@echo
 	@read -r -p "completed."
 	@clear

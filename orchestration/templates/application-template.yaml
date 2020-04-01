@@ -5,7 +5,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: {{ $key }}
-  namespace: argo-cd
+  namespace: argocd
   {{- if $.Values.metadata.finalizers.enabled }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io

@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argo-cd
-  namespace: argo-cd
+  namespace: argocd
   {{- if .Values.metadata.finalizers.enabled }}
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -15,7 +15,7 @@ spec:
     targetRevision: {{ .Values.spec.source.targetRevision }}
   destination:
     server: {{ .Values.spec.destination.server }}
-    namespace: argo-cd
+    namespace: argocd
 
   # Do not specify syncPolicy if nothing is defined in values
   {{- if or .Values.spec.syncPolicy.automated.prune.enabled .Values.spec.syncPolicy.automated.selfHeal.enabled }}
