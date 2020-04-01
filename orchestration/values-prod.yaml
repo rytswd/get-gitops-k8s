@@ -10,12 +10,14 @@ env: prod
 #   ArgoCD sync will be halted until it is fixed.
 #
 apps:
+  argo-workflows: false
   etcd-operator: false
   falco: false
   istio: true
   nats-jetstream: false
   playground: false
   sealed-secrets: false
+  tekton-pipeline: false
   vault: false
   vitess: false
 #
