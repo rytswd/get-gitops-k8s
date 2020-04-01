@@ -10,14 +10,14 @@ env: staging
 #   ArgoCD sync will be halted until it is fixed.
 #
 apps:
-  argo-workflows: false
+  argo-workflows: true
   etcd-operator: false
   falco: false
   istio: true
   nats-operators: false
   nats-jetstream: false
   playground: true
-  sealed-secrets: true
+  sealed-secrets: false
   tekton-pipeline: false
   vault: false
   vitess: false
