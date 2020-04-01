@@ -17,6 +17,7 @@ apps:
   nats-jetstream: false
   playground: true
   sealed-secrets: false
+  tekton-pipeline: true
   vault: false
   vitess: false
 #
