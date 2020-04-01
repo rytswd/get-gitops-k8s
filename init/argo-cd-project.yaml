@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: argocd-setup
-  namespace: argocd
+  name: argo-cd-setup
+  namespace: argo-cd
 spec:
-  description: Project for ArgoCD setup
+  description: Project for Argo CD setup
   sourceRepos:
     - https://github.com/rytswd/get-gitops-k8s.git
   destinations:

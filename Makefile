@@ -14,8 +14,8 @@ note-1:
 	@echo "The following steps will be taken:"
 	@echo "	1. Apply prerequisite namespace definition"
 	@echo "	2. Set up access token for git repo"
-	@echo "	3. Install ArgoCD"
-	@echo "	4. Set up ArgoCD with \`stack\` directory"
+	@echo "	3. Install Argo CD"
+	@echo "	4. Set up Argo CD with \`stack\` directory"
 	@echo
 	@echo "NOTE: If you used template to generate the repo, you need to run the following first:"
 	@echo "      	tools/replace-repo-ref.sh"
@@ -32,9 +32,9 @@ note-1:
 	@clear
 
 k8s-namespace:
-	@echo "$(boldGreen)1. Applying K8s namespace for ArgoCD...$(normal)"
+	@echo "$(boldGreen)1. Applying K8s namespace for Argo CD...$(normal)"
 	@echo
-	kubectl apply -f ./init/namespace-argocd.yaml
+	kubectl apply -f ./init/namespace-argo-cd.yaml
 	@echo
 	@read -r -p "completed."
 	@clear
@@ -51,7 +51,7 @@ github-token:
 # @read -r -p "    Your username: " username; # When user token is used, the username can be any non-empty string
 	@read -s -p "    Your token: " userToken;\
 		echo "";\
-		kubectl -n argocd create secret generic access-secret \
+		kubectl -n argo-cd create secret generic access-secret \
 			--from-literal=username=placeholder \
 			--from-literal=token=$$userToken
 	@echo
@@ -59,18 +59,18 @@ github-token:
 	@clear
 
 argocd:
-	@echo "$(boldGreen)3. Installing ArgoCD...$(normal)"
+	@echo "$(boldGreen)3. Installing Argo CD...$(normal)"
 	@echo
-	kubectl apply -f ./stack/argocd/argocd-install.yaml -n argocd
+	kubectl apply -f ./stack/argo-cd/argo-cd-install.yaml -n argo-cd
 	@echo
 	@read -r -p "completed."
 	@clear
 
 argocd-app:
-	@echo "$(boldGreen)4. Set up ArgoCD with \`stack\` folder$(normal)"
+	@echo "$(boldGreen)4. Set up Argo CD with \`stack\` folder$(normal)"
 	@echo
-	kubectl apply -f ./init/argocd-project.yaml
-	kubectl apply -f ./init/argocd-application.yaml
+	kubectl apply -f ./init/argo-cd-project.yaml
+	kubectl apply -f ./init/argo-cd-application.yaml
 	@echo
 	@read -r -p "completed."
 
@@ -82,8 +82,8 @@ note-2:
 	@echo
 	@echo "The following steps will be taken:"
 	@echo "	3. Set up access token for git repo"
-	@echo "	4. Install ArgoCD"
-	@echo "	5. Set up ArgoCD with \`stack\` directory"
+	@echo "	4. Install Argo CD"
+	@echo "	5. Set up Argo CD with \`stack\` directory"
 	@echo
 	@read -r -p "If you are ready to get started, press enter "
 	@clear

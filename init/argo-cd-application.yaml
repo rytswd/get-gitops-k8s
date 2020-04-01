@@ -2,9 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: app-orchestration
-  namespace: argocd
+  namespace: argo-cd
 spec:
-  project: argocd-setup
+  project: argo-cd-setup
   source:
     repoURL: https://github.com/rytswd/get-gitops-k8s.git
     targetRevision: master
@@ -14,7 +14,7 @@ spec:
         - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: argo-cd
   syncPolicy:
     automated:
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
