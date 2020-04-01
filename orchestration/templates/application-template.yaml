@@ -1,5 +1,6 @@
 {{- range $key, $value := .Values.apps }}
 {{- if $value }}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -33,5 +34,6 @@ spec:
       selfHeal: true 
       {{- end }}
   {{- end }}
+...
 {{- end }}
 {{- end }}
