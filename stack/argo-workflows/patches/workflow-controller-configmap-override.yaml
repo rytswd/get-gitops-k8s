@@ -1,0 +1,8 @@
+# As suggested by https://github.com/argoproj/argo/issues/2376
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workflow-controller-configmap
+data:
+  config: |
+    containerRuntimeExecutor: k8sapi
