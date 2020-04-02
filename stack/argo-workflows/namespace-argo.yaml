@@ -1,0 +1,4 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argo # This cannot change as Argo Workflows installer expects this namespace
