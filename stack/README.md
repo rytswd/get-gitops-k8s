@@ -6,6 +6,8 @@ Let's walk through an example case to install Jetstack's `cert-manager`.
 
 #### 1. Create a Helm Chart
 
+> NOTE: Helm v3 is not yet supported in the current Argo CD version. This will be soon available.
+
 Helm CLI provides a template for creating a custom chart. Simply run that to create `cert-manager` directory. You will be updating many of the auto-generated files later, so you can leave the files untouched for now.
 
 ```bash
@@ -13,7 +15,7 @@ $ helm create cert-manager
 $ cd cert-manager
 ```
 
-Note that the chart created will be a "parent" chart. If you want to pull some external dependency from Helm Chart Hub, etc., you still need to perform this step, in order to wire up that dependent chart under a chart you have control over.
+Note that the chart created will be a "parent" chart. Even if you want to pull some external dependency from Helm Chart Hub, etc., you still need to perform this step, in order to wire up that dependent chart under a chart you have control over.
 
 #### 2. Add Helm Chart Repository (Optional for some)
 
@@ -33,6 +35,8 @@ $ helm repo update
 
 #### 3. Add a `requirements.yaml`
 
+> NOTE: Helm v3 steps will be added
+
 In order to specify a dependency, you need to add a new file to the directory. Create a file called `requirements.yaml`, and copy the following content:
 
 ```yaml
@@ -45,6 +49,8 @@ dependencies:
 This assumes that you have added a `jetstack` Helm Chart repository by following the above step#2.
 
 #### 4. Build Dependency
+
+> NOTE: Helm v3 steps will be added
 
 Helm uses this `requirements.yaml` to build out all the dependencies you have.
 
@@ -81,11 +87,21 @@ In order to add a new "Application" CRD definition, head to `orchestration` dire
 
 ```yaml
 apps:
-  etcd-operator: false
-  falco: false
-  istio: true
-  cert-manager: true // This is new
-  // more apps ...
+  - name: argo-workflows
+    enabled: true
+    namespace: argo
+  - name: etcd-operator
+    enabled: false
+  - name: falco
+    enabled: false
+  - name: istio
+    enabled: false
+  # ========
+  # Add this - you may define namespace if necessary
+  - name: cert-manager
+    enabled: true
+  # ========
+  # more apps ...
 ```
 
 #### 7. Commit and Push
