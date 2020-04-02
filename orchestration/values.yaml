@@ -15,6 +15,7 @@ apps:
   falco: false
   istio: false
   nats-jetstream: false
+  nsm: true
   playground: true
   sealed-secrets: false
   tekton-pipeline: false
