@@ -134,22 +134,7 @@ Each Application can contain as many resources as it needs, and it allows a few 
 - Kustomize
 - Helm chart
 
-Application definition under `orchestration/templates/` have something like below to look at the `stack` directory:
-
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: etcd-operator
-  namespace: argocd
-spec:
-  project: default
-  source:
-    path: stack/etcd-operator
-    repoURL: "https://github.com/rytswd/get-gitops-k8s.git"
-```
-
-You can see that, in this repo, I have added the following dependencies:
+In this repo, I have added some dependencies to showcase this in `orchestration/values.yaml`:
 
 - `argocd` (based on single directory with K8s YAML)
 - `etcd-operator` (based on Helm)
@@ -161,7 +146,7 @@ You can see that, in this repo, I have added the following dependencies:
 - `vault` (based on Helm)
 - `vitess` (based on Helm)
 
-These are just a few examples to get started with, and you can add more as you like.
+These are just a few examples to get started with, and you can add more as you like. For most common scenarios, you can simply add an element in `orchestration/values.yaml`, and create a directory inside `stack/` containing the resources with the above format.
 
 ### `tools`: Tools for Frequently Used Setup
 
