@@ -2,24 +2,40 @@ env: prod
 
 # === Application Onboarding with ArgoCD ==================================== #
 #
-#   Once you provide the `key`, ArgoCD template setup is going to search
-#   for the same name directory inside `get-gitops-k8s/stack/`. If the
-#   boolean value is set to `true`, ArgoCD will ignore.
+#   ArgoCD template setup is going to loop through the items in slice here,
+#   and search for `name` inside `get-gitops-k8s/stack/`. If the `enabled`
+#   boolean flag is set to `false`, ArgoCD will ignore.
+#
+#   Additionally, you can specify `namespace`. This may be useful when the
+#   installation requires a specific namespace in place.
 #
 #   If `stack` does not comply with the directory format ArgoCD expects,
 #   ArgoCD sync will be halted until it is fixed.
 #
 apps:
-  argo-workflows: false
-  etcd-operator: false
-  falco: false
-  istio: true
-  nats-jetstream: false
-  playground: false
-  sealed-secrets: false
-  tekton-pipeline: false
-  vault: false
-  vitess: false
+  - name: argo-workflows
+    enabled: true
+    namespace: argo
+  - name: etcd-operator
+    enabled: false
+  - name: falco
+    enabled: false
+  - name: istio
+    enabled: false
+  - name: nats-jetstream
+    enabled: false
+  - name: nsm
+    enabled: true
+  - name: playground
+    enabled: true
+  - name: sealed-secrets
+    enabled: false
+  - name: tekton-pipeline
+    enabled: false
+  - name: vault
+    enabled: false
+  - name: vitess
+    enabled: false
 #
 # =========================================================================== #
 

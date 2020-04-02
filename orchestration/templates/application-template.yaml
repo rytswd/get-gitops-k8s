@@ -1,10 +1,10 @@
-{{- range $key, $value := .Values.apps }}
-{{- if $value }}
+{{- range .Values.apps }}
+{{- if .enabled }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ $key }}
+  name: {{ .name }}
   namespace: argocd
   {{- if $.Values.metadata.finalizers.enabled }}
   finalizers:
@@ -13,12 +13,12 @@ metadata:
 spec:
   project: default
   source:
-    path: stack/{{ $key }}
+    path: stack/{{ .name }}
     repoURL: {{ $.Values.spec.source.gitRepoUrl }}
     targetRevision: {{ $.Values.spec.source.targetRevision }}
   destination:
     server: {{ $.Values.spec.destination.server }}
-    namespace: default
+    namespace: {{ .namespace | default "default" }}
 
   # Do not specify syncPolicy if nothing is defined in values
   {{- if or $.Values.spec.syncPolicy.automated.prune.enabled $.Values.spec.syncPolicy.automated.selfHeal.enabled }}
