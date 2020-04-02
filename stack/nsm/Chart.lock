@@ -1,0 +1,6 @@
+dependencies:
+- name: nsm
+  repository: https://helm.nsm.dev
+  version: 0.2.0
+digest: sha256:a8dca4e6524d784fd7f1b366ac4b8de54c21b0cbf26e38c84aa78604c3fbe828
+generated: "2020-04-02T09:32:20.958626+01:00"
