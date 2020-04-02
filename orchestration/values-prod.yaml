@@ -24,8 +24,8 @@ apps:
     enabled: false
   - name: nats-jetstream
     enabled: false
-  - name: nsm
-    enabled: true
+  - name: networkservicemesh
+    enabled: false
   - name: playground
     enabled: true
   - name: sealed-secrets
