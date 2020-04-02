@@ -11,6 +11,9 @@ note-1:
 	@echo "You need the following tools installed on your machine:"
 	@echo "	- kubectl (Homebrew: kubernetes-cli)"
 	@echo
+	@echo "You will also need to provide the access token to your git repo."
+	@echo "	For GitHub: https://github.com/settings/tokens/new"
+	@echo
 	@echo "The following steps will be taken:"
 	@echo "	1. Apply prerequisite namespace definition"
 	@echo "	2. Set up access token for git repo"
@@ -29,17 +32,17 @@ note-1:
 	@echo
 
 	@read -r -p "If you are ready to proceed, press enter. Otherwise exit with Ctrl-C. "
-	@clear
 
 k8s-namespace:
+	@clear
 	@echo "$(boldGreen)1. Applying K8s namespace for Argo CD...$(normal)"
 	@echo
 	kubectl apply -f ./init/namespace-argocd.yaml
 	@echo
 	@read -r -p "completed."
-	@clear
 
 github-token:
+	@clear
 	@echo "$(boldGreen)2. Setting up access token for git repo...$(normal)"
 	@echo
 	@echo "NOTE: For using a forked repository, you need to run \`tools/replace-repo-ref.sh\` script before this."
@@ -56,17 +59,17 @@ github-token:
 			--from-literal=token=$$userToken
 	@echo
 	@read -r -p "completed."
-	@clear
 
 argocd:
+	@clear
 	@echo "$(boldGreen)3. Installing Argo CD...$(normal)"
 	@echo
 	kubectl apply -f ./stack/argo-cd/argo-cd-install.yaml -n argocd
 	@echo
 	@read -r -p "completed."
-	@clear
 
 argocd-app:
+	@clear
 	@echo "$(boldGreen)4. Set up Argo CD with \`stack\` folder$(normal)"
 	@echo
 	kubectl apply -f ./init/argo-cd-project.yaml
@@ -86,4 +89,3 @@ note-2:
 	@echo "	5. Set up Argo CD with \`stack\` directory"
 	@echo
 	@read -r -p "If you are ready to get started, press enter "
-	@clear
