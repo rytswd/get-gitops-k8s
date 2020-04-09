@@ -15,7 +15,10 @@ env: staging
 apps:
   - name: argo-workflows
     enabled: true
-    namespace: argo
+    namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
+  - name: argo-events
+    enabled: true
+    namespace: argo-events # https://argoproj.github.io/argo-events/installation/
   - name: etcd-operator
     enabled: false
   - name: falco
