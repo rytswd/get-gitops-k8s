@@ -9,10 +9,10 @@ ff81aac6777552ac6e9da5c4cbbbd989c7fcc44836a50fbde1db11f5cc0fe130  ./stack/tekton
 ```
 
 - **Last Update**: 10th April, 2020
-- **Version**: v0.6.1?
+- **Version**: v0.6.0
 - **Evidence**:
   ```
-  $ curl -L https://storage.googleapis.com/tekton-releases/dashboard/previous/v0.6.0/release.yaml | shasum -a 256
+  $ curl -L https://github.com/tektoncd/dashboard/releases/download/v0.6.0/tekton-dashboard-release.yaml | shasum -a 256
   ...
-  TBC  -
+  ff81aac6777552ac6e9da5c4cbbbd989c7fcc44836a50fbde1db11f5cc0fe130  -
   ```
