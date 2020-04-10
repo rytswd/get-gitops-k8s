@@ -32,6 +32,10 @@ apps:
     enabled: false
   - name: tekton-pipeline
     enabled: true
+  - name: tekton-dashboard
+    enabled: true
+  - name: tekton-triggers
+    enabled: true
   - name: vault
     enabled: false
   - name: vitess
