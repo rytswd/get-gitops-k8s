@@ -31,7 +31,7 @@ apps:
   - name: sealed-secrets
     enabled: false
   - name: tekton-pipeline
-    enabled: false
+    enabled: true
   - name: vault
     enabled: false
   - name: vitess
