@@ -25,17 +25,17 @@ apps:
   - name: nats-jetstream
     enabled: false
   - name: networkservicemesh
-    enabled: false
+    enabled: true
   - name: playground
     enabled: true
   - name: sealed-secrets
     enabled: false
   - name: tekton-pipeline
-    enabled: true
+    enabled: false
   - name: tekton-dashboard
-    enabled: true
+    enabled: false
   - name: tekton-triggers
-    enabled: true
+    enabled: false
   - name: vault
     enabled: false
   - name: vitess
