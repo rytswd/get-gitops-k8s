@@ -69,7 +69,9 @@ It is only meant for quick testing rather than production grade stability.
 | [nats-jetstream](https://github.com/nats-io/nats-server)                       | K8s YAML  |   NA    |  false  |    Yes    |
 | playground                                                                     | K8s YAML  |   NA    |  true   |    NA     |
 | [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets)               |   Helm    |  1.4.3  |  false  |    Yes    |
-| [tekton-pipeline](https://github.com/tektoncd/pipeline)                        | K8s YAML  | 0.11.0  |  false  |    No     |
+| [tekton-pipeline](https://github.com/tektoncd/pipeline)                        | K8s YAML  | 0.11.0  |  false  |    Yes    |
+| [tekton-dashboard](https://github.com/tektoncd/pipeline)                       | K8s YAML  |  0.6.0  |  false  |    Yes    |
+| [tekton-triggers](https://github.com/tektoncd/pipeline)                        | K8s YAML  |  0.4.0  |  false  |    Yes    |
 | [vault](https://github.com/hashicorp/vault-helm)                               |   Helm    |   NA    |  false  |    No     |
 | [vitess](https://github.com/vitessio/vitess)                                   |   Helm    |         |  false  |    No     |
 
