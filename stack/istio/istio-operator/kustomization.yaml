@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - istio-operator-install.yaml
+  - istio-installation-spec.yaml
+  - istio-system-namespace.yaml

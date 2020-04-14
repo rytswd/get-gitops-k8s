@@ -64,7 +64,7 @@ It is only meant for quick testing rather than production grade stability.
 | [argo-workflows](https://github.com/argoproj/argo)                             | Kustomize |  2.7.0  |  false  |    Yes    |
 | [etcd-operator](https://github.com/coreos/etcd-operator)                       |   Helm    | 0.10.0  |  false  |    No     |
 | [falco](https://github.com/falcosecurity/falco)                                |   Helm    |  1.0.9  |  false  |    No     |
-| [istio](https://github.com/istio/istio)                                        | K8s YAML  |  1.5.1  |  true   |  Yes/No   |
+| [istio](https://github.com/istio/istio)                                        | Kustomize |  1.5.1  |  true   |  Yes/No   |
 | [networkservicemesh](https://github.com/networkservicemesh/networkservicemesh) |  Helm v3  |  0.2.0  |  false  |    No     |
 | [nats-jetstream](https://github.com/nats-io/nats-server)                       | K8s YAML  |   NA    |  false  |    Yes    |
 | playground                                                                     | K8s YAML  |   NA    |  true   |    NA     |

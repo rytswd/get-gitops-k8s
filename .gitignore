@@ -1,0 +1,2 @@
+# Istio setup requires downloading Istio, ignoring as many files will be added
+/istio*/
