@@ -6,7 +6,7 @@ Let's walk through an example case to install Jetstack's `cert-manager`.
 
 #### 1. Create a Helm Chart
 
-> NOTE: Helm v3 is not yet supported in the current Argo CD version. This will be soon available.
+> NOTE: Helm v3 is supported from Argo CD v1.5+. Helm v2 is also supported as of this writing.
 
 Helm CLI provides a template for creating a custom chart. Simply run that to create `cert-manager` directory. You will be updating many of the auto-generated files later, so you can leave the files untouched for now.
 
