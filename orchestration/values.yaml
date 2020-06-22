@@ -13,8 +13,10 @@ env: staging
 #   ArgoCD sync will be halted until it is fixed.
 #
 apps:
-  - name: argo-workflows
+  - name: argo-rollouts
     enabled: true
+  - name: argo-workflows
+    enabled: false
     namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
   - name: etcd-operator
     enabled: false
