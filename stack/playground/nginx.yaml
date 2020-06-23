@@ -5,7 +5,7 @@ metadata:
   name: example-rollout
   # namespace: playground
 spec:
-  replicas: 5
+  replicas: 2
   selector:
     matchLabels:
       app: nginx
@@ -25,7 +25,7 @@ spec:
     # ----- Everything above this comment are the same as a deployment -----
     canary: # A new field that used to provide configurable options for a Canary strategy
       steps:
-        - setWeight: 20
+        - setWeight: 50
         - pause: {}
 ---
 apiVersion: v1
