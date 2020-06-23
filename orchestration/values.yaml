@@ -24,7 +24,7 @@ apps:
   - name: falco
     enabled: false
   - name: istio
-    enabled: false
+    enabled: true
   - name: nats-jetstream
     enabled: false
   - name: networkservicemesh
