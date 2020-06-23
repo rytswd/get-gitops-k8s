@@ -37,19 +37,17 @@ In order for Argo CD to pick up and install Istio, we use `istioctl manifest gen
 ```shell
 $ istioctl manifest versions
 
-Operator version is 1.5.1.
+Binary version is 1.6.3.
 
-The following installation package versions are recommended for use with this version of the operator:
-  1.5.0
-
-The following installation package versions are supported for upgrade by this version of the operator:
-  >=1.4.0
-   <1.6
+This version of istioctl can:
+  Install Istio 1.6.0
+  Update Istio from >=1.5.0 to 1.6.0
+  Update Istio from  <1.7 to 1.6.0
 
 $ istioctl manifest generate > ./stack/istio/istioctl/istio-install.yaml
 
 $ shasum -a 256 ./stack/istio/istioctl/istio-install.yaml
-45f26f1c5cbd91e70d2bd5a960b4da719284686b329ba31468f18fe27f27f150  ./stack/istio/istioctl/istio-install.yaml
+7549a62ed15c0ace0e34326d8c68fa5911170ab7bdaf130e7357ebfeab398b17  ./stack/istio/istioctl/istio-install.yaml
 ```
 
 ## Istio Operator
