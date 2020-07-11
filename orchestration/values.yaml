@@ -25,6 +25,7 @@ apps:
     enabled: false
   - name: istio
     enabled: true
+    namespace: istio-system
   - name: nats-jetstream
     enabled: false
   - name: networkservicemesh
