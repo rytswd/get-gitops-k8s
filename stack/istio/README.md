@@ -37,7 +37,7 @@ In order for Argo CD to pick up and install Istio, we use `istioctl manifest gen
 ```shell
 $ istioctl manifest versions
 
-Binary version is 1.6.3.
+Binary version is 1.6.4.
 
 This version of istioctl can:
   Install Istio 1.6.0
@@ -47,7 +47,7 @@ This version of istioctl can:
 $ istioctl manifest generate > ./stack/istio/istioctl/istio-install.yaml
 
 $ shasum -a 256 ./stack/istio/istioctl/istio-install.yaml
-7549a62ed15c0ace0e34326d8c68fa5911170ab7bdaf130e7357ebfeab398b17  ./stack/istio/istioctl/istio-install.yaml
+97cd2ce3818463b22cd886196c16a156f82c8e1ae73e87ba548cfc3dfc70fd0e  ./stack/istio/istioctl/istio-install.yaml
 ```
 
 ## Istio Operator
