@@ -14,10 +14,10 @@ env: staging
 #
 apps:
   - name: argo-rollouts
-    enabled: true
+    enabled: false
     namespace: argo-rollouts
   - name: argo-rollouts-sample
-    enabled: true
+    enabled: false
   - name: argo-workflows
     enabled: false
     namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
