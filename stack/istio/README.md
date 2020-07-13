@@ -10,11 +10,9 @@ Using Helm is another approach, and is documented [here](https://istio.io/docs/s
 
 # Istio with Get GitOps K8s
 
-This repository is by default uses Istio Operator.
+This repository is by default uses `istioctl` installation, as it is the official recommendation for the production setup.
 
-This allows installing into restricted environments such as `kind`.
-
-However, please note that Istio recommends using `istioctl` for the production setup.
+Istio Operator pattern poses a question of Operator holding significant permission, which may cause some security concerns, the same way Helm v2 had in the past.
 
 ---
 
@@ -44,10 +42,10 @@ This version of istioctl can:
   Update Istio from >=1.5.0 to 1.6.0
   Update Istio from  <1.7 to 1.6.0
 
-$ istioctl manifest generate > ./stack/istio/istioctl/istio-install.yaml
+$ istioctl manifest generate --set profile=demo --set values.grafana.enabled=false --set values.kiali.enabled=false > ./stack/istio/istioctl/istio-install.yaml
 
 $ shasum -a 256 ./stack/istio/istioctl/istio-install.yaml
-97cd2ce3818463b22cd886196c16a156f82c8e1ae73e87ba548cfc3dfc70fd0e  ./stack/istio/istioctl/istio-install.yaml
+65787205184dc7a3453862552367dac59461f6b99f9c3d279a6a8597a49f8c37  ./stack/istio/istioctl/istio-install.yaml
 ```
 
 ## Istio Operator
