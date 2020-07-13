@@ -16,6 +16,8 @@ apps:
   - name: argo-rollouts
     enabled: true
     namespace: argo-rollouts
+  - name: argo-rollouts-sample
+    enabled: true
   - name: argo-workflows
     enabled: false
     namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
