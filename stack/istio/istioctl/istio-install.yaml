@@ -7,807 +7,10 @@
 # AddonComponents kiali component is disabled.
 
 ---
-# Resources for AddonComponents prometheus component
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: prometheus-istio-system
-  labels:
-    app: prometheus
-    release: istio
-rules:
-- apiGroups: [""]
-  resources:
-  - nodes
-  - services
-  - endpoints
-  - pods
-  - nodes/proxy
-  verbs: ["get", "list", "watch"]
-- apiGroups: [""]
-  resources:
-  - configmaps
-  verbs: ["get"]
-- nonResourceURLs: ["/metrics"]
-  verbs: ["get"]
----
-
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: prometheus-istio-system
-  labels:
-    app: prometheus
-    release: istio
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: prometheus-istio-system
-subjects:
-- kind: ServiceAccount
-  name: prometheus
-  namespace: istio-system
----
-
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: prometheus
-  namespace: istio-system
-  labels:
-    app: prometheus
-    release: istio
-data:
-  prometheus.yml: |-
-    global:
-      scrape_interval: 15s
-    scrape_configs:
-    # Mixer scrapping. Defaults to Prometheus and mixer on same namespace.
-    - job_name: 'istio-mesh'
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - istio-system
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: istio-telemetry;prometheus
-
-    # Scrape config for envoy stats
-    - job_name: 'envoy-stats'
-      metrics_path: /stats/prometheus
-      kubernetes_sd_configs:
-      - role: pod
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_container_port_name]
-        action: keep
-        regex: '.*-envoy-prom'
-      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:15090
-        target_label: __address__
-      - action: labeldrop
-        regex: __meta_kubernetes_pod_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: pod_name
-
-    - job_name: 'istio-policy'
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - istio-system
-
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: istio-policy;http-policy-monitoring
-
-    - job_name: 'istio-telemetry'
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - istio-system
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: istio-telemetry;http-monitoring
-
-    - job_name: 'pilot'
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - istio-system
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: istiod;http-monitoring
-      - source_labels: [__meta_kubernetes_service_label_app]
-        target_label: app
-    - job_name: 'galley'
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - istio-system
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: istio-galley;http-monitoring
-
-    - job_name: 'citadel'
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - istio-system
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: istio-citadel;http-monitoring
-
-    - job_name: 'sidecar-injector'
-
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - istio-system
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: istio-sidecar-injector;http-monitoring
-
-    # scrape config for API servers
-    - job_name: 'kubernetes-apiservers'
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - default
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: kubernetes;https
-
-    # scrape config for nodes (kubelet)
-    - job_name: 'kubernetes-nodes'
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      kubernetes_sd_configs:
-      - role: node
-      relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics
-
-    # Scrape config for Kubelet cAdvisor.
-    #
-    # This is required for Kubernetes 1.7.3 and later, where cAdvisor metrics
-    # (those whose names begin with 'container_') have been removed from the
-    # Kubelet metrics endpoint.  This job scrapes the cAdvisor endpoint to
-    # retrieve those metrics.
-    #
-    # In Kubernetes 1.7.0-1.7.2, these metrics are only exposed on the cAdvisor
-    # HTTP endpoint; use "replacement: /api/v1/nodes/${1}:4194/proxy/metrics"
-    # in that case (and ensure cAdvisor's HTTP server hasn't been disabled with
-    # the --cadvisor-port=0 Kubelet flag).
-    #
-    # This job is not necessary and should be removed in Kubernetes 1.6 and
-    # earlier versions, or it will cause the metrics to be scraped twice.
-    - job_name: 'kubernetes-cadvisor'
-      scheme: https
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      kubernetes_sd_configs:
-      - role: node
-      relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
-
-    # scrape config for service endpoints.
-    - job_name: 'kubernetes-service-endpoints'
-      kubernetes_sd_configs:
-      - role: endpoints
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
-        action: replace
-        target_label: __scheme__
-        regex: (https?)
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-        action: replace
-        target_label: __address__
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-      - action: labelmap
-        regex: __meta_kubernetes_service_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_service_name]
-        action: replace
-        target_label: kubernetes_name
-
-    - job_name: 'kubernetes-pods'
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:  # If first two labels are present, pod should be scraped  by the istio-secure job.
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_pod_annotation_sidecar_istio_io_status]
-        action: drop
-        regex: (.+)
-      - source_labels: [__meta_kubernetes_pod_annotation_istio_mtls]
-        action: drop
-        regex: (true)
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-        target_label: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_pod_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: pod_name
-    - job_name: 'kubernetes-pods-istio-secure'
-      scheme: https
-      tls_config:
-        ca_file: /etc/istio-certs/root-cert.pem
-        cert_file: /etc/istio-certs/cert-chain.pem
-        key_file: /etc/istio-certs/key.pem
-        insecure_skip_verify: true  # prometheus does not support secure naming.
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      # sidecar status annotation is added by sidecar injector and
-      # istio_workload_mtls_ability can be specifically placed on a pod to indicate its ability to receive mtls traffic.
-      - source_labels: [__meta_kubernetes_pod_annotation_sidecar_istio_io_status, __meta_kubernetes_pod_annotation_istio_mtls]
-        action: keep
-        regex: (([^;]+);([^;]*))|(([^;]*);(true))
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__]  # Only keep address that is host:port
-        action: keep    # otherwise an extra target with ':443' is added for https scheme
-        regex: ([^:]+):(\d+)
-      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-        target_label: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_pod_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: pod_name
----
-
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: prometheus
-    release: istio
-  name: prometheus
-  namespace: istio-system
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: prometheus
-  template:
-    metadata:
-      annotations:
-        sidecar.istio.io/inject: "false"
-      labels:
-        app: prometheus
-        release: istio
-    spec:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-            weight: 2
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - ppc64le
-            weight: 2
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - s390x
-            weight: 2
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-                - ppc64le
-                - s390x
-      containers:
-      - args:
-        - --storage.tsdb.retention=6h
-        - --config.file=/etc/prometheus/prometheus.yml
-        image: docker.io/prom/prometheus:v2.15.1
-        livenessProbe:
-          httpGet:
-            path: /-/healthy
-            port: 9090
-        name: prometheus
-        ports:
-        - containerPort: 9090
-          name: http
-        readinessProbe:
-          httpGet:
-            path: /-/ready
-            port: 9090
-        resources:
-          requests:
-            cpu: 10m
-        volumeMounts:
-        - mountPath: /etc/prometheus
-          name: config-volume
-        - mountPath: /etc/istio-certs
-          name: istio-certs
-      - args:
-        - proxy
-        - sidecar
-        - --domain
-        - $(POD_NAMESPACE).svc.cluster.local
-        - istio-proxy-prometheus
-        - --proxyLogLevel=warning
-        - --proxyComponentLogLevel=misc:error
-        - --controlPlaneAuthPolicy
-        - NONE
-        - --trust-domain=cluster.local
-        env:
-        - name: OUTPUT_CERTS
-          value: /etc/istio-certs
-        - name: JWT_POLICY
-          value: third-party-jwt
-        - name: PILOT_CERT_PROVIDER
-          value: istiod
-        - name: CA_ADDR
-          value: istiod.istio-system.svc:15012
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: INSTANCE_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        - name: SERVICE_ACCOUNT
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.serviceAccountName
-        - name: HOST_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.hostIP
-        - name: ISTIO_META_MESH_ID
-          value: cluster.local
-        - name: ISTIO_META_CLUSTER_ID
-          value: Kubernetes
-        image: docker.io/istio/proxyv2:1.6.4
-        imagePullPolicy: Always
-        name: istio-proxy
-        ports:
-        - containerPort: 15090
-          name: http-envoy-prom
-          protocol: TCP
-        readinessProbe:
-          failureThreshold: 30
-          httpGet:
-            path: /healthz/ready
-            port: 15020
-            scheme: HTTP
-          initialDelaySeconds: 1
-          periodSeconds: 2
-          successThreshold: 1
-          timeoutSeconds: 1
-        volumeMounts:
-        - mountPath: /var/run/secrets/istio
-          name: istiod-ca-cert
-        - mountPath: /etc/istio/proxy
-          name: istio-envoy
-        - mountPath: /var/run/secrets/tokens
-          name: istio-token
-        - mountPath: /etc/istio-certs/
-          name: istio-certs
-        - mountPath: /etc/istio/config
-          name: istio-config-volume
-      serviceAccountName: prometheus
-      volumes:
-      - configMap:
-          name: istio
-          optional: true
-        name: istio-config-volume
-      - configMap:
-          name: prometheus
-        name: config-volume
-      - emptyDir:
-          medium: Memory
-        name: istio-certs
-      - emptyDir:
-          medium: Memory
-        name: istio-envoy
-      - name: istio-token
-        projected:
-          defaultMode: 420
-          sources:
-          - serviceAccountToken:
-              audience: istio-ca
-              expirationSeconds: 43200
-              path: istio-token
-      - configMap:
-          defaultMode: 420
-          name: istio-ca-root-cert
-        name: istiod-ca-cert
+# AddonComponents prometheus component is disabled.
 
 ---
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: prometheus
-  namespace: istio-system
-  annotations:
-    prometheus.io/scrape: 'true'
-  labels:
-    app: prometheus
-    release: istio
-spec:
-  selector:
-    app: prometheus
-  ports:
-  - name: http-prometheus
-    protocol: TCP
-    port: 9090
----
-
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: prometheus
-  namespace: istio-system
-  labels:
-    app: prometheus
-    release: istio
----
-
----
-# Resources for AddonComponents tracing component
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: istio-tracing
-  namespace: istio-system
-  labels:
-    app: jaeger
-    release: istio
-spec:
-  selector:
-    matchLabels:
-      app: jaeger
-  template:
-    metadata:
-      labels:
-        app: jaeger
-        release: istio
-      annotations:
-        sidecar.istio.io/inject: "false"
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "14269"
-    spec:
-      containers:
-        - name: jaeger
-          image: "docker.io/jaegertracing/all-in-one:1.16"
-          ports:
-            - containerPort: 9411
-            - containerPort: 16686
-            - containerPort: 14250
-            - containerPort: 14267
-            - containerPort: 14268
-            - containerPort: 14269
-            - containerPort: 5775
-              protocol: UDP
-            - containerPort: 6831
-              protocol: UDP
-            - containerPort: 6832
-              protocol: UDP
-          env:
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                apiVersion: v1
-                fieldPath: metadata.namespace
-          - name: BADGER_EPHEMERAL
-            value: "false"
-          - name: SPAN_STORAGE_TYPE
-            value: "badger"
-          - name: BADGER_DIRECTORY_VALUE
-            value: "/badger/data"
-          - name: BADGER_DIRECTORY_KEY
-            value: "/badger/key"
-          - name: COLLECTOR_ZIPKIN_HTTP_PORT
-            value: "9411"
-          - name: MEMORY_MAX_TRACES
-            value: "50000"
-          - name: QUERY_BASE_PATH
-            value:  /jaeger 
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 14269
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 14269
-          volumeMounts:
-          - name: data
-            mountPath: /badger
-          resources:
-            requests:
-              cpu: 10m
-      affinity:      
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - "amd64"
-                - "ppc64le"
-                - "s390x"
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 2
-            preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - "amd64"
-          - weight: 2
-            preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - "ppc64le"
-          - weight: 2
-            preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - "s390x"      
-      volumes:
-      - name: data
-        emptyDir: {}
----
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: jaeger-query
-  namespace: istio-system
-  annotations:
-  labels:
-    app: jaeger
-    jaeger-infra: jaeger-service
-    release: istio
-spec:
-  ports:
-    - name: query-http
-      port: 16686
-      protocol: TCP
-      targetPort: 16686
-  selector:
-    app: jaeger
----
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: jaeger-collector
-  namespace: istio-system
-  labels:
-    app: jaeger
-    jaeger-infra: collector-service
-    release: istio
-spec:
-  ports:
-  - name: jaeger-collector-tchannel
-    port: 14267
-    protocol: TCP
-    targetPort: 14267
-  - name: jaeger-collector-http
-    port: 14268
-    targetPort: 14268
-    protocol: TCP
-  - name: jaeger-collector-grpc
-    port: 14250
-    targetPort: 14250
-    protocol: TCP
-  selector:
-    app: jaeger
-  type: ClusterIP
----
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: jaeger-collector-headless
-  namespace: istio-system
-  labels:
-    app: jaeger
-    jaeger-infra: collector-service
-    release: istio
-spec:
-  ports:
-  - name: jaeger-collector-grpc
-    port: 14250
-    targetPort: 14250
-    protocol: TCP
-  selector:
-    app: jaeger
-  clusterIP: None
----
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: jaeger-agent
-  namespace: istio-system
-  labels:
-    app: jaeger
-    jaeger-infra: agent-service
-    release: istio
-spec:
-  ports:
-  - name: agent-zipkin-thrift
-    port: 5775
-    protocol: UDP
-    targetPort: 5775
-  - name: agent-compact
-    port: 6831
-    protocol: UDP
-    targetPort: 6831
-  - name: agent-binary
-    port: 6832
-    protocol: UDP
-    targetPort: 6832
-  clusterIP: None
-  selector:
-    app: jaeger
----
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: zipkin
-  namespace: istio-system
-  labels:
-    app: jaeger
-    release: istio
-spec:
-  ports:
-    - port: 9411
-      targetPort: 9411
-      protocol: TCP
-      name: http-query
-  selector:
-    app: jaeger
----
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: tracing
-  namespace: istio-system
-  annotations:
-  labels:
-    app: jaeger
-    release: istio
-spec:
-  type: ClusterIP
-  ports:
-    - name: http-query
-      port: 80
-      protocol: TCP
-
-      targetPort: 16686
-
-  selector:
-    app: jaeger
----
+# AddonComponents istio-tracing component is disabled.
 
 # Resources for Base component
 
@@ -1021,68 +224,6 @@ webhooks:
     # endpoint is ready.
     failurePolicy: Ignore
     sideEffects: None
----
-
-
-apiVersion: apiextensions.k8s.io/v1beta1
-kind: CustomResourceDefinition
-metadata:
-  name: istiooperators.install.istio.io
-  labels:
-    release: istio
-spec:
-  additionalPrinterColumns:
-  - JSONPath: .spec.revision
-    description: Istio control plane revision
-    name: Revision
-    type: string
-  - JSONPath: .metadata.creationTimestamp
-    description: 'CreationTimestamp is a timestamp representing the server time when
-      this object was created. It is not guaranteed to be set in happens-before order
-      across separate operations. Clients may not set this value. It is represented
-      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
-      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
-    name: Age
-    type: date
-  group: install.istio.io
-  names:
-    kind: IstioOperator
-    plural: istiooperators
-    singular: istiooperator
-    shortNames:
-    - iop
-  scope: Namespaced
-  subresources:
-    status: {}
-  validation:
-    openAPIV3Schema:
-      properties:
-        apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values.
-            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#resources'
-          type: string
-        kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase.
-            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-          type: string
-        spec:
-          description: 'Specification of the desired state of the istio control plane resource.
-            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
-          type: object
-        status:
-          description: 'Status describes each of istio control plane component status at the current time.
-            0 means NONE, 1 means UPDATING, 2 means HEALTHY, 3 means ERROR, 4 means RECONCILING.
-            More info: https://github.com/istio/api/blob/master/operator/v1alpha1/istio.operator.v1alpha1.pb.html &
-            https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
-          type: object
-  versions:
-  - name: v1alpha1
-    served: true
-    storage: true
 ---
 
 
@@ -6079,606 +5220,99 @@ spec:
       storage: true
 ---
 
+
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: istiooperators.install.istio.io
+  labels:
+    release: istio
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .spec.revision
+    description: Istio control plane revision
+    name: Revision
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    description: 'CreationTimestamp is a timestamp representing the server time when
+      this object was created. It is not guaranteed to be set in happens-before order
+      across separate operations. Clients may not set this value. It is represented
+      in RFC3339 form and is in UTC. Populated by the system. Read-only. Null for
+      lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata'
+    name: Age
+    type: date
+  group: install.istio.io
+  names:
+    kind: IstioOperator
+    plural: istiooperators
+    singular: istiooperator
+    shortNames:
+    - iop
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values.
+            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase.
+            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        spec:
+          description: 'Specification of the desired state of the istio control plane resource.
+            More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
+          type: object
+        status:
+          description: 'Status describes each of istio control plane component status at the current time.
+            0 means NONE, 1 means UPDATING, 2 means HEALTHY, 3 means ERROR, 4 means RECONCILING.
+            More info: https://github.com/istio/api/blob/master/operator/v1alpha1/istio.operator.v1alpha1.pb.html &
+            https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status'
+          type: object
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+
 # Cni component is disabled.
 
-# Resources for EgressGateways component
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: istio-egressgateway
-    istio: egressgateway
-    release: istio
-  name: istio-egressgateway
-  namespace: istio-system
-spec:
-  selector:
-    matchLabels:
-      app: istio-egressgateway
-      istio: egressgateway
-  strategy:
-    rollingUpdate:
-      maxSurge: 100%
-      maxUnavailable: 25%
-  template:
-    metadata:
-      annotations:
-        sidecar.istio.io/inject: "false"
-      labels:
-        app: istio-egressgateway
-        chart: gateways
-        heritage: Tiller
-        istio: egressgateway
-        release: istio
-        service.istio.io/canonical-name: istio-egressgateway
-        service.istio.io/canonical-revision: latest
-    spec:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-            weight: 2
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - ppc64le
-            weight: 2
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - s390x
-            weight: 2
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-                - ppc64le
-                - s390x
-      containers:
-      - args:
-        - proxy
-        - router
-        - --domain
-        - $(POD_NAMESPACE).svc.cluster.local
-        - --proxyLogLevel=warning
-        - --proxyComponentLogLevel=misc:error
-        - --log_output_level=default:info
-        - --serviceCluster
-        - istio-egressgateway
-        - --trust-domain=cluster.local
-        env:
-        - name: JWT_POLICY
-          value: third-party-jwt
-        - name: PILOT_CERT_PROVIDER
-          value: istiod
-        - name: NODE_NAME
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: spec.nodeName
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
-        - name: INSTANCE_IP
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: status.podIP
-        - name: HOST_IP
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: status.hostIP
-        - name: SERVICE_ACCOUNT
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.serviceAccountName
-        - name: CANONICAL_SERVICE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels['service.istio.io/canonical-name']
-        - name: CANONICAL_REVISION
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels['service.istio.io/canonical-revision']
-        - name: ISTIO_META_WORKLOAD_NAME
-          value: istio-egressgateway
-        - name: ISTIO_META_OWNER
-          value: kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-egressgateway
-        - name: ISTIO_META_MESH_ID
-          value: cluster.local
-        - name: ISTIO_META_ROUTER_MODE
-          value: sni-dnat
-        - name: ISTIO_META_CLUSTER_ID
-          value: Kubernetes
-        image: docker.io/istio/proxyv2:1.6.4
-        name: istio-proxy
-        ports:
-        - containerPort: 8080
-        - containerPort: 8443
-        - containerPort: 15443
-        - containerPort: 15090
-          name: http-envoy-prom
-          protocol: TCP
-        readinessProbe:
-          failureThreshold: 30
-          httpGet:
-            path: /healthz/ready
-            port: 15021
-            scheme: HTTP
-          initialDelaySeconds: 1
-          periodSeconds: 2
-          successThreshold: 1
-          timeoutSeconds: 1
-        resources:
-          limits:
-            cpu: 2000m
-            memory: 1024Mi
-          requests:
-            cpu: 10m
-            memory: 40Mi
-        volumeMounts:
-        - mountPath: /etc/istio/proxy
-          name: istio-envoy
-        - mountPath: /etc/istio/config
-          name: config-volume
-        - mountPath: /var/run/secrets/istio
-          name: istiod-ca-cert
-        - mountPath: /var/run/secrets/tokens
-          name: istio-token
-          readOnly: true
-        - mountPath: /etc/istio/pod
-          name: podinfo
-        - mountPath: /etc/istio/egressgateway-certs
-          name: egressgateway-certs
-          readOnly: true
-        - mountPath: /etc/istio/egressgateway-ca-certs
-          name: egressgateway-ca-certs
-          readOnly: true
-      serviceAccountName: istio-egressgateway-service-account
-      volumes:
-      - configMap:
-          name: istio-ca-root-cert
-        name: istiod-ca-cert
-      - downwardAPI:
-          items:
-          - fieldRef:
-              fieldPath: metadata.labels
-            path: labels
-          - fieldRef:
-              fieldPath: metadata.annotations
-            path: annotations
-        name: podinfo
-      - emptyDir: {}
-        name: istio-envoy
-      - name: istio-token
-        projected:
-          sources:
-          - serviceAccountToken:
-              audience: istio-ca
-              expirationSeconds: 43200
-              path: istio-token
-      - configMap:
-          name: istio
-          optional: true
-        name: config-volume
-      - name: egressgateway-certs
-        secret:
-          optional: true
-          secretName: istio-egressgateway-certs
-      - name: egressgateway-ca-certs
-        secret:
-          optional: true
-          secretName: istio-egressgateway-ca-certs
-
----
-
-
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: istio-egressgateway
-  namespace: istio-system
-  labels:
-    app: istio-egressgateway
-    istio: egressgateway
-    release: istio
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      app: istio-egressgateway
-      istio: egressgateway
-      release: istio
----
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: istio-egressgateway
-  namespace: istio-system
-  annotations:
-  labels:
-    app: istio-egressgateway
-    istio: egressgateway
-    release: istio
-spec:
-  type: ClusterIP
-  selector:
-    app: istio-egressgateway
-    istio: egressgateway
-  ports:
-    -
-      name: http2
-      port: 80
-      targetPort: 8080
-    -
-      name: https
-      port: 443
-      targetPort: 8443
-    -
-      name: tls
-      port: 15443
-      targetPort: 15443
----
-
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: istio-egressgateway-service-account
-  namespace: istio-system
-  labels:
-    app: istio-egressgateway
-    istio: egressgateway
-    release: istio
----
-
-# Resources for IngressGateways component
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: istio-ingressgateway
-    istio: ingressgateway
-    release: istio
-  name: istio-ingressgateway
-  namespace: istio-system
-spec:
-  selector:
-    matchLabels:
-      app: istio-ingressgateway
-      istio: ingressgateway
-  strategy:
-    rollingUpdate:
-      maxSurge: 100%
-      maxUnavailable: 25%
-  template:
-    metadata:
-      annotations:
-        sidecar.istio.io/inject: "false"
-      labels:
-        app: istio-ingressgateway
-        chart: gateways
-        heritage: Tiller
-        istio: ingressgateway
-        release: istio
-        service.istio.io/canonical-name: istio-ingressgateway
-        service.istio.io/canonical-revision: latest
-    spec:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-            weight: 2
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - ppc64le
-            weight: 2
-          - preference:
-              matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - s390x
-            weight: 2
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: beta.kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-                - ppc64le
-                - s390x
-      containers:
-      - args:
-        - proxy
-        - router
-        - --domain
-        - $(POD_NAMESPACE).svc.cluster.local
-        - --proxyLogLevel=warning
-        - --proxyComponentLogLevel=misc:error
-        - --log_output_level=default:info
-        - --serviceCluster
-        - istio-ingressgateway
-        - --trust-domain=cluster.local
-        env:
-        - name: JWT_POLICY
-          value: third-party-jwt
-        - name: PILOT_CERT_PROVIDER
-          value: istiod
-        - name: CA_ADDR
-          value: istiod.istio-system.svc:15012
-        - name: NODE_NAME
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: spec.nodeName
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
-        - name: INSTANCE_IP
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: status.podIP
-        - name: HOST_IP
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: status.hostIP
-        - name: SERVICE_ACCOUNT
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.serviceAccountName
-        - name: CANONICAL_SERVICE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels['service.istio.io/canonical-name']
-        - name: CANONICAL_REVISION
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels['service.istio.io/canonical-revision']
-        - name: ISTIO_META_WORKLOAD_NAME
-          value: istio-ingressgateway
-        - name: ISTIO_META_OWNER
-          value: kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway
-        - name: ISTIO_META_MESH_ID
-          value: cluster.local
-        - name: ISTIO_META_ROUTER_MODE
-          value: sni-dnat
-        - name: ISTIO_META_CLUSTER_ID
-          value: Kubernetes
-        image: docker.io/istio/proxyv2:1.6.4
-        name: istio-proxy
-        ports:
-        - containerPort: 15020
-        - containerPort: 8080
-        - containerPort: 8443
-        - containerPort: 31400
-        - containerPort: 15443
-        - containerPort: 15011
-        - containerPort: 15012
-        - containerPort: 8060
-        - containerPort: 853
-        - containerPort: 15090
-          name: http-envoy-prom
-          protocol: TCP
-        readinessProbe:
-          failureThreshold: 30
-          httpGet:
-            path: /healthz/ready
-            port: 15021
-            scheme: HTTP
-          initialDelaySeconds: 1
-          periodSeconds: 2
-          successThreshold: 1
-          timeoutSeconds: 1
-        resources:
-          limits:
-            cpu: 2000m
-            memory: 1024Mi
-          requests:
-            cpu: 10m
-            memory: 40Mi
-        volumeMounts:
-        - mountPath: /etc/istio/proxy
-          name: istio-envoy
-        - mountPath: /etc/istio/config
-          name: config-volume
-        - mountPath: /var/run/secrets/istio
-          name: istiod-ca-cert
-        - mountPath: /var/run/secrets/tokens
-          name: istio-token
-          readOnly: true
-        - mountPath: /var/run/ingress_gateway
-          name: ingressgatewaysdsudspath
-        - mountPath: /etc/istio/pod
-          name: podinfo
-        - mountPath: /etc/istio/ingressgateway-certs
-          name: ingressgateway-certs
-          readOnly: true
-        - mountPath: /etc/istio/ingressgateway-ca-certs
-          name: ingressgateway-ca-certs
-          readOnly: true
-      serviceAccountName: istio-ingressgateway-service-account
-      volumes:
-      - configMap:
-          name: istio-ca-root-cert
-        name: istiod-ca-cert
-      - downwardAPI:
-          items:
-          - fieldRef:
-              fieldPath: metadata.labels
-            path: labels
-          - fieldRef:
-              fieldPath: metadata.annotations
-            path: annotations
-        name: podinfo
-      - emptyDir: {}
-        name: istio-envoy
-      - emptyDir: {}
-        name: ingressgatewaysdsudspath
-      - name: istio-token
-        projected:
-          sources:
-          - serviceAccountToken:
-              audience: istio-ca
-              expirationSeconds: 43200
-              path: istio-token
-      - configMap:
-          name: istio
-          optional: true
-        name: config-volume
-      - name: ingressgateway-certs
-        secret:
-          optional: true
-          secretName: istio-ingressgateway-certs
-      - name: ingressgateway-ca-certs
-        secret:
-          optional: true
-          secretName: istio-ingressgateway-ca-certs
-
----
-
-
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: istio-ingressgateway
-  namespace: istio-system
-  labels:
-    app: istio-ingressgateway
-    istio: ingressgateway
-    release: istio
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      app: istio-ingressgateway
-      istio: ingressgateway
-      release: istio
----
-
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: istio-ingressgateway-sds
-  namespace: istio-system
-  labels:
-    release: istio
-rules:
-- apiGroups: [""]
-  resources: ["secrets"]
-  verbs: ["get", "watch", "list"]
----
-
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: istio-ingressgateway-sds
-  namespace: istio-system
-  labels:
-    release: istio
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: istio-ingressgateway-sds
-subjects:
-- kind: ServiceAccount
-  name: istio-ingressgateway-service-account
----
-
-
-apiVersion: v1
-kind: Service
-metadata:
-  annotations: null
-  labels:
-    app: istio-ingressgateway
-    istio: ingressgateway
-    release: istio
-  name: istio-ingressgateway
-  namespace: istio-system
-spec:
-  ports:
-  - name: status-port
-    port: 15020
-    targetPort: 15020
-  - name: http2
-    port: 80
-    targetPort: 8080
-  - name: https
-    port: 443
-    targetPort: 8443
-  - name: tcp
-    port: 31400
-    targetPort: 31400
-  - name: tls
-    port: 15443
-    targetPort: 15443
-  selector:
-    app: istio-ingressgateway
-    istio: ingressgateway
-  type: LoadBalancer
-
----
-
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: istio-ingressgateway-service-account
-  namespace: istio-system
-  labels:
-    app: istio-ingressgateway
-    istio: ingressgateway
-    release: istio
----
+# EgressGateways istio-egressgateway component is disabled.
 
 # IstiodRemote component is disabled.
 
 # Resources for Pilot component
+
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: istiod
+  namespace: istio-system
+  labels:
+    app: istiod
+    release: istio
+    istio.io/rev: default
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: istiod
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 80
+---
+
 
 apiVersion: v1
 kind: ConfigMap
@@ -6696,7 +5330,7 @@ data:
 
   mesh: |-
     accessLogEncoding: TEXT
-    accessLogFile: /dev/stdout
+    accessLogFile: ""
     accessLogFormat: ""
     defaultConfig:
       concurrency: 2
@@ -6714,7 +5348,8 @@ data:
         zipkin:
           address: zipkin.istio-system:9411
     disableMixerHttpReports: true
-    disablePolicyChecks: false
+    disablePolicyChecks: true
+    enableAutoMtls: false
     enablePrometheusMerge: false
     ingressClass: istio
     ingressControllerMode: STRICT
@@ -6739,7 +5374,6 @@ metadata:
   name: istiod
   namespace: istio-system
 spec:
-  replicas: 1
   selector:
     matchLabels:
       istio: pilot
@@ -6783,17 +5417,13 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        - name: GODEBUG
-          value: gctrace=1
         - name: SERVICE_ACCOUNT
           valueFrom:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.serviceAccountName
         - name: PILOT_TRACE_SAMPLING
-          value: "100"
-        - name: CONFIG_NAMESPACE
-          value: istio-config
+          value: "1"
         - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND
           value: "true"
         - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND
@@ -6824,8 +5454,8 @@ spec:
           timeoutSeconds: 5
         resources:
           requests:
-            cpu: 10m
-            memory: 100Mi
+            cpu: 500m
+            memory: 2048Mi
         securityContext:
           capabilities:
             drop:
@@ -6927,6 +5557,9 @@ data:
         },
         "meshNetworks": {},
         "mountMtlsCerts": false,
+        "mtls": {
+          "auto": false
+        },
         "multiCluster": {
           "clusterName": "",
           "enabled": false
@@ -6964,8 +5597,8 @@ data:
               "memory": "1024Mi"
             },
             "requests": {
-              "cpu": "10m",
-              "memory": "40Mi"
+              "cpu": "100m",
+              "memory": "128Mi"
             }
           },
           "statusPort": 15020,
