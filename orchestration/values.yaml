@@ -14,10 +14,10 @@ env: staging
 #
 apps:
   - name: argo-rollouts
-    enabled: false
+    enabled: true
     namespace: argo-rollouts
   - name: argo-rollouts-sample
-    enabled: false
+    enabled: true
   - name: argo-workflows
     enabled: false
     namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
@@ -26,7 +26,7 @@ apps:
   - name: falco
     enabled: false
   - name: istio
-    enabled: true
+    enabled: false
     namespace: istio-system
   - name: nats-jetstream
     enabled: false
