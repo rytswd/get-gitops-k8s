@@ -7,7 +7,7 @@ env: staging
 #   boolean flag is set to `false`, ArgoCD will ignore.
 #
 #   Additionally, you can specify `namespace`. This may be useful when the
-#   installation requires a specific namespace in place. 
+#   installation requires a specific namespace in place.
 #
 #   If `stack` does not comply with the directory format ArgoCD expects,
 #   ArgoCD sync will be halted until it is fixed.
@@ -21,6 +21,8 @@ apps:
   - name: argo-workflows
     enabled: false
     namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
+  - name: cert-manager
+    enabled: false
   - name: etcd-operator
     enabled: false
   - name: falco
@@ -49,7 +51,6 @@ apps:
 #
 # =========================================================================== #
 
-
 # === ArgoCD Setup ========================================================== #
 #
 # Metadata
@@ -66,12 +67,12 @@ spec:
   syncPolicy:
     automated:
       prune:
-        # Specifies if resources should be pruned during auto-syncing 
+        # Specifies if resources should be pruned during auto-syncing
         # ( false by default ).
-        enabled: true 
+        enabled: true
       selfHeal:
         # Specifies if partial app sync should be executed when resources
-        # are changed only in target Kubernetes cluster and no git change 
+        # are changed only in target Kubernetes cluster and no git change
         # detected ( false by default ).
         enabled: true
 #
