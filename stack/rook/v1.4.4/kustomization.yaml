@@ -5,3 +5,6 @@ resources:
   - ./cluster.yaml
   - ./common.yaml
   - ./operator.yaml
+
+  # Toolbox for debugging
+  - ./toolbox.yaml
