@@ -37,7 +37,7 @@ apps:
   - name: playground
     enabled: true
   - name: rook
-    enabled: true
+    enabled: false
   - name: sealed-secrets
     enabled: false
   - name: tekton-pipeline
