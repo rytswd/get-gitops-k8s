@@ -29,7 +29,7 @@ $ tools/replace-repo-ref.sh
 $ make
 ```
 
-This goes into a very simple interactive mode. You will need to input your GitHub user ID and [access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
+This goes into a very simple interactive mode. You will need to input your [GitHub access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
 
 ```
 Starting K8s Installation
