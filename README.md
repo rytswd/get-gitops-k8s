@@ -58,22 +58,36 @@ _To be added_
 This repo holds some popular application YAML / Helm / Kustomize definitions.  
 It is only meant for quick testing rather than production grade stability.
 
-| Name                                                                           |   Type    | Version | Default | Verified? |
-| ------------------------------------------------------------------------------ | :-------: | :-----: | :-----: | :-------: |
-| [argo-cd](https://github.com/argoproj/argo-cd)                                 | K8s YAML  |  1.4.2  |  true   |    Yes    |
-| [argo-workflows](https://github.com/argoproj/argo)                             | Kustomize |  2.7.0  |  false  |    Yes    |
-| [etcd-operator](https://github.com/coreos/etcd-operator)                       |   Helm    | 0.10.0  |  false  |    No     |
-| [falco](https://github.com/falcosecurity/falco)                                |   Helm    |  1.0.9  |  false  |    No     |
-| [istio](https://github.com/istio/istio)                                        | Kustomize |  1.5.1  |  true   |  Yes/No   |
-| [networkservicemesh](https://github.com/networkservicemesh/networkservicemesh) |  Helm v3  |  0.2.0  |  false  |    No     |
-| [nats-jetstream](https://github.com/nats-io/nats-server)                       | K8s YAML  |   NA    |  false  |    Yes    |
-| playground                                                                     | K8s YAML  |   NA    |  true   |    NA     |
-| [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets)               |   Helm    |  1.4.3  |  false  |    Yes    |
-| [tekton-pipeline](https://github.com/tektoncd/pipeline)                        | K8s YAML  | 0.11.0  |  false  |    Yes    |
-| [tekton-dashboard](https://github.com/tektoncd/pipeline)                       | K8s YAML  |  0.6.0  |  false  |    Yes    |
-| [tekton-triggers](https://github.com/tektoncd/pipeline)                        | K8s YAML  |  0.4.0  |  false  |    Yes    |
-| [vault](https://github.com/hashicorp/vault-helm)                               |   Helm    |   NA    |  false  |    No     |
-| [vitess](https://github.com/vitessio/vitess)                                   |   Helm    |         |  false  |    No     |
+| Name                 |   Type    | Version | Default | Verified? |
+| -------------------- | :-------: | :-----: | :-----: | :-------: |
+| [argo-cd]            | K8s YAML  |  1.4.2  |  true   |    Yes    |
+| [argo-workflows]     | Kustomize |  2.7.0  |  false  |    Yes    |
+| [etcd-operator]      |   Helm    | 0.10.0  |  false  |    No     |
+| [falco]              |   Helm    |  1.0.9  |  false  |    No     |
+| [istio]              | Kustomize |  1.5.1  |  true   |  Yes/No   |
+| [networkservicemesh] |  Helm v3  |  0.2.0  |  false  |    No     |
+| [nats-jetstream]     | K8s YAML  |   NA    |  false  |    Yes    |
+| playground           | K8s YAML  |   NA    |  true   |    NA     |
+| [sealed-secrets]     |   Helm    |  1.4.3  |  false  |    Yes    |
+| [tekton-pipeline]    | K8s YAML  | 0.11.0  |  false  |    Yes    |
+| [tekton-dashboard]   | K8s YAML  |  0.6.0  |  false  |    Yes    |
+| [tekton-triggers]    | K8s YAML  |  0.4.0  |  false  |    Yes    |
+| [vault]              |   Helm    |   NA    |  false  |    No     |
+| [vitess]             |   Helm    |         |  false  |    No     |
+
+[argo-cd]: https://github.com/argoproj/argo-cd
+[argo-workflows]: https://github.com/argoproj/argo
+[etcd-operator]: https://github.com/coreos/etcd-operator
+[falco]: https://github.com/falcosecurity/falco
+[istio]: https://github.com/istio/istio
+[networkservicemesh]: https://github.com/networkservicemesh/networkservicemesh
+[nats-jetstream]: https://github.com/nats-io/nats-server
+[sealed-secrets]: https://github.com/bitnami-labs/sealed-secrets
+[tekton-pipeline]: https://github.com/tektoncd/pipeline
+[tekton-dashboard]: https://github.com/tektoncd/pipeline)
+[tekton-triggers]: https://github.com/tektoncd/pipeline)
+[vault]: https://github.com/hashicorp/vault-helm
+[vitess]: https://github.com/vitessio/vitess
 
 ## WHY: Single Source of Truth, Even in Dev
 
