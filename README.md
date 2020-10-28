@@ -132,8 +132,8 @@ It is only meant for quick testing rather than production grade stability.
 [nats-jetstream]: https://github.com/nats-io/nats-server
 [sealed-secrets]: https://github.com/bitnami-labs/sealed-secrets
 [tekton-pipeline]: https://github.com/tektoncd/pipeline
-[tekton-dashboard]: https://github.com/tektoncd/pipeline)
-[tekton-triggers]: https://github.com/tektoncd/pipeline)
+[tekton-dashboard]: https://github.com/tektoncd/pipeline
+[tekton-triggers]: https://github.com/tektoncd/pipeline
 [vault]: https://github.com/hashicorp/vault-helm
 [vitess]: https://github.com/vitessio/vitess
 
