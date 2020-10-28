@@ -8,7 +8,7 @@ This repository is set up as a [template repository](https://help.github.com/en/
 
 In order to benefit from GitOps, [use this template](https://github.com/rytswd/get-gitops-k8s/generate) to create a new repository which you have full control over.
 
-## 🌅 Contents
+## Contents
 
 - 🧪 [Examples](#-Examples)
 - 🌗 [Background](#-Background)
