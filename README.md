@@ -161,21 +161,11 @@ Each Application can contain as many resources as it needs, and it allows a few 
 - Kustomize
 - Helm chart
 
-In this repo, I have added some dependencies to showcase this in `orchestration/values.yaml`:
+In this repo, I have added some dependencies to showcase this in `orchestration/values.yaml`. You can find the full list in [this table](#Predefined-Application-Stacks).
 
-- `argocd` (based on single directory with K8s YAML)
-- `etcd-operator` (based on Helm)
-- `falco` (based on Helm)
-- `istio` (based on single directory with K8s YAML)
-- `nats-jetstream` (based on single directory with K8s YAML)
-- `playground` (single directory with K8s YAML)
-- `sealed-secrets` (based on Helm)
-- `vault` (based on Helm)
-- `vitess` (based on Helm)
+You can add more as you like. For most common scenarios, you can simply add an element in `orchestration/values.yaml`, and create a directory inside `stack/` containing the resources with the above format.
 
-These are just a few examples to get started with, and you can add more as you like. For most common scenarios, you can simply add an element in `orchestration/values.yaml`, and create a directory inside `stack/` containing the resources with the above format.
-
-### `tools`: Tools for Frequently Used Setup
+#### `tools`: Tools for Frequently Used Setup
 
 This repository also comes with simplistic scripts to help set up the cluster.
 
@@ -183,6 +173,6 @@ This repository also comes with simplistic scripts to help set up the cluster.
   Replaces all `github.com/rytswd/get-gitops-k8s` with your repo.  
   You can set both username and repository name with this.
 
-# Other
+# Other Notes
 
 Argo CD is not designed to write back to Git. It cannot listen to Docker registry changes, as that falls outside of their GitOps design. If any additional features outside of Git control such as Docker registry is needed, those should be a separate setup utilising systems such as [Argo Events](https://argoproj.github.io/argo-events/), making Argo CD a purely dependent on Git as single source of truth. This [issue](https://github.com/argoproj/argo-cd/issues/1648) also has some clear mention of the Argo CD intention.
