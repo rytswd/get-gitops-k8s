@@ -2,13 +2,21 @@
 
 This repository gets you [GitOps](https://www.weave.works/technologies/gitops/) based Kubernetes environment.
 
-### Make Use of Template
+**Make use of template**
 
 This repository is set up as a [template repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-template-repository). Because GitOps uses the remote Git repo to sync Kubernetes setup, a direct clone of this repository won't be fit for modifications (it would only install the default set).
 
 In order to benefit from GitOps, [use this template](https://github.com/rytswd/get-gitops-k8s/generate) to create a new repository which you have full control over.
 
-### Example: Deploy to KinD (Kubernetes in Docker) with Default
+## 🌅 Contents
+
+- [🧪 Examples](#Examples)
+- [🌗 Background](#Background)
+- [📝 Details](#Details)
+
+## 🧪 Examples
+
+### Deploy to KinD (Kubernetes in Docker) with Default
 
 ```bash
 # Create a local cluster using kind
@@ -45,51 +53,15 @@ The following steps will be taken:
 ...
 ```
 
-### Example: Deploy to production
+### Deploy to production
 
 You can mostly use the same set of files to manage PROD, Staging, and Dev clusters.
 
 _To be added_
 
-# Details
+## 🌗 Background
 
-## WHAT: Predefined Application Stacks
-
-This repo holds some popular application YAML / Helm / Kustomize definitions.  
-It is only meant for quick testing rather than production grade stability.
-
-| Name                 |   Type    | Version | Default | Verified? |
-| -------------------- | :-------: | :-----: | :-----: | :-------: |
-| [argo-cd]            | K8s YAML  |  1.4.2  |  true   |    Yes    |
-| [argo-workflows]     | Kustomize |  2.7.0  |  false  |    Yes    |
-| [etcd-operator]      |   Helm    | 0.10.0  |  false  |    No     |
-| [falco]              |   Helm    |  1.0.9  |  false  |    No     |
-| [istio]              | Kustomize |  1.5.1  |  true   |  Yes/No   |
-| [networkservicemesh] |  Helm v3  |  0.2.0  |  false  |    No     |
-| [nats-jetstream]     | K8s YAML  |   NA    |  false  |    Yes    |
-| playground           | K8s YAML  |   NA    |  true   |    NA     |
-| [sealed-secrets]     |   Helm    |  1.4.3  |  false  |    Yes    |
-| [tekton-pipeline]    | K8s YAML  | 0.11.0  |  false  |    Yes    |
-| [tekton-dashboard]   | K8s YAML  |  0.6.0  |  false  |    Yes    |
-| [tekton-triggers]    | K8s YAML  |  0.4.0  |  false  |    Yes    |
-| [vault]              |   Helm    |   NA    |  false  |    No     |
-| [vitess]             |   Helm    |         |  false  |    No     |
-
-[argo-cd]: https://github.com/argoproj/argo-cd
-[argo-workflows]: https://github.com/argoproj/argo
-[etcd-operator]: https://github.com/coreos/etcd-operator
-[falco]: https://github.com/falcosecurity/falco
-[istio]: https://github.com/istio/istio
-[networkservicemesh]: https://github.com/networkservicemesh/networkservicemesh
-[nats-jetstream]: https://github.com/nats-io/nats-server
-[sealed-secrets]: https://github.com/bitnami-labs/sealed-secrets
-[tekton-pipeline]: https://github.com/tektoncd/pipeline
-[tekton-dashboard]: https://github.com/tektoncd/pipeline)
-[tekton-triggers]: https://github.com/tektoncd/pipeline)
-[vault]: https://github.com/hashicorp/vault-helm
-[vitess]: https://github.com/vitessio/vitess
-
-## WHY: Single Source of Truth, Even in Dev
+### Single Source of Truth, Even in Dev
 
 GitOps is gaining popularity thanks to [Flux](https://github.com/fluxcd/flux) by Weaveworks, [Argo CD](https://argoproj.github.io/argo-cd/) by Intuit, and other Open Source projects. There is also a joint "Argo Flux" project, which has been recently announced as of Nov 2019 ([blog](https://www.weave.works/blog/argo-flux-join-forces) from Weaveworks, [blog](https://www.intuit.com/blog/technology/introducing-argo-flux/) from Intuit, [blog](https://aws.amazon.com/blogs/containers/help-us-write-a-new-chapter-for-gitops-kubernetes-and-open-source-collaboration/) from Amazon EKS team). GitOps concept is simple - Git repo as the single source of truth for Kubernetes environment. All changes will be based on Git commits, and no commands should be run manually.
 
@@ -127,23 +99,61 @@ GitOps solution provides a very easily understandable model - whatever is in Git
 
 After using GitOps for production, I needed the same development experience even for local development with [kind](https://kind.sigs.k8s.io/), and that's how I decided to set this up.
 
-## HOW: Directory Setup and Orchestration
+## 📝 Details
+
+### Predefined Application Stacks
+
+This repo holds some popular application YAML / Helm / Kustomize definitions.  
+It is only meant for quick testing rather than production grade stability.
+
+| Name                 |   Type    | Version | Default | Verified? |
+| -------------------- | :-------: | :-----: | :-----: | :-------: |
+| [argo-cd]            | K8s YAML  |  1.4.2  |  true   |    Yes    |
+| [argo-workflows]     | Kustomize |  2.7.0  |  false  |    Yes    |
+| [etcd-operator]      |   Helm    | 0.10.0  |  false  |    No     |
+| [falco]              |   Helm    |  1.0.9  |  false  |    No     |
+| [istio]              | Kustomize |  1.5.1  |  true   |  Yes/No   |
+| [networkservicemesh] |  Helm v3  |  0.2.0  |  false  |    No     |
+| [nats-jetstream]     | K8s YAML  |   NA    |  false  |    Yes    |
+| playground           | K8s YAML  |   NA    |  true   |    NA     |
+| [sealed-secrets]     |   Helm    |  1.4.3  |  false  |    Yes    |
+| [tekton-pipeline]    | K8s YAML  | 0.11.0  |  false  |    Yes    |
+| [tekton-dashboard]   | K8s YAML  |  0.6.0  |  false  |    Yes    |
+| [tekton-triggers]    | K8s YAML  |  0.4.0  |  false  |    Yes    |
+| [vault]              |   Helm    |   NA    |  false  |    No     |
+| [vitess]             |   Helm    |         |  false  |    No     |
+
+[argo-cd]: https://github.com/argoproj/argo-cd
+[argo-workflows]: https://github.com/argoproj/argo
+[etcd-operator]: https://github.com/coreos/etcd-operator
+[falco]: https://github.com/falcosecurity/falco
+[istio]: https://github.com/istio/istio
+[networkservicemesh]: https://github.com/networkservicemesh/networkservicemesh
+[nats-jetstream]: https://github.com/nats-io/nats-server
+[sealed-secrets]: https://github.com/bitnami-labs/sealed-secrets
+[tekton-pipeline]: https://github.com/tektoncd/pipeline
+[tekton-dashboard]: https://github.com/tektoncd/pipeline)
+[tekton-triggers]: https://github.com/tektoncd/pipeline)
+[vault]: https://github.com/hashicorp/vault-helm
+[vitess]: https://github.com/vitessio/vitess
+
+### Directory Setup and Orchestration
 
 There are 4 directories in this repository, and each has very clear responsibility.
 
-### `init`: Initial GitOps setup with Argo CD
+#### `init`: Initial GitOps setup with Argo CD
 
 This repository uses [Argo CD](https://argoproj.github.io/argo-cd/) to support GitOps workflow. `init` directory contains only a few files that are used by the initial setup, and these are _not part of GitOps itself_. That means, any commit touching files under this directory will have no effect. Argo CD documentation covers [App of Apps](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#app-of-apps) support, and also [Managing Argo CD using Argo CD](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#manage-argo-cd-using-argo-cd). This repository uses both techniques to provide full control of cluster with clarity, auditability, and simplicity.
 
 I chose Argo CD over other GitOps solutions for several reasons including some usage mentioned above, but one of the biggest reasons was the great UI support to visualise GitOps in action.
 
-### `orchestration`: Orchestrate Dependencies
+#### `orchestration`: Orchestrate Dependencies
 
 Argo CD has a notion of "Application", which is a bundle of K8s resources, defined under a Git repository. `orchestration` directory is used as a parent Application, which defines Applications underneath it. Applications allow multiple formats, and `orchestration` uses Helm Chart format. This allows enabling and disabling Application by defining a flag in `values.yaml` file, provided that a dependency directory is ready for integration.
 
 As you can see in `orchestration/templates/` directory, it checks against `apps:` stanza you see in `values.yaml`. ArgoCD will then pick up whichever dependency that's set with `enabled: true`, and assumes that the matching directory name exists under `stack` directory.
 
-### `stack`: Resource Definitions for Each Application
+#### `stack`: Resource Definitions for Each Application
 
 Each Application can contain as many resources as it needs, and it allows a few formats:
 
