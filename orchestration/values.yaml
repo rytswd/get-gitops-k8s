@@ -30,6 +30,18 @@ apps:
   - name: istio
     enabled: true
     namespace: istio-system
+    ignoreDifferences:
+      # Ignore caBundle diff due to runtime updates to the config
+      - group: admissionregistration.k8s.io
+        kind: MutatingWebhookConfiguration
+        jsonPointers:
+          - /webhooks/0/clientConfig/caBundle
+          - /webhooks/0/failurePolicy
+      - group: admissionregistration.k8s.io
+        kind: ValidatingWebhookConfiguration
+        jsonPointers:
+          - /webhooks/0/clientConfig/caBundle
+          - /webhooks/0/failurePolicy
   - name: nats-jetstream
     enabled: false
   - name: networkservicemesh

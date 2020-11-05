@@ -20,6 +20,11 @@ spec:
     server: {{ $.Values.spec.destination.server }}
     namespace: {{ .namespace | default "default" }}
 
+  {{- if .ignoreDifferences }}
+  ignoreDifferences:
+{{ .ignoreDifferences | toYaml | indent 4 }}
+  {{- end }}
+
   # Do not specify syncPolicy if nothing is defined in values
   {{- if or $.Values.spec.syncPolicy.automated.prune.enabled $.Values.spec.syncPolicy.automated.selfHeal.enabled }}
   syncPolicy:
