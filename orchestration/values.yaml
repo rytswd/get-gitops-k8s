@@ -48,6 +48,8 @@ apps:
     enabled: false
   - name: playground
     enabled: true
+  - name: prometheus-operator
+    enabled: true
   - name: rook
     enabled: false
   - name: sealed-secrets
