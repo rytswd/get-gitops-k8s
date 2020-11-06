@@ -67,11 +67,11 @@ Because `istioctl` does not provide a way, the only way to create Istio Operator
 Firstly, you need to download the target Istio version.
 
 ```shell
-$ curl -L https://istio.io/downloadIstio | sh -
+$ curl -sSL https://istio.io/downloadIstio | sh -
 
 # OR, if you need a specific version
 
-$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.5.1 sh -
+$ curl -sSL https://istio.io/downloadIstio | ISTIO_VERSION=1.5.1 sh -
 ```
 
 Then, you can create the YAML by `helm template`.

@@ -88,7 +88,7 @@ $ helm install --name falco stable/falco
 ```bash
 # 4. Declarative approach, with shell
 # -- Example from Istio
-$ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.3.3 sh -
+$ curl -sSL https://git.io/getLatestIstio | ISTIO_VERSION=1.3.3 sh -
 $ cd istio-1.3.3
 $ for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
 ```
