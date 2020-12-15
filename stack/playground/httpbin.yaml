@@ -80,11 +80,11 @@ spec:
   subsets:
     - name: old
       labels:
-        app.kubernetes.io/name: toolkit-alpine
+        app.kubernetes.io/name: httpbin
         version: v1
     - name: new
       labels:
-        app.kubernetes.io/name: toolkit-alpine
+        app.kubernetes.io/name: httpbin
         version: v2
 ---
 apiVersion: networking.istio.io/v1alpha3
