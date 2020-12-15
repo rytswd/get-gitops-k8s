@@ -49,7 +49,7 @@ apps:
   - name: playground
     enabled: true
   - name: playground-another
-    enabled: false
+    enabled: true
   - name: prometheus-install
     enabled: false
   - name: prometheus-operator
