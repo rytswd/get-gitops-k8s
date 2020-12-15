@@ -103,7 +103,7 @@ spec:
         uri: /status/418
       route:
         - destination:
-            host: httpbin.default.svc.cluster.local
+            host: httpbin.playground.svc.cluster.local
             subset: new
       fault:
         abort:
