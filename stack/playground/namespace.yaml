@@ -5,3 +5,4 @@ metadata:
   name: playground
   annotations:
     argocd.argoproj.io/sync-options: Prune=false
+    istio-injection: enabled
