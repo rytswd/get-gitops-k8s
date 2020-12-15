@@ -7663,7 +7663,7 @@ data:
         "istiod": {
           "enableAnalysis": false
         },
-        "jwtPolicy": "third-party-jwt",
+        "jwtPolicy": "first-party-jwt",
         "logAsJson": false,
         "logging": {
           "level": "default:info"
@@ -8325,7 +8325,7 @@ spec:
         - name: REVISION
           value: default
         - name: JWT_POLICY
-          value: third-party-jwt
+          value: first-party-jwt
         - name: PILOT_CERT_PROVIDER
           value: istiod
         - name: POD_NAME
@@ -8392,9 +8392,6 @@ spec:
         volumeMounts:
         - mountPath: /etc/istio/config
           name: config-volume
-        - mountPath: /var/run/secrets/tokens
-          name: istio-token
-          readOnly: true
         - mountPath: /var/run/secrets/istio-dns
           name: local-certs
         - mountPath: /etc/cacerts
@@ -8413,13 +8410,6 @@ spec:
       - emptyDir:
           medium: Memory
         name: local-certs
-      - name: istio-token
-        projected:
-          sources:
-          - serviceAccountToken:
-              audience: istio-ca
-              expirationSeconds: 43200
-              path: istio-token
       - name: cacerts
         secret:
           optional: true
