@@ -6,6 +6,10 @@ metadata:
 spec:
   profile: minimal
 
+  values:
+    global:
+      jwtPolicy: first-party-jwt
+
   components:
     pilot:
       k8s:
