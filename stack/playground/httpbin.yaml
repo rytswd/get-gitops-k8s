@@ -74,6 +74,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: httpbin
+  namespace: playground
 spec:
   host: httpbin.playground.svc.cluster.local
   subsets:
