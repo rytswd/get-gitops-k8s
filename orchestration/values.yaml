@@ -28,7 +28,7 @@ apps:
   - name: falco
     enabled: false
   - name: istio
-    enabled: true
+    enabled: false
     namespace: istio-system
     ignoreDifferences:
       # Ignore caBundle diff due to runtime updates to the config
@@ -48,6 +48,8 @@ apps:
     enabled: false
   - name: playground
     enabled: true
+  - name: playground-another
+    enabled: false
   - name: prometheus-install
     enabled: false
   - name: prometheus-operator
