@@ -28,7 +28,7 @@ apps:
   - name: falco
     enabled: false
   - name: istio
-    enabled: false
+    enabled: true
     namespace: istio-system
     ignoreDifferences:
       # Ignore caBundle diff due to runtime updates to the config
