@@ -22,6 +22,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: httpbin-old
+  namespace: playground
 spec:
   replicas: 1
   selector:
@@ -46,6 +47,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: httpbin-new
+  namespace: playground
 spec:
   replicas: 1
   selector:
