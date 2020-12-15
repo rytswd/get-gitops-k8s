@@ -90,3 +90,17 @@ $ shasum -a 256 ./stack/istio/istio-operator/istio-operator-install.yaml
 - **Last Update**: 15th April, 2020
 - **Version**: v1.5.1
 - **Evidence**: Unfortunately, there is no source to verify against
+
+### TODO: Move this somewhere
+
+```bash
+# control-plane only
+istioctl manifest generate \
+  -f ./stack/istio/istio-operator/control-plane-only.yaml\
+    > ./stack/istio/control-plane/istio-install.yaml
+
+# demo
+istioctl manifest generate \
+  -f ./stack/istio/istio-operator/demo.yaml\
+    > ./stack/istio/demo/istio-install.yaml
+```
