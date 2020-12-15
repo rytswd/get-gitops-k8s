@@ -20,6 +20,22 @@ spec:
   selector:
     app.kubernetes.io/name: httpbin
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpbin-special
+  namespace: playground
+  labels:
+    app.kubernetes.io/name: httpbin
+spec:
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: httpbin
+    version: v1
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -93,7 +109,7 @@ metadata:
   name: httpbin-chaos-routing
 spec:
   hosts:
-    - httpbin.playground.svc.cluster.local
+    - httpbin-special.playground.svc.cluster.local
   gateways:
     - mesh
   http:
