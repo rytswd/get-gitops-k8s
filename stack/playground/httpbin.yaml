@@ -120,8 +120,12 @@ spec:
         uri: /status/418
       route:
         - destination:
+            host: toolkit-alpine.playground.svc.cluster.local
+          weight: 33
+        - destination:
             host: httpbin.playground.svc.cluster.local
             subset: new
+          weight: 67
       fault:
         abort:
           percentage:
