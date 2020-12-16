@@ -53,7 +53,7 @@ apps:
   - name: prometheus-install
     enabled: false
   - name: prometheus-operator
-    enabled: true
+    enabled: false
   - name: rook
     enabled: false
   - name: sealed-secrets
