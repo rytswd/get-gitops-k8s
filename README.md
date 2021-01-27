@@ -10,9 +10,9 @@ In order to benefit from GitOps, [use this template](https://github.com/rytswd/g
 
 ## Contents
 
-- 🧪 [Examples](#-Examples)
-- 🌗 [Background](#-Background)
-- 📝 [Details](#-Details)
+- [Examples](#-Examples)
+- [Background](#-Background)
+- [Details](#-Details)
 
 ## 🧪 Examples
 
