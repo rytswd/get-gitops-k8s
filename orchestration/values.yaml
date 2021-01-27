@@ -81,7 +81,7 @@ metadata:
 spec:
   source:
     gitRepoUrl: https://github.com/rytswd/get-gitops-k8s.git
-    targetRevision: master
+    targetRevision: main
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
