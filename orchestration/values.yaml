@@ -23,6 +23,9 @@ apps:
     namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
   - name: cert-manager
     enabled: false
+  - name: cortex
+    enabled: true
+    namespace: cortex
   - name: etcd-operator
     enabled: false
   - name: falco
