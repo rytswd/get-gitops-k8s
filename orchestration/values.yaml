@@ -50,9 +50,9 @@ apps:
   - name: networkservicemesh
     enabled: false
   - name: playground
-    enabled: true
+    enabled: false
   - name: playground-another
-    enabled: true
+    enabled: false
   - name: prometheus-install
     enabled: false
   - name: prometheus-operator
