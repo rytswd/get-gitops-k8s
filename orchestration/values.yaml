@@ -69,7 +69,7 @@ apps:
     enabled: false
   - name: vault
     enabled: false
-  - name: vectorr
+  - name: vector
     enabled: true
     namespace: vector
   - name: vitess
