@@ -9,3 +9,6 @@ vector:
       rawConfig: |
         target = "stdout"
         encoding = "json"
+
+  podLabels:
+    test: abc
