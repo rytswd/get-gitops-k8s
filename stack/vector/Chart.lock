@@ -1,0 +1,6 @@
+dependencies:
+- name: vector
+  repository: https://packages.timber.io/helm/latest
+  version: 0.11.1
+digest: sha256:c144023e6b38aecaa58f4c941dfdcfb165e1e96f3fea5562b41cd6c0a07e18e8
+generated: "2021-01-29T17:53:15.507224Z"

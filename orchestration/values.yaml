@@ -24,7 +24,7 @@ apps:
   - name: cert-manager
     enabled: false
   - name: cortex
-    enabled: true
+    enabled: false
     namespace: cortex
   - name: etcd-operator
     enabled: false
@@ -69,6 +69,9 @@ apps:
     enabled: false
   - name: vault
     enabled: false
+  - name: vectorr
+    enabled: true
+    namespace: vector
   - name: vitess
     enabled: false
 #
