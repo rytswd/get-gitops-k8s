@@ -1,4 +1,4 @@
-vector:
+vector-agent:
   sinks:
     # Adjust as necessary. By default we use the console sink
     # to print all data. This allows you to see Vector working.
@@ -10,5 +10,5 @@ vector:
         target = "stdout"
         encoding = "json"
 
-image:
-  base: alpine
+  image:
+    base: alpine

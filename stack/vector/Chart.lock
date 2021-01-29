@@ -1,6 +1,6 @@
 dependencies:
-- name: vector
+- name: vector-agent
   repository: https://packages.timber.io/helm/latest
   version: 0.11.1
-digest: sha256:c144023e6b38aecaa58f4c941dfdcfb165e1e96f3fea5562b41cd6c0a07e18e8
-generated: "2021-01-29T17:53:15.507224Z"
+digest: sha256:36d40b1667f49aac7bf3d3212ba63d7d6e6da225f643334c09e5186474769003
+generated: "2021-01-29T20:01:44.030636Z"

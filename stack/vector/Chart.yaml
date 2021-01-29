@@ -24,6 +24,6 @@ version: 0.1.0
 appVersion: "1.16.0"
 
 dependencies:
-  - name: vector
+  - name: vector-agent
     version: "0.11.1"
     repository: "https://packages.timber.io/helm/latest"
