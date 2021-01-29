@@ -10,5 +10,5 @@ vector:
         target = "stdout"
         encoding = "json"
 
-  image:
-    base: alpine
+image:
+  base: alpine
