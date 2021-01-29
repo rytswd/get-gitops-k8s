@@ -10,5 +10,5 @@ vector:
         target = "stdout"
         encoding = "json"
 
-  podLabels:
-    test: abc
+  image:
+    base: alpine
