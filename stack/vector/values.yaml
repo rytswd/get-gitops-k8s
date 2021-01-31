@@ -9,6 +9,3 @@ vector-agent:
       rawConfig: |
         target = "stdout"
         encoding = "json"
-
-  image:
-    base: alpine
