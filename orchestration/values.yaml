@@ -51,6 +51,7 @@ apps:
     enabled: false
   - name: playground
     enabled: true
+    namespace: playground
     istioSidecar: true
   - name: playground-another
     enabled: false
