@@ -41,3 +41,10 @@ spec:
         - image: docker.io/rytswd/toolkit-alpine:0.1.1
           name: toolkit-alpine
           command: ["/bin/sleep", "3650d"]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+            limits:
+              cpu: 30m
+              memory: 30Mi
