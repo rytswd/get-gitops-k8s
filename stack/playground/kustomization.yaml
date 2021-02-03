@@ -8,3 +8,4 @@ resources:
   - color-svc-only-blue.yaml
   - toolkit-alpine.yaml
   - httpbin.yaml
+  - istio-mtls-strict.yaml
