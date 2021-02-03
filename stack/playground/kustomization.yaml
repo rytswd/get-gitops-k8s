@@ -6,6 +6,5 @@ resources:
   - color-svc-only-red.yaml
   - color-svc-only-green.yaml
   - color-svc-only-blue.yaml
-  - namespace.yaml
   - toolkit-alpine.yaml
   - httpbin.yaml
