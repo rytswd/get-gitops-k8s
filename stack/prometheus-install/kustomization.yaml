@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - simple-prometheus.yaml
   - istio-rules.yaml
+  - istio-servicemonitor.yaml
