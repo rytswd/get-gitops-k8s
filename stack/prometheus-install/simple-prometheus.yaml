@@ -2,10 +2,11 @@ apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   name: simple
-  labels:
-    app.kubernetes.io/name: simple-prometheus
 spec:
   replicas: 1
+  podMetadata:
+    labels:
+      app.kubernetes.io/name: simple-prometheus
 
   # TODO: Configure DNS and ingress to be able to connect
   externalUrl: http://localhost
