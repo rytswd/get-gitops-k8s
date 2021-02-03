@@ -10,14 +10,14 @@ metadata:
   name: toolkit-alpine
   namespace: playground
   labels:
-    app: toolkit-alpine
+    app.kubernetes.io/name: toolkit-alpine
 spec:
   ports:
     - name: http
       port: 8000
       targetPort: 80
   selector:
-    app: toolkit-alpine
+    app.kubernetes.io/name: toolkit-alpine
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,12 +28,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: toolkit-alpine
+      app.kubernetes.io/name: toolkit-alpine
       version: v1
   template:
     metadata:
       labels:
-        app: toolkit-alpine
+        app.kubernetes.io/name: toolkit-alpine
         version: v1
     spec:
       serviceAccountName: toolkit-alpine
