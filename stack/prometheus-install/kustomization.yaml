@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - simple-prometheus.yaml
+  - istio-rules.yaml
