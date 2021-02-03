@@ -1,3 +1,4 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
@@ -6,7 +7,7 @@ spec:
   replicas: 1
   podMetadata:
     labels:
-      app.kubernetes.io/name: simple-prometheus
+      app.kubernetes.io/name: prometheus-simple
 
   # TODO: Configure DNS and ingress to be able to connect
   externalUrl: http://localhost
@@ -28,14 +29,14 @@ spec:
         - topologyKey: kubernetes.io/hostname
           labelSelector:
             matchLabels:
-              app.kubernetes.io/name: prometheus
+              app.kubernetes.io/name: prometheus-simple
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: simple
+  name: prometheus-simple
   labels:
-    app.kubernetes.io/name: simple-prometheus
+    app.kubernetes.io/name: prometheus-simple
 spec:
   type: ClusterIP
   ports:
@@ -43,16 +44,16 @@ spec:
       port: 9090
       targetPort: 9090
   selector:
-    app.kubernetes.io/name: simple-prometheus
+    app.kubernetes.io/name: prometheus-simple
 ---
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: prometheus
+  name: prometheus-simple
   labels:
-    app.kubernetes.io/name: simple-prometheus
+    app.kubernetes.io/name: prometheus-simple
 spec:
   minAvailable: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: simple-prometheus
+      app.kubernetes.io/name: prometheus-simple
