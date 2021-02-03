@@ -55,8 +55,10 @@ apps:
     enabled: false
   - name: prometheus-install
     enabled: true
+    namespace: prometheus-install
   - name: prometheus-operator
     enabled: true
+    namespace: prometheus-operator
   - name: rook
     enabled: false
   - name: sealed-secrets
