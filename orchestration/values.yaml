@@ -54,7 +54,7 @@ apps:
   - name: playground-another
     enabled: false
   - name: prometheus-install
-    enabled: false
+    enabled: true
   - name: prometheus-operator
     enabled: true
   - name: rook
