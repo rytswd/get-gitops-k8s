@@ -50,7 +50,8 @@ apps:
   - name: networkservicemesh
     enabled: false
   - name: playground
-    enabled: false
+    enabled: true
+    istioSidecar: true
   - name: playground-another
     enabled: false
   - name: prometheus-install
