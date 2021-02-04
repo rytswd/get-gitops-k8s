@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: rpc-app
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -18,3 +19,18 @@ spec:
           ports:
             - name: web
               containerPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rpc-app-service
+  labels:
+    app: rpc-app
+spec:
+  ports:
+    - name: web
+      port: 8081
+      targetPort: 8081
+      protocol: TCP
+  selector:
+    app: rpc-app
