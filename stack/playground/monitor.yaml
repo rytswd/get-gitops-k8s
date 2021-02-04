@@ -23,4 +23,4 @@ spec:
     matchLabels:
       app.kubernetes.io/name: color-svc
   endpoints:
-    - port: web
+    - port: http
