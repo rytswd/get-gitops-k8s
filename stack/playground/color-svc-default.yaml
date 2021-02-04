@@ -94,3 +94,6 @@ spec:
           percentage:
             value: 50
           httpStatus: 400
+    - route:
+        - destination:
+            host: color-svc.playground.cluster.local
