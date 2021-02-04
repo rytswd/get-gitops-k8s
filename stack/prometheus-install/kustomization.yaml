@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - simple-prometheus.yaml
   - simple-prometheus-rbac.yaml
-  - istio-rules.yaml
-  - istio-servicemonitor.yaml
+
+  - prometheus-istio.yaml
+  - istio-scrape-configs-secret.yaml
