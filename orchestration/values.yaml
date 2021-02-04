@@ -47,6 +47,9 @@ apps:
         jsonPointers:
           - /webhooks/0/clientConfig/caBundle
           - /webhooks/0/failurePolicy
+  - name: kiali-operator
+    enabled: true
+    namespace: kiali-operator
   - name: nats-jetstream
     enabled: false
   - name: networkservicemesh
