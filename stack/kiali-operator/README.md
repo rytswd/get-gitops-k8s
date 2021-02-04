@@ -6,6 +6,7 @@ This installation assumes that namespace `kiali-operator` exists.
 
 ```sh
 $ helm template \
+    --include-crds \
     --set cr.namespace=istio-system \
     --namespace kiali-operator \
     --repo https://kiali.org/helm-charts \
