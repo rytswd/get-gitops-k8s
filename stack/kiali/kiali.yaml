@@ -11,6 +11,8 @@ spec:
   deployment:
     accessible_namespaces:
       - "**"
+  auth:
+    strategy: "anonymous"
 ##
 
 ###################################################################
