@@ -6,4 +6,5 @@ resources:
   - simple-prometheus-rbac.yaml
 
   - prometheus-istio.yaml
+  - prometheus-istio-rbac.yaml
   - istio-scrape-configs-secret.yaml
