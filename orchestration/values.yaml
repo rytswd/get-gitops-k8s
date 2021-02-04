@@ -30,6 +30,8 @@ apps:
     enabled: false
   - name: falco
     enabled: false
+  - name: grafana
+    enabled: true
   - name: istio
     enabled: true
     namespace: istio-system
