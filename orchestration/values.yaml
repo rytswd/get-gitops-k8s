@@ -58,6 +58,7 @@ apps:
   - name: prometheus-install
     enabled: true
     namespace: prometheus-install
+    istioSidecar: true
   - name: prometheus-operator
     enabled: true
   - name: rook
