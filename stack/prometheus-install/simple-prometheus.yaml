@@ -13,7 +13,7 @@ spec:
   externalUrl: http://localhost
   routePrefix: "/"
 
-  # serviceAccountName: prometheus
+  serviceAccountName: prometheus-simple
 
   retention: "10d"
   # portName: web

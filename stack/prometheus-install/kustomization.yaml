@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - simple-prometheus.yaml
+  - simple-prometheus-rbac.yaml
   - istio-rules.yaml
   - istio-servicemonitor.yaml
