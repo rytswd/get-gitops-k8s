@@ -99,6 +99,6 @@ spec:
           httpStatus: 400
     - route:
         - destination:
-            host: color-svc.playground.cluster.local
+            host: color-svc.playground.svc.cluster.local
             port:
               number: 8800
