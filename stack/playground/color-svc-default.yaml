@@ -84,10 +84,13 @@ spec:
       route:
         - destination:
             host: color-svc-only-red.playground.svc.cluster.local
+            port:
+              number: 8800
           weight: 50
         - destination:
             host: color-svc-only-blue.playground.svc.cluster.local
-            subset: new
+            port:
+              number: 8800
           weight: 50
       fault:
         abort:
@@ -97,3 +100,5 @@ spec:
     - route:
         - destination:
             host: color-svc.playground.cluster.local
+            port:
+              number: 8800
