@@ -65,3 +65,32 @@ spec:
             limits:
               cpu: 30m
               memory: 30Mi
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: color-svc
+spec:
+  hosts:
+    - color-svc.playground.svc.cluster.local
+  gateways:
+    - mesh
+  http:
+    - match:
+        - uri:
+            prefix: /istio
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: color-svc-only-red.playground.svc.cluster.local
+          weight: 50
+        - destination:
+            host: color-svc-only-blue.playground.svc.cluster.local
+            subset: new
+          weight: 50
+      fault:
+        abort:
+          percentage:
+            value: 50
+          httpStatus: 400
