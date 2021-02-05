@@ -11,6 +11,8 @@ spec:
       - "**"
   auth:
     strategy: "anonymous"
+  istio_labels:
+    app_label_name: "app.kubernetes.io/name"
   external_services:
     custom_dashboards:
       prometheus:
