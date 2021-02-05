@@ -1,3 +1,4 @@
 grafana:
   adminUser: admin
   adminPassword: admin
+  namespaceOverride: istio-system # Deploys against this namespace
