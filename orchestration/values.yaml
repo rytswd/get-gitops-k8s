@@ -80,7 +80,7 @@ apps:
     enabled: false
   - name: vault
     enabled: false
-  - name: Vector
+  - name: vector
     enabled: true
     namespace: vector
     loadPath: vector
