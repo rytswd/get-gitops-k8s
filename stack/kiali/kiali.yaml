@@ -3,17 +3,20 @@ kind: Kiali
 metadata:
   name: kiali
   namespace: istio-system
-  annotations:
-    ansible.operator-sdk/verbosity: "1"
-spec:
-##
+###################################################################
 # Manually edited
+spec:
   deployment:
     accessible_namespaces:
       - "**"
   auth:
     strategy: "anonymous"
-##
+  prometheus:
+    cache_duration: 10
+    cache_enabled: true
+    cache_expiration: 300
+    url: "http://prometheus-istio.prometheus-install.svc.cluster.local:9090"
+###################################################################
 
 ###################################################################
 # kiali_cr.yaml
