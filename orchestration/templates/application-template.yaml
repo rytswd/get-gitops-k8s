@@ -13,7 +13,7 @@ metadata:
 spec:
   project: default
   source:
-    path: stack/{{ .name }}
+    path: {{ .loadPath | default .name | printf "stack/%s" }}
     repoURL: {{ $.Values.spec.source.gitRepoUrl }}
     targetRevision: {{ $.Values.spec.source.targetRevision }}
   destination:

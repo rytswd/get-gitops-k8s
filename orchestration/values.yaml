@@ -80,9 +80,10 @@ apps:
     enabled: false
   - name: vault
     enabled: false
-  - name: vector
+  - name: Vector
     enabled: true
     namespace: vector
+    loadPath: vector
   - name: vitess
     enabled: false
 #
