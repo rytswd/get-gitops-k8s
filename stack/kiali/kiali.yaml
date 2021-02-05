@@ -9,10 +9,13 @@ spec:
   deployment:
     accessible_namespaces:
       - "**"
+
   auth:
     strategy: "anonymous"
+
   istio_labels:
     app_label_name: "app.kubernetes.io/name"
+
   external_services:
     custom_dashboards:
       prometheus:
@@ -20,6 +23,8 @@ spec:
         cache_enabled: true
         cache_expiration: 300
         url: "http://prometheus-istio.prometheus-install.svc.cluster.local:9090"
+    prometheus:
+      url: "http://prometheus-istio.prometheus-install.svc.cluster.local:9090"
 ###################################################################
 
 ###################################################################
