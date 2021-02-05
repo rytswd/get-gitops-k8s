@@ -11,8 +11,8 @@ spec:
       jwtPolicy: first-party-jwt
 
   components:
-    cni:
-      enabled: true
+    # cni:
+    #   enabled: true
     pilot:
       k8s:
         # Reduce resource requirements for local testing. This is NOT
