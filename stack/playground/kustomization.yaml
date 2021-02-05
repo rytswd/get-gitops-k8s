@@ -9,5 +9,3 @@ resources:
   - toolkit-alpine.yaml
   - httpbin.yaml
   - istio-mtls-strict.yaml
-  - prometheus-tester.yaml
-  - monitor.yaml
