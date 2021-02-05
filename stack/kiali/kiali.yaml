@@ -11,11 +11,12 @@ spec:
       - "**"
   auth:
     strategy: "anonymous"
-  prometheus:
-    cache_duration: 10
-    cache_enabled: true
-    cache_expiration: 300
-    url: "http://prometheus-istio.prometheus-install.svc.cluster.local:9090"
+  external_services:
+    prometheus:
+      cache_duration: 10
+      cache_enabled: true
+      cache_expiration: 300
+      url: "http://prometheus-istio.prometheus-install.svc.cluster.local:9090"
 ###################################################################
 
 ###################################################################
