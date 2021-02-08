@@ -268,6 +268,7 @@ rules:
   - get
   - list
   - watch
+  - patch
 - apiGroups: [""]
   resources:
   - pods/portforward
@@ -283,6 +284,7 @@ rules:
   - get
   - list
   - watch
+  - patch
 - apiGroups: ["autoscaling"]
   resources:
   - horizontalpodautoscalers
@@ -298,6 +300,7 @@ rules:
   - get
   - list
   - watch
+  - patch
 - apiGroups:
   - networking.istio.io
   - security.istio.io
@@ -306,6 +309,9 @@ rules:
   - get
   - list
   - watch
+  - create
+  - delete
+  - patch
 - apiGroups: ["apps.openshift.io"]
   resources:
   - deploymentconfigs
@@ -313,6 +319,7 @@ rules:
   - get
   - list
   - watch
+  - patch
 - apiGroups: ["project.openshift.io"]
   resources:
   - projects
@@ -336,6 +343,9 @@ rules:
   - get
   - list
   - watch
+  - create
+  - delete
+  - patch
 - apiGroups: ["authentication.k8s.io"]
   resources:
   - tokenreviews
