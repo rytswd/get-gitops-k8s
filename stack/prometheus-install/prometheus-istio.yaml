@@ -45,6 +45,10 @@ spec:
     - mountPath: /etc/prom-certs/
       name: istio-certs
 
+  volumes:
+    - name: istio-certs
+      emptyDir: {}
+
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
