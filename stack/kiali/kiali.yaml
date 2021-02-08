@@ -1,3 +1,5 @@
+---
+# Ref: https://github.com/kiali/kiali-operator/blob/master/deploy/kiali/kiali_cr.yaml
 apiVersion: kiali.io/v1alpha1
 kind: Kiali
 metadata:
