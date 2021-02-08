@@ -25,12 +25,12 @@ spec:
         cache_duration: 10
         cache_enabled: true
         cache_expiration: 300
-        url: "http://prometheus-istio.istio-system.svc.cluster.local:9090/prometheus"
+        url: "http://prometheus-istio.prometheus-install.svc.cluster.local:9090/prometheus"
     grafana:
       in_cluster_url: "http://grafana.istio-system:3000"
       url: ""
     prometheus:
-      url: "http://prometheus-istio.istio-system.svc.cluster.local:9090/prometheus"
+      url: "http://prometheus-istio.prometheus-install.svc.cluster.local:9090/prometheus"
 ###################################################################
 
 ###################################################################
