@@ -4,7 +4,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   name: istio
-  namespace: istio-system
 spec:
   replicas: 1
   podMetadata:
@@ -61,7 +60,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus-istio
-  namespace: istio-system
   labels:
     app.kubernetes.io/name: prometheus-istio
 spec:
@@ -77,7 +75,6 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   name: prometheus-istio
-  namespace: istio-system
   labels:
     app.kubernetes.io/name: prometheus-istio
 spec:
