@@ -1,4 +1,5 @@
 ---
+# Ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
