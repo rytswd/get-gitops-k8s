@@ -11,7 +11,7 @@ spec:
 
   # TODO: Configure DNS and ingress to be able to connect
   externalUrl: http://localhost
-  routePrefix: "/"
+  routePrefix: "/prometheus"
 
   serviceAccountName: prometheus-istio
 
