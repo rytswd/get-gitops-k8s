@@ -11,6 +11,7 @@ spec:
   deployment:
     accessible_namespaces:
       - "**"
+    ingress_enabled: false
 
   auth:
     strategy: "anonymous"
