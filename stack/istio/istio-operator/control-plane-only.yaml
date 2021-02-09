@@ -6,6 +6,13 @@ metadata:
 spec:
   profile: minimal
 
+  meshConfig:
+    enableTracing: true
+    defaultConfig:
+      tracing:
+        zipkin:
+          address: jaeger-collector.default.svc.cluster.local:9411
+
   values:
     global:
       jwtPolicy: first-party-jwt

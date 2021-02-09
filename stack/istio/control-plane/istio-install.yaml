@@ -7616,9 +7616,10 @@ data:
         DNS_AGENT: ""
       tracing:
         zipkin:
-          address: zipkin.istio-system:9411
+          address: jaeger-collector.default.svc.cluster.local:9411
     disableMixerHttpReports: true
     enablePrometheusMerge: true
+    enableTracing: true
     rootNamespace: istio-system
     trustDomain: cluster.local
 ---
