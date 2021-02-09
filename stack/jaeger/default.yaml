@@ -7,19 +7,9 @@ metadata:
 spec:
   startegy: allInOne
   allInOne:
+    image: jaegertracing/all-in-one:1.16
     log-level: debug
     query:
       base-path: /jaeger
-  query:
-    options:
-      base-path: /jaeger
-      query:
-        base-path: /jaeger
-  ui:
-    options:
-      dependencies:
-        menuEnabled: false
-      tracking:
-        gaID: UA-000000-2
   ingress:
     enabled: false
