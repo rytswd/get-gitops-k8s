@@ -8,6 +8,7 @@ spec:
   startegy: allInOne
   query:
     options:
-      base-path: /jaeger
+      query:
+        basePath: /jaeger
   ingress:
     enabled: false
