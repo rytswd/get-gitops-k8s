@@ -9,6 +9,6 @@ spec:
   ui:
     options:
       query:
-        basePath: /jaeger
+        base-path: /jaeger
   ingress:
     enabled: false
