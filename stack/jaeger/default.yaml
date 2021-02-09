@@ -6,6 +6,11 @@ metadata:
   name: jaeger
 spec:
   startegy: allInOne
+  query:
+    options:
+      base-path: /jaeger
+      query:
+        base-path: /jaeger
   ui:
     options:
       base-path: /jaeger
