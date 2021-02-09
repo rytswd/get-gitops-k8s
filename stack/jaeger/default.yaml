@@ -6,5 +6,8 @@ metadata:
   name: jaeger
 spec:
   startegy: allInOne
+  query:
+    options:
+      base-path: /jaeger
   ingress:
     enabled: false
