@@ -47,6 +47,10 @@ apps:
         jsonPointers:
           - /webhooks/0/clientConfig/caBundle
           - /webhooks/0/failurePolicy
+  - name: jaeger
+    enabled: true
+  - name: jaeger-operator
+    enabled: true
   - name: kiali
     enabled: true
   - name: kiali-operator

@@ -1,0 +1,12 @@
+---
+# Ref: https://www.jaegertracing.io/docs/1.21/operator/#understanding-custom-resource-definitions
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: default
+spec:
+  collector:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
