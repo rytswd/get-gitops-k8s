@@ -51,6 +51,7 @@ apps:
     enabled: true
   - name: jaeger-operator
     enabled: true
+    namespace: jaeger-operator
   - name: kiali
     enabled: true
   - name: kiali-operator
