@@ -10,3 +10,9 @@ grafana:
       enabled: true
       org_name: test-org
       org_role: Viewer
+
+  sidecar:
+    dashboards:
+      enabled: true
+    datasources:
+      enabled: true
