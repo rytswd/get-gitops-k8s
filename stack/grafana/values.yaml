@@ -3,3 +3,12 @@ grafana:
   adminUser: admin
   adminPassword: admin
   namespaceOverride: istio-system # Deploys against this namespace
+
+  persistence:
+    enabled: true
+
+  grafana.ini:
+    auth.anonymous:
+      enabled: true
+      org_name: test-org
+      org_role: Viewer
