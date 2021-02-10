@@ -1,5 +1,7 @@
 # Get GitOps K8s
 
+###### NOTE (Feb 2021): This is undergoing massive updates in all the stacks. Most of the setup works as is, but please expect some installation hiccups with some of the apps.
+
 This repository gets you [GitOps](https://www.weave.works/technologies/gitops/) based Kubernetes environment.
 
 **Make use of template**
