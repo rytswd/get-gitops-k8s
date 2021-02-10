@@ -5,7 +5,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: jaeger-operator
-  namespace: "observability" # change to point to the namespace you installed your operator
+  namespace: "jaeger-operator" # change to point to the namespace you installed your operator
 roleRef:
   kind: ClusterRole
   name: jaeger-operator
