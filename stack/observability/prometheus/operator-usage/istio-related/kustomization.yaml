@@ -16,4 +16,4 @@ resources:
   - prometheus-istio.yaml
   - prometheus-istio-rbac.yaml
   - prometheus-istio-monitor.yaml
-  - istio-scrape-configs-secret.yaml
+  # - istio-scrape-configs-secret.yaml
