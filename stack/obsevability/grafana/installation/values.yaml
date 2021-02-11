@@ -10,6 +10,10 @@ grafana:
       enabled: true
       org_name: test-org
       org_role: Viewer
+    server:
+      domain: monitoring.example.com
+      root_url: "%(protocol)s://%(domain)s/grafana"
+      serve_from_sub_path: true
 
   sidecar:
     dashboards:

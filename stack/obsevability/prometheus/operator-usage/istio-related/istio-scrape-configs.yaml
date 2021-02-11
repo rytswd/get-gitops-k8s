@@ -1,4 +1,6 @@
-# Config not used directly, run the following command to generate a Secret.
+# NOTE: This config is not used directly. Secret is needed for Prometheus to
+#       consume. You can use the following command, or set up secret generation
+#       in Kustomization spec.
 #
 # kubectl create secret generic \
 #    istio-scrape-configs \

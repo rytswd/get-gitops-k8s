@@ -2,39 +2,54 @@ env: staging
 
 # === Application Onboarding with ArgoCD ==================================== #
 #
-#   ArgoCD template setup is going to loop through the items in slice here,
-#   and search for `name` inside `get-gitops-k8s/stack/`. If the `enabled`
-#   boolean flag is set to `false`, ArgoCD will ignore.
+#   ArgoCD template setup is going to loop through the items in slice here.
+#   If the `enabled` boolean flag is set to `false`, ArgoCD will ignore.
+#   `loadPath` is relative to the root diirectory where .git/ diectory resides.
 #
 #   Additionally, you can specify `namespace`. This may be useful when the
 #   installation requires a specific namespace in place.
 #
-#   If `stack` does not comply with the directory format ArgoCD expects,
-#   ArgoCD sync will be halted until it is fixed.
+#   If the loaded stack does not comply with the directory format ArgoCD
+#   expects, ArgoCD sync will be halted until it is fixed.
 #
 apps:
   - name: argo-rollouts
     enabled: false
     namespace: argo-rollouts
+    loadPath: stack/cicd/argo-rollouts/installation
   - name: argo-rollouts-sample
     enabled: false
+    loadPath: stack/cicd/argo-rollouts/usage
   - name: argo-workflows
     enabled: false
     namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
+    loadPath: stack/cicd/argo-workflows/installation
   - name: cert-manager
     enabled: false
+    loadPath: stack/security/cert-manager
   - name: cortex
     enabled: false
     namespace: cortex
+    loadPath: stack/observability/cortex
   - name: etcd-operator
     enabled: false
+    loadPath: stack/coordination/etcd-operator
   - name: falco
     enabled: false
+    loadPath: stack/security/falco
   - name: grafana
     enabled: true
+    loadPath: stack/observability/grafana/installation
+  - name: grafana-datasources
+    enabled: true
+    loadPath: stack/observability/grafana/datasources
+  - name: grafana-dashboards
+    enabled: true
+    loadPath: stack/observability/grafana/dashboards
   - name: istio
     enabled: true
     namespace: istio-system
+    loadPath: stack/service-mesh/istio
     ignoreDifferences:
       # Ignore caBundle diff due to runtime updates to the config
       - group: admissionregistration.k8s.io
@@ -49,48 +64,64 @@ apps:
           - /webhooks/0/failurePolicy
   - name: jaeger
     enabled: true
+    loadPath: stack/observability/jaeger/operator-usage
   - name: jaeger-operator
     enabled: true
     namespace: jaeger-operator
+    loadPath: stack/observability/jaeger/operator-install
   - name: kiali
     enabled: true
+    loadPath: stack/observability/kiali/operator-usage
   - name: kiali-operator
     enabled: true
     namespace: kiali-operator
+    loadPath: stack/observability/kiali/operator-install
   - name: nats-jetstream
     enabled: false
+    loadPath: stack/messaging/nats-jetstream
   - name: networkservicemesh
     enabled: false
-  - name: playground
+    loadPath: stack/service-mesh/networkservicemesh
+  - name: playground-alice
     enabled: true
     namespace: playground
+    loadPath: stack/playground/alice
     istioSidecar: true
-  - name: playground-another
+  - name: playground-bob
     enabled: false
-  - name: prometheus-install
+    loadPath: stack/playground/bob
+  - name: prometheus
     enabled: true
-    namespace: prometheus-install
     istioSidecar: true
+    loadPath: stack/observability/prometheus/operator-usage
   - name: prometheus-operator
     enabled: true
+    loadPath: stack/observability/prometheus/operator-install
   - name: rook
     enabled: false
+    loadPath: stack/storage/rook
   - name: sealed-secrets
     enabled: false
+    loadPath: stack/security/sealed-secrets
   - name: tekton-pipeline
     enabled: false
+    loadPath: stack/cicd/tekton-pipeline
   - name: tekton-dashboard
     enabled: false
+    loadPath: stack/cicd/tekton-dashboard
   - name: tekton-triggers
     enabled: false
+    loadPath: stack/cicd/tekton-triggers
   - name: vault
     enabled: false
+    loadPath: stack/key-management/vault
   - name: vector
     enabled: true
     namespace: vector
-    loadPath: vector
+    loadPath: stack/observability/vector
   - name: vitess
     enabled: false
+    loadPath: stack/database/vitess
 #
 # =========================================================================== #
 
