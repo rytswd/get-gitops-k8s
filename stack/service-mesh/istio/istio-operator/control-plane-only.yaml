@@ -11,7 +11,8 @@ spec:
     defaultConfig:
       tracing:
         zipkin:
-          address: jaeger-collector.default.svc.cluster.local:9411
+          address: jaeger-collector.istio-system.svc.cluster.local:9411
+        sampling: 100 # 100% of trace captured instead of default 1%
 
   values:
     global:

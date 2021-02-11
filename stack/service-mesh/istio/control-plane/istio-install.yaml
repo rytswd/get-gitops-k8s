@@ -7615,8 +7615,9 @@ data:
       proxyMetadata:
         DNS_AGENT: ""
       tracing:
+        sampling: 100
         zipkin:
-          address: jaeger-collector.default.svc.cluster.local:9411
+          address: jaeger-collector.istio-system.svc.cluster.local:9411
     disableMixerHttpReports: true
     enablePrometheusMerge: true
     enableTracing: true
