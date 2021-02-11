@@ -7,7 +7,7 @@ secretGenerator:
   - name: istio-scrape-configs
     files:
       - ./istio-scrape-configs.yaml
-    namespace: upsidr-system
+    namespace: istio-system
 
 generatorOptions:
   disableNameSuffixHash: true
