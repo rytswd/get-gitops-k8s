@@ -40,4 +40,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: prometheus-istio
-    namespace: istio-system
+    namespace: prometheus
