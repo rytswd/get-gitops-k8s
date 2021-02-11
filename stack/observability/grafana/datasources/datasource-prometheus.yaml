@@ -11,7 +11,7 @@ data:
     datasources:
       - name: Prometheus
         type: prometheus
-        url: http://prometheus-istio.upsidr-system.svc.cluster.local:9090/prometheus/
+        url: http://prometheus-istio.prometheus.svc.cluster.local:9090/prometheus/
         access: proxy
         isDefault: true
         orgId: 1
