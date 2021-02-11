@@ -10,7 +10,7 @@ metadata:
 spec:
   project: argo-cd-setup
   source:
-    path: stack/argo-cd
+    path: stack/cicd/argo-cd
     repoURL: {{ .Values.spec.source.gitRepoUrl }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
   destination:
