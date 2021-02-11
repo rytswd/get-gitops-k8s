@@ -6,10 +6,10 @@ grafana:
     enabled: true
 
   grafana.ini:
-    auth.anonymous:
-      enabled: true
-      org_name: test-org
-      org_role: Viewer
+    # auth.anonymous:
+    #   enabled: true
+    #   org_name: test-org
+    #   org_role: Viewer
     server:
       domain: monitoring.example.com
       root_url: "%(protocol)s://%(domain)s/grafana"
