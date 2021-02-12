@@ -4,6 +4,7 @@ grafana:
 
   persistence:
     enabled: true
+    size: 10Mi
 
   grafana.ini:
     # auth.anonymous:
