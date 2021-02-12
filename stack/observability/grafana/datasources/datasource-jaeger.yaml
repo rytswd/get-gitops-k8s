@@ -6,7 +6,7 @@ metadata:
   labels:
     grafana_datasource: "1"
 data:
-  datasources.yaml: |-
+  datasource_jaeger.yaml: |-
     apiVersion: 1
     datasources:
       - name: Jaeger
