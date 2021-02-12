@@ -64,7 +64,7 @@ argocd:
 	@clear
 	@echo "$(boldGreen)3. Installing Argo CD...$(normal)"
 	@echo
-	kubectl apply -f ./stack/argo-cd/argo-cd-install.yaml -n argocd
+	kubectl apply -f ./stack/cicd/argo-cd/argo-cd-install.yaml -n argocd
 	@echo
 	@read -r -p "completed."
 
