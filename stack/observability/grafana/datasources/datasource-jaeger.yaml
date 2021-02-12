@@ -13,5 +13,5 @@ data:
         type: jaeger
         url: http://jaeger-query.istio-system.svc.cluster.local:16686/jaeger/
         access: proxy
-        isDefault: true
+        isDefault: false
         orgId: 1
