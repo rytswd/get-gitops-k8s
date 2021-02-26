@@ -24,6 +24,9 @@ In order to benefit from GitOps, [use this template](https://github.com/rytswd/g
 # Create a local cluster using kind
 $ kind create cluster
 Creating cluster "kind" ...
+
+# If you want to have more customised cluster, you can run the following instead
+$ kind create cluster --config ./tools/kind-config/config-with-2-nodes.yaml --name gitops-k8s
 ...
 
 # Connect to the local cluster
