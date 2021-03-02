@@ -113,6 +113,9 @@ apps:
   - name: tekton-triggers
     enabled: false
     loadPath: stack/cicd/tekton-triggers
+  - name: thanos
+    enabled: true
+    loadPath: stack/observability/thanos
   - name: vault
     enabled: false
     loadPath: stack/key-management/vault
