@@ -33,8 +33,6 @@ spec:
   thanos:
     baseImage: quay.io/thanos/thanos
     version: v0.18.0
-  queryEndpoints:
-    - dnssrv+_http._tcp.thanos-query.thanos.svc.cluster.local
 
   serviceMonitorNamespaceSelector: {} # auto discovers all service monitors across all namespaces
   serviceMonitorSelector: {} # auto discovers all service monitors in namespaces configured one line above
@@ -61,6 +59,22 @@ spec:
           labelSelector:
             matchLabels:
               app.kubernetes.io/name: prometheus-istio
+# ---
+# apiVersion: monitoring.coreos.com/v1
+# kind: ThanosRuler
+# metadata:
+#   name: istio-thanos-ruler
+#   labels:
+#     example: thanos-ruler
+#   namespace: thanos
+# spec:
+#   image: quay.io/thanos/thanos
+#   ruleSelector:
+#     matchLabels:
+#       role: my-thanos-rules
+#   queryEndpoints:
+#     - dnssrv+_http._tcp.my-thanos-querier.monitoring.svc.cluster.local
+
 ---
 apiVersion: v1
 kind: Service
