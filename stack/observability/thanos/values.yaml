@@ -3,3 +3,8 @@ thanos:
     registry: quay.io/thanos
     repository: thanos
     tag: v0.18.0
+
+  query:
+    dnsDiscovery:
+      sidecarsService: prometheus-istio
+      sidecarsNamespace: prometheus
