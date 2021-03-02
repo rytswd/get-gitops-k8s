@@ -115,6 +115,7 @@ apps:
     loadPath: stack/cicd/tekton-triggers
   - name: thanos
     enabled: true
+    namespace: thanos
     loadPath: stack/observability/thanos
   - name: vault
     enabled: false
