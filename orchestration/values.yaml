@@ -116,6 +116,7 @@ apps:
   - name: thanos
     enabled: true
     namespace: thanos
+    istioSidecar: true
     loadPath: stack/observability/thanos
   - name: vault
     enabled: false
