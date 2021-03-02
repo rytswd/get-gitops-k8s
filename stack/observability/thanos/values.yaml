@@ -1,0 +1,5 @@
+thanos:
+  image:
+    registry: quay.io/thanos
+    repository: thanos
+    tag: v0.18.0

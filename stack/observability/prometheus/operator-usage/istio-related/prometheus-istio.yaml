@@ -30,6 +30,12 @@ spec:
   retention: "10d"
   # portName: web
 
+  thanos:
+    baseImage: quay.io/thanos/thanos
+    version: v0.18.0
+  queryEndpoints:
+    - dnssrv+_http._tcp.thanos-query.thanos.svc.cluster.local
+
   serviceMonitorNamespaceSelector: {} # auto discovers all service monitors across all namespaces
   serviceMonitorSelector: {} # auto discovers all service monitors in namespaces configured one line above
   ruleNamespaceSelector: {} # auto discovers all prometheus rules across all namespaces
