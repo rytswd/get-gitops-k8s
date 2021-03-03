@@ -138,6 +138,7 @@ apps:
     ignoreDifferences:
       - group: apiextensions.k8s.io
         kind: CustomResourceDefinition
+        name: tenants.minio.min.io
         jsonPointers:
           - /spec/preserveUnknownFields
   - name: rook
