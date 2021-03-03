@@ -13,6 +13,7 @@ env: staging
 #   expects, ArgoCD sync will be halted until it is fixed.
 #
 apps:
+  # CI/CD related
   - name: argo-rollouts
     enabled: false
     namespace: argo-rollouts
@@ -24,19 +25,36 @@ apps:
     enabled: false
     namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
     loadPath: stack/cicd/argo-workflows/installation
-  - name: cert-manager
+  - name: tekton-pipeline
     enabled: false
-    loadPath: stack/security/cert-manager
+    loadPath: stack/cicd/tekton-pipeline
+  - name: tekton-dashboard
+    enabled: false
+    loadPath: stack/cicd/tekton-dashboard
+  - name: tekton-triggers
+    enabled: false
+    loadPath: stack/cicd/tekton-triggers
+
+  # Database related
+  - name: vitess
+    enabled: false
+    loadPath: stack/database/vitess
+
+  # Key management related
+  - name: vault
+    enabled: false
+    loadPath: stack/key-management/vault
+
+  # Messaging related
+  - name: nats-jetstream
+    enabled: false
+    loadPath: stack/messaging/nats-jetstream
+
+  # Observability related
   - name: cortex
     enabled: false
     namespace: cortex
     loadPath: stack/observability/cortex
-  - name: etcd-operator
-    enabled: false
-    loadPath: stack/coordination/etcd-operator
-  - name: falco
-    enabled: false
-    loadPath: stack/security/falco
   - name: grafana
     enabled: true
     loadPath: stack/observability/grafana/installation
@@ -46,6 +64,50 @@ apps:
   - name: grafana-dashboards
     enabled: true
     loadPath: stack/observability/grafana/dashboards
+  - name: jaeger
+    enabled: true
+    loadPath: stack/observability/jaeger/operator-usage
+  - name: jaeger-operator
+    enabled: true
+    namespace: jaeger-operator
+    loadPath: stack/observability/jaeger/operator-install
+  - name: kiali
+    enabled: true
+    loadPath: stack/observability/kiali/operator-usage
+  - name: kiali-operator
+    enabled: true
+    namespace: kiali-operator
+    loadPath: stack/observability/kiali/operator-install
+  - name: prometheus
+    enabled: true
+    namespace: prometheus
+    istioSidecar: true
+    loadPath: stack/observability/prometheus/operator-usage
+  - name: prometheus-operator
+    enabled: true
+    loadPath: stack/observability/prometheus/operator-install
+  - name: thanos
+    enabled: true
+    namespace: thanos
+    istioSidecar: true
+    loadPath: stack/observability/thanos
+  - name: vector
+    enabled: true
+    namespace: vector
+    loadPath: stack/observability/vector
+
+  # Security related
+  - name: cert-manager
+    enabled: false
+    loadPath: stack/security/cert-manager
+  - name: falco
+    enabled: false
+    loadPath: stack/security/falco
+  - name: sealed-secrets
+    enabled: false
+    loadPath: stack/security/sealed-secrets
+
+  # Service Mesh related
   - name: istio
     enabled: true
     namespace: istio-system
@@ -62,26 +124,21 @@ apps:
         jsonPointers:
           - /webhooks/0/clientConfig/caBundle
           - /webhooks/0/failurePolicy
-  - name: jaeger
-    enabled: true
-    loadPath: stack/observability/jaeger/operator-usage
-  - name: jaeger-operator
-    enabled: true
-    namespace: jaeger-operator
-    loadPath: stack/observability/jaeger/operator-install
-  - name: kiali
-    enabled: true
-    loadPath: stack/observability/kiali/operator-usage
-  - name: kiali-operator
-    enabled: true
-    namespace: kiali-operator
-    loadPath: stack/observability/kiali/operator-install
-  - name: nats-jetstream
-    enabled: false
-    loadPath: stack/messaging/nats-jetstream
   - name: networkservicemesh
     enabled: false
     loadPath: stack/service-mesh/networkservicemesh
+
+  # Storage related
+  - name: rook
+    enabled: false
+    loadPath: stack/storage/rook
+
+  # Coordination related
+  - name: etcd-operator
+    enabled: false
+    loadPath: stack/coordination/etcd-operator
+
+  # Other
   - name: playground-alice
     enabled: true
     namespace: playground
@@ -90,44 +147,6 @@ apps:
   - name: playground-bob
     enabled: false
     loadPath: stack/playground/bob
-  - name: prometheus
-    enabled: true
-    namespace: prometheus
-    istioSidecar: true
-    loadPath: stack/observability/prometheus/operator-usage
-  - name: prometheus-operator
-    enabled: true
-    loadPath: stack/observability/prometheus/operator-install
-  - name: rook
-    enabled: false
-    loadPath: stack/storage/rook
-  - name: sealed-secrets
-    enabled: false
-    loadPath: stack/security/sealed-secrets
-  - name: tekton-pipeline
-    enabled: false
-    loadPath: stack/cicd/tekton-pipeline
-  - name: tekton-dashboard
-    enabled: false
-    loadPath: stack/cicd/tekton-dashboard
-  - name: tekton-triggers
-    enabled: false
-    loadPath: stack/cicd/tekton-triggers
-  - name: thanos
-    enabled: true
-    namespace: thanos
-    istioSidecar: true
-    loadPath: stack/observability/thanos
-  - name: vault
-    enabled: false
-    loadPath: stack/key-management/vault
-  - name: vector
-    enabled: true
-    namespace: vector
-    loadPath: stack/observability/vector
-  - name: vitess
-    enabled: false
-    loadPath: stack/database/vitess
 #
 # =========================================================================== #
 
