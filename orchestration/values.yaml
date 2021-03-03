@@ -136,7 +136,7 @@ apps:
     enabled: true
     loadPath: stack/storage/minio/operator-install
     ignoreDifferences:
-      - group: apiextensions.k8s.io/v1
+      - group: apiextensions.k8s.io
         kind: CustomResourceDefinition
         jsonPointers:
           - /spec/preserveUnknownFields
