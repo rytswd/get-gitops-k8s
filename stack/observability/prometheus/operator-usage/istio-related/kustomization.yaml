@@ -9,6 +9,9 @@ secretGenerator:
   - name: istio-scrape-configs
     files:
       - ./istio-scrape-configs.yaml
+  - name: thanos-storage-config
+    files:
+      - ./thanos-storage.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
