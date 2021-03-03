@@ -1,3 +1,7 @@
-type: FILESYSTEM
+type: s3
 config:
-  directory: "/tmp/"
+  bucket: minio
+  endpoint: minio
+  access_key: bWluaW8=
+  secret_key: bWluaW8xMjM=
+  insecure: true
