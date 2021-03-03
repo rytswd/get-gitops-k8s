@@ -140,7 +140,7 @@ apps:
         kind: CustomResourceDefinition
         name: tenants.minio.min.io
         jsonPointers:
-          - /preserveUnknownFields
+          - /spec/preserveUnknownFields
   - name: rook
     enabled: false
     loadPath: stack/storage/rook
