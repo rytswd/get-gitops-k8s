@@ -129,6 +129,9 @@ apps:
     loadPath: stack/service-mesh/networkservicemesh
 
   # Storage related
+  - name: minio
+    enabled: true
+    loadPath: stack/storage/minio/operator-usage
   - name: minio-operator
     enabled: true
     loadPath: stack/storage/minio/operator-install
