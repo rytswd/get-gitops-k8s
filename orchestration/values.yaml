@@ -72,22 +72,22 @@ apps:
     namespace: jaeger-operator
     loadPath: stack/observability/jaeger/operator-install
   - name: kiali
-    enabled: true
+    enabled: false
     loadPath: stack/observability/kiali/operator-usage
   - name: kiali-operator
-    enabled: true
+    enabled: false
     namespace: kiali-operator
     loadPath: stack/observability/kiali/operator-install
   - name: prometheus
-    enabled: true
+    enabled: false
     namespace: prometheus
     istioSidecar: true
     loadPath: stack/observability/prometheus/operator-usage
   - name: prometheus-operator
-    enabled: true
+    enabled: false
     loadPath: stack/observability/prometheus/operator-install
   - name: thanos
-    enabled: true
+    enabled: false
     namespace: thanos
     istioSidecar: true
     loadPath: stack/observability/thanos
@@ -109,7 +109,7 @@ apps:
 
   # Service Mesh related
   - name: istio
-    enabled: true
+    enabled: false
     namespace: istio-system
     loadPath: stack/service-mesh/istio
     ignoreDifferences:
