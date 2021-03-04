@@ -2,6 +2,7 @@ boldGreen := $(shell tput bold)$(shell tput setaf 2)
 normal := $(shell tput sgr0)
 
 all: note-1 k8s-namespace github-token argocd argocd-app
+dev: note-1 k8s-namespace github-token argocd argocd-app-dev
 resume: note-2 github-token argocd argocd-app
 
 note-1:
@@ -69,6 +70,15 @@ argocd:
 	@read -r -p "completed."
 
 argocd-app:
+	@clear
+	@echo "$(boldGreen)4. Set up Argo CD with \`stack\` folder$(normal)"
+	@echo
+	kubectl apply -f ./init/argo-cd-project.yaml
+	kubectl apply -f ./init/argo-cd-application.yaml
+	@echo
+	@read -r -p "completed."
+
+argocd-app-dev:
 	@clear
 	@echo "$(boldGreen)4. Set up Argo CD with \`stack\` folder$(normal)"
 	@echo
