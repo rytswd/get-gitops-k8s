@@ -1,0 +1,190 @@
+env: staging
+
+# === Application Onboarding with ArgoCD ==================================== #
+#
+#   ArgoCD template setup is going to loop through the items in slice here.
+#   If the `enabled` boolean flag is set to `false`, ArgoCD will ignore.
+#   `loadPath` is relative to the root diirectory where .git/ diectory resides.
+#
+#   Additionally, you can specify `namespace`. This may be useful when the
+#   installation requires a specific namespace in place.
+#
+#   If the loaded stack does not comply with the directory format ArgoCD
+#   expects, ArgoCD sync will be halted until it is fixed.
+#
+apps:
+  # CI/CD related
+  - name: argo-rollouts
+    enabled: false
+    namespace: argo-rollouts
+    loadPath: stack/cicd/argo-rollouts/installation
+  - name: argo-rollouts-sample
+    enabled: false
+    loadPath: stack/cicd/argo-rollouts/usage
+  - name: argo-workflows
+    enabled: false
+    namespace: argo # https://argoproj.github.io/docs/argo/getting-started.html
+    loadPath: stack/cicd/argo-workflows/installation
+  - name: tekton-pipeline
+    enabled: false
+    loadPath: stack/cicd/tekton-pipeline
+  - name: tekton-dashboard
+    enabled: false
+    loadPath: stack/cicd/tekton-dashboard
+  - name: tekton-triggers
+    enabled: false
+    loadPath: stack/cicd/tekton-triggers
+
+  # Database related
+  - name: vitess
+    enabled: false
+    loadPath: stack/database/vitess
+
+  # Key management related
+  - name: vault
+    enabled: false
+    loadPath: stack/key-management/vault
+
+  # Messaging related
+  - name: nats-jetstream
+    enabled: false
+    loadPath: stack/messaging/nats-jetstream
+
+  # Observability related
+  - name: cortex
+    enabled: false
+    namespace: cortex
+    loadPath: stack/observability/cortex
+  - name: grafana
+    enabled: false
+    loadPath: stack/observability/grafana/installation
+  - name: grafana-datasources
+    enabled: false
+    loadPath: stack/observability/grafana/datasources
+  - name: grafana-dashboards
+    enabled: false
+    loadPath: stack/observability/grafana/dashboards
+  - name: jaeger
+    enabled: false
+    loadPath: stack/observability/jaeger/operator-usage
+  - name: jaeger-operator
+    enabled: false
+    namespace: jaeger-operator
+    loadPath: stack/observability/jaeger/operator-install
+  - name: kiali
+    enabled: false
+    loadPath: stack/observability/kiali/operator-usage
+  - name: kiali-operator
+    enabled: false
+    namespace: kiali-operator
+    loadPath: stack/observability/kiali/operator-install
+  - name: prometheus
+    enabled: false
+    namespace: prometheus
+    istioSidecar: true
+    loadPath: stack/observability/prometheus/operator-usage
+  - name: prometheus-operator
+    enabled: false
+    loadPath: stack/observability/prometheus/operator-install
+  - name: thanos
+    enabled: false
+    namespace: thanos
+    istioSidecar: true
+    loadPath: stack/observability/thanos
+  - name: vector
+    enabled: false
+    namespace: vector
+    loadPath: stack/observability/vector
+
+  # Security related
+  - name: cert-manager
+    enabled: false
+    loadPath: stack/security/cert-manager
+  - name: falco
+    enabled: false
+    loadPath: stack/security/falco
+  - name: sealed-secrets
+    enabled: false
+    loadPath: stack/security/sealed-secrets
+
+  # Service Mesh related
+  - name: istio
+    enabled: false
+    namespace: istio-system
+    loadPath: stack/service-mesh/istio
+    ignoreDifferences:
+      # Ignore caBundle diff due to runtime updates to the config
+      - group: admissionregistration.k8s.io
+        kind: MutatingWebhookConfiguration
+        jsonPointers:
+          - /webhooks/0/clientConfig/caBundle
+          - /webhooks/0/failurePolicy
+      - group: admissionregistration.k8s.io
+        kind: ValidatingWebhookConfiguration
+        jsonPointers:
+          - /webhooks/0/clientConfig/caBundle
+          - /webhooks/0/failurePolicy
+  - name: networkservicemesh
+    enabled: false
+    loadPath: stack/service-mesh/networkservicemesh
+
+  # Storage related
+  - name: minio
+    enabled: false
+    loadPath: stack/storage/minio/operator-usage
+  - name: minio-operator
+    enabled: false
+    loadPath: stack/storage/minio/operator-install
+    ignoreDifferences:
+      - group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        name: tenants.minio.min.io
+        jsonPointers:
+          - /spec/preserveUnknownFields
+  - name: rook
+    enabled: false
+    loadPath: stack/storage/rook
+
+  # Coordination related
+  - name: etcd-operator
+    enabled: false
+    loadPath: stack/coordination/etcd-operator
+
+  # Other
+  - name: playground-alice
+    enabled: true
+    namespace: playground
+    loadPath: stack/playground/alice
+    istioSidecar: true
+  - name: playground-bob
+    enabled: false
+    loadPath: stack/playground/bob
+#
+# =========================================================================== #
+
+# === ArgoCD Setup ========================================================== #
+#
+# Metadata
+metadata:
+  finalizers:
+    enabled: true
+# Overrides
+spec:
+  source:
+    gitRepoUrl: https://github.com/rytswd/get-gitops-k8s.git
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune:
+        # Specifies if resources should be pruned during auto-syncing
+        # ( false by default ).
+        enabled: true
+      selfHeal:
+        # Specifies if partial app sync should be executed when resources
+        # are changed only in target Kubernetes cluster and no git change
+        # detected ( false by default ).
+        enabled: true
+#
+# =========================================================================== #
