@@ -56,19 +56,19 @@ apps:
     namespace: cortex
     loadPath: stack/observability/cortex
   - name: grafana
-    enabled: true
+    enabled: false
     loadPath: stack/observability/grafana/installation
   - name: grafana-datasources
-    enabled: true
+    enabled: false
     loadPath: stack/observability/grafana/datasources
   - name: grafana-dashboards
-    enabled: true
+    enabled: false
     loadPath: stack/observability/grafana/dashboards
   - name: jaeger
-    enabled: true
+    enabled: false
     loadPath: stack/observability/jaeger/operator-usage
   - name: jaeger-operator
-    enabled: true
+    enabled: false
     namespace: jaeger-operator
     loadPath: stack/observability/jaeger/operator-install
   - name: kiali
@@ -92,7 +92,7 @@ apps:
     istioSidecar: true
     loadPath: stack/observability/thanos
   - name: vector
-    enabled: true
+    enabled: false
     namespace: vector
     loadPath: stack/observability/vector
 
@@ -130,10 +130,10 @@ apps:
 
   # Storage related
   - name: minio
-    enabled: true
+    enabled: false
     loadPath: stack/storage/minio/operator-usage
   - name: minio-operator
-    enabled: true
+    enabled: false
     loadPath: stack/storage/minio/operator-install
     ignoreDifferences:
       - group: apiextensions.k8s.io
