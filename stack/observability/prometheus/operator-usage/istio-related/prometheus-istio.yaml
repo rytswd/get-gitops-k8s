@@ -33,9 +33,9 @@ spec:
   thanos:
     baseImage: quay.io/thanos/thanos
     version: v0.18.0
-    objectStorageConfig:
-      name: thanos-storage-config
-      key: thanos-storage.yaml
+    # objectStorageConfig:
+    #   name: thanos-storage-config
+    #   key: thanos-storage.yaml
 
   serviceMonitorNamespaceSelector: {} # auto discovers all service monitors across all namespaces
   serviceMonitorSelector: {} # auto discovers all service monitors in namespaces configured one line above
