@@ -1,4 +1,6 @@
-# Ref: https://github.com/bitnami/charts/blob/master/bitnami/thanos/values.yaml
+# Ref:
+#   https://artifacthub.io/packages/helm/bitnami/thanos
+#   https://github.com/bitnami/charts/blob/master/bitnami/thanos/values.yaml
 thanos:
   image:
     registry: quay.io/thanos
