@@ -3,7 +3,6 @@ kind: Kustomization
 
 bases:
   - ./istio-related/
-
-resources:
-  - simple-prometheus.yaml
-  - simple-prometheus-rbac.yaml
+# resources:
+#   - simple-prometheus.yaml
+#   - simple-prometheus-rbac.yaml
