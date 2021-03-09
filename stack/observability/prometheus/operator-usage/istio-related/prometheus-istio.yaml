@@ -55,13 +55,13 @@ spec:
     - name: istio-certs
       emptyDir: {}
 
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - topologyKey: kubernetes.io/hostname
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: prometheus-istio
+  # affinity:
+  #   podAntiAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       - topologyKey: kubernetes.io/hostname
+  #         labelSelector:
+  #           matchLabels:
+  #             app.kubernetes.io/name: prometheus-istio
 # ---
 # apiVersion: monitoring.coreos.com/v1
 # kind: ThanosRuler
