@@ -91,6 +91,9 @@ spec:
     - name: web
       port: 9090
       targetPort: 9090
+    - name: grpc
+      port: 10901
+      targetPort: 10901
   selector:
     app.kubernetes.io/name: prometheus-istio
 ---
