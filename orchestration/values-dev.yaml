@@ -72,10 +72,10 @@ apps:
     namespace: jaeger-operator
     loadPath: stack/observability/jaeger/operator-install
   - name: kiali
-    enabled: true
+    enabled: false
     loadPath: stack/observability/kiali/operator-usage
   - name: kiali-operator
-    enabled: true
+    enabled: false
     namespace: kiali-operator
     loadPath: stack/observability/kiali/operator-install
   - name: prometheus
