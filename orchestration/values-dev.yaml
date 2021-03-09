@@ -130,10 +130,10 @@ apps:
 
   # Storage related
   - name: minio
-    enabled: false
+    enabled: true
     loadPath: stack/storage/minio/operator-usage
   - name: minio-operator
-    enabled: false
+    enabled: true
     loadPath: stack/storage/minio/operator-install
     ignoreDifferences:
       - group: apiextensions.k8s.io
