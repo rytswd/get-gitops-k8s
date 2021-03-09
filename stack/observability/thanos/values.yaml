@@ -1,3 +1,4 @@
+# Ref: https://github.com/bitnami/charts/blob/master/bitnami/thanos/values.yaml
 thanos:
   image:
     registry: quay.io/thanos
@@ -5,6 +6,7 @@ thanos:
     tag: v0.18.0
 
   query:
+    replicaCount: 2
     dnsDiscovery:
       sidecarsService: prometheus-istio
       sidecarsNamespace: prometheus
