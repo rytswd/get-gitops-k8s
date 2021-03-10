@@ -20,7 +20,7 @@ thanos:
     type: s3
     config:
       bucket: thanos-test-bucket-with-minio
-      endpoint: thanos-minio
+      endpoint: thanos-minio:9000
       access_key: bWluaW8= # minio
       secret_key: bWluaW8xMjM= # minio123
       insecure: true
