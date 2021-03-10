@@ -25,10 +25,10 @@ thanos:
       secret_key: bWluaW8xMjM= # minio123
       insecure: true
 
-  minio:
-    enabled: true
-    accessKey:
-      password: minio
-    secretKey:
-      password: minio123
-    defaultBuckets: "thanos-test-bucket-with-minio"
+  # minio:
+  #   enabled: true
+  #   accessKey:
+  #     password: minio
+  #   secretKey:
+  #     password: minio123
+  #   defaultBuckets: "thanos-test-bucket-with-minio"
