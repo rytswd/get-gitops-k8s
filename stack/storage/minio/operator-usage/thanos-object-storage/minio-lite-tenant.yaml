@@ -189,28 +189,3 @@ spec:
       runAsUser: 1000
       runAsGroup: 2000
       runAsNonRoot: true
-
----
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: minio-inbound
-spec:
-  host: minio.thanos.svc.cluster.local
-  trafficPolicy:
-    tls:
-      mode: DISABLE
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: minio-inbound
-spec:
-  hosts:
-    - minio.thanos.svc.cluster.local
-  gateways:
-    - mesh
-  http:
-    - route:
-        - destination:
-            host: minio.thanos.svc.cluster.local
