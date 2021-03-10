@@ -12,3 +12,6 @@ thanos:
     dnsDiscovery:
       sidecarsService: prometheus-istio
       sidecarsNamespace: prometheus
+
+  storeGateway:
+    enabled: true
