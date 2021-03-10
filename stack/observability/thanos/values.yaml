@@ -15,6 +15,24 @@ thanos:
 
   storegateway:
     enabled: true
+    livenessProbe:
+      httpGet:
+        path: /-/healthy
+        port: http
+      initialDelaySeconds: 30
+      timeoutSeconds: 30
+      periodSeconds: 10
+      successThreshold: 1
+      failureThreshold: 6
+    readinessProbe:
+      httpGet:
+        path: /-/ready
+        port: http
+      initialDelaySeconds: 30
+      timeoutSeconds: 30
+      periodSeconds: 10
+      successThreshold: 1
+      failureThreshold: 6
 
   objstoreConfig:
     type: s3
