@@ -16,18 +16,19 @@ thanos:
   storegateway:
     enabled: true
 
-  # objstoreConfig:
-  #   type: s3
-  #   config:
-  #     bucket: thanos-test-bucket-with-minio
-  #     endpoint: minio
-  #     access_key: bWluaW8= # minio
-  #     secret_key: bWluaW8xMjM= # minio123
-  #     insecure: true
+  objstoreConfig:
+    type: s3
+    config:
+      bucket: thanos-test-bucket-with-minio
+      endpoint: minio
+      access_key: bWluaW8= # minio
+      secret_key: bWluaW8xMjM= # minio123
+      insecure: true
 
   minio:
     enabled: true
     accessKey:
-      password: miniotest
+      password: minio
     secretKey:
-      password: miniotest
+      password: minio123
+    defaultBuckets: "thanos-test-bucket-with-minio"
