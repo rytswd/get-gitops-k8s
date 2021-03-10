@@ -23,7 +23,7 @@ thanos:
       bucket: thanos-test-bucket-with-minio
       # endpoint: minio:9000
       endpoint: thanos-minio:9000
-      access_key: bWluaW8= # minio
+      access_key: minio
       secret_key: bWluaW8xMjM= # minio123
       insecure: true
 
