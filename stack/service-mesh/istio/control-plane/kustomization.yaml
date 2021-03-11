@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - istio-install.yaml
+  - istio-traffic-policies.yaml
