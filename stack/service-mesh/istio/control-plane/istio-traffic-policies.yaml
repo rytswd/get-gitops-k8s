@@ -9,7 +9,7 @@ spec:
     mode: DISABLE
   selector:
     matchLabels:
-      app: prometheus
+      app.kubernetes.io/name: thanos
 
 ---
 apiVersion: security.istio.io/v1beta1
