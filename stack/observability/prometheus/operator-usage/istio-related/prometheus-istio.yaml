@@ -36,7 +36,6 @@ spec:
     objectStorageConfig:
       name: thanos-storage-config
       key: thanos-storage.yaml
-    logLevel: debug
 
   serviceMonitorNamespaceSelector: {} # auto discovers all service monitors across all namespaces
   serviceMonitorSelector: {} # auto discovers all service monitors in namespaces configured one line above
@@ -110,29 +109,3 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: prometheus-istio
-
-# Ensure Thanos Querier will be connecting to Prometheus Pods without mTLS
----
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: prometheus-istio-inbound
-spec:
-  host: prometheus-istio.prometheus.svc.cluster.local
-  trafficPolicy:
-    tls:
-      mode: DISABLE
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: prometheus-istio-inbound
-spec:
-  hosts:
-    - prometheus-istio.prometheus.svc.cluster.local
-  gateways:
-    - mesh
-  http:
-    - route:
-        - destination:
-            host: prometheus-istio.prometheus.svc.cluster.local
