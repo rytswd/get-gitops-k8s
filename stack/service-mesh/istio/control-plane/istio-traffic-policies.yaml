@@ -5,11 +5,11 @@ metadata:
   name: prometheus-no-mtls
   namespace: prometheus
 spec:
+  selector:
+    matchLabels:
+      app: prometheus
   mtls:
     mode: DISABLE
-  # selector:
-  #   matchLabels:
-  #     app: prometheus
 
 ---
 apiVersion: security.istio.io/v1beta1
