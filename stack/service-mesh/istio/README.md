@@ -96,8 +96,8 @@ $ shasum -a 256 ./stack/istio/istio-operator/istio-operator-install.yaml
 ```bash
 # control-plane only
 istioctl manifest generate \
-  -f ./stack/istio/istio-operator/control-plane-only.yaml\
-    > ./stack/istio/control-plane/istio-install.yaml
+  -f ./stack/service-mesh/istio/istio-operator/control-plane-only.yaml \
+    > ./stack/service-mesh/istio/control-plane/istio-install.yaml
 
 # demo
 istioctl manifest generate \
