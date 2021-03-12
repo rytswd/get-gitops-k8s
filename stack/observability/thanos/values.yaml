@@ -18,6 +18,7 @@ thanos:
     logLevel: debug
 
   objstoreConfig:
+    # Ref: https://thanos.io/tip/thanos/storage.md/
     type: s3
     config:
       bucket: thanos-test-bucket-with-minio
