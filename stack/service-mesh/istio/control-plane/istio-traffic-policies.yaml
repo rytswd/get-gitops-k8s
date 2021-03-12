@@ -9,13 +9,12 @@ spec:
     mode: DISABLE
   selector:
     matchLabels:
-      app.kubernetes.io/name: prometheus-istio
-
----
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: default
-spec:
-  mtls:
-    mode: STRICT
+      app: prometheus
+# ---
+# apiVersion: security.istio.io/v1beta1
+# kind: PeerAuthentication
+# metadata:
+#   name: default
+# spec:
+#   mtls:
+#     mode: STRICT
