@@ -3,13 +3,13 @@ apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
   name: prometheus-no-mtls
-  namespace: thanos
+  namespace: prometheus
 spec:
   mtls:
     mode: DISABLE
   selector:
     matchLabels:
-      app.kubernetes.io/name: thanos
+      app: prometheus
 
 ---
 apiVersion: security.istio.io/v1beta1
