@@ -1,20 +1,21 @@
----
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: prometheus
-  namespace: prometheus
-spec:
-  mtls:
-    mode: DISABLE
-  selector:
-    matchLabels:
-      app: prometheus
 # ---
 # apiVersion: security.istio.io/v1beta1
 # kind: PeerAuthentication
 # metadata:
-#   name: default
+#   name: prometheus
+#   namespace: prometheus
 # spec:
 #   mtls:
-#     mode: STRICT
+#     mode: DISABLE
+#   selector:
+#     matchLabels:
+#       app: prometheus
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+spec:
+  mtls:
+    mode: STRICT
