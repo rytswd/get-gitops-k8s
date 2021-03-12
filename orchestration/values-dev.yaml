@@ -72,10 +72,10 @@ apps:
     namespace: jaeger-operator
     loadPath: stack/observability/jaeger/operator-install
   - name: kiali
-    enabled: false
+    enabled: true
     loadPath: stack/observability/kiali/operator-usage
   - name: kiali-operator
-    enabled: false
+    enabled: true
     namespace: kiali-operator
     loadPath: stack/observability/kiali/operator-install
   - name: prometheus
@@ -130,10 +130,10 @@ apps:
 
   # Storage related
   - name: minio
-    enabled: true
+    enabled: false
     loadPath: stack/storage/minio/operator-usage
   - name: minio-operator
-    enabled: true
+    enabled: false
     loadPath: stack/storage/minio/operator-install
     ignoreDifferences:
       - group: apiextensions.k8s.io
@@ -152,7 +152,7 @@ apps:
 
   # Other
   - name: playground-alice
-    enabled: true
+    enabled: false
     namespace: playground
     loadPath: stack/playground/alice
     istioSidecar: true
