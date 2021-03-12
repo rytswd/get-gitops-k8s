@@ -7,9 +7,9 @@ metadata:
 spec:
   mtls:
     mode: DISABLE
-  selector:
-    matchLabels:
-      app: prometheus
+  # selector:
+  #   matchLabels:
+  #     app: prometheus
 
 ---
 apiVersion: security.istio.io/v1beta1
