@@ -82,6 +82,7 @@ apps:
     enabled: true
     namespace: prometheus
     istioSidecar: true
+    istioRevision: 1-8-3
     loadPath: stack/observability/prometheus/operator-usage
   - name: prometheus-operator
     enabled: true

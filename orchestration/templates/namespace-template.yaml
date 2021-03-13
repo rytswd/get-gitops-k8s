@@ -8,6 +8,9 @@ metadata:
   {{- if .istioSidecar }}
   labels:
     istio-injection: enabled
+    {{- if .istioRevision }}
+    istio.io/rev: {{ .istioRevision }}
+    {{- end }}
   {{- end }}
 ...
 {{- end }}
