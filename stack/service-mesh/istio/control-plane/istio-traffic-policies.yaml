@@ -5,9 +5,9 @@ metadata:
   name: prometheus-no-mtls
   namespace: prometheus
 spec:
-  # selector:
-  #   matchLabels:
-  #     app: prometheus
+  selector:
+    matchLabels:
+      app: prometheus
   mtls:
     mode: STRICT
   portLevelMtls:
