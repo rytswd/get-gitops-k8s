@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: prometheus-istio
   mtls:
-    mode: STRICT
+    mode: UNSET
   portLevelMtls:
     10901:
       mode: DISABLE
