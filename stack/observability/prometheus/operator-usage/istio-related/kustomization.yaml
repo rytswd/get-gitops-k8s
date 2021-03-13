@@ -22,5 +22,5 @@ resources:
   - prometheus-istio-monitor.yaml
 
   - prometheus-istio-thanos-storegateway-access.yaml
-  # - istio-sidecar.yaml
+  - istio-sidecar.yaml
   # - istio-scrape-configs-secret.yaml
