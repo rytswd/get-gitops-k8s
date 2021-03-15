@@ -21,5 +21,3 @@ resources:
   - prometheus-istio-rbac.yaml
   - prometheus-istio-monitor.yaml
   - istio-sidecar.yaml
-
-  - thanos-storegateway-access.yaml
