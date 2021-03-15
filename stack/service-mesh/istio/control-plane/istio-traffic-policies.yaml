@@ -12,6 +12,15 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
+  name: prometheus-namespace
+  namespace: prometheus
+spec:
+  mtls:
+    mode: UNSET # Inherit what's used, or use PERMISSIVE if none
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
   name: prometheus-no-mtls
   namespace: prometheus
 spec:
@@ -19,7 +28,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: prometheus-istio
   mtls:
-    mode: UNSET # Inherit what's used, or use PERMISSIVE if none
+    mode: DISABLE
   # portLevelMtls:
   #   10901:
   #     mode: DISABLE
