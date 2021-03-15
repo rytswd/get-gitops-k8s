@@ -37,9 +37,10 @@ spec:
       name: thanos-storage-config
       key: thanos-storage.yaml
     grpcServerTlsConfig:
-      caFile: /etc/prom-certs/root-cert.pem
-      certFile: /etc/prom-certs/cert-chain.pem
-      keyFile: /etc/prom-certs/key.pem
+      # This does not work because volume cannot be mounted for Thanos sidecar
+      # caFile: /etc/prom-certs/root-cert.pem
+      # certFile: /etc/prom-certs/cert-chain.pem
+      # keyFile: /etc/prom-certs/key.pem
       insecureSkipVerify: true # Prometheus does not support Istio security naming, thus skip verifying target pod ceritifcate
 
   serviceMonitorNamespaceSelector: {} # auto discovers all service monitors across all namespaces
