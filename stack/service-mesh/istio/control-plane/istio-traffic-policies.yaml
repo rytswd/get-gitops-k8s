@@ -16,7 +16,7 @@ metadata:
   namespace: prometheus
 spec:
   mtls:
-    mode: UNSET # Inherit what's used, or use PERMISSIVE if none
+    mode: DISABLE # Inherit what's used, or use PERMISSIVE if none
 ---
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
