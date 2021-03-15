@@ -1,30 +1,26 @@
-# Ensure Thanos Store Gateway is accessible via Prometheus Pod.
+# Ensure Thanos Store Gateway and MinIO are accessible from Prometheus Pod.
 # Unlike Prometheus, Thanos cannot use TLS setup, and thus this workaround is needed.
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
-  name: prometheus-istio-thanos-gateway
+  name: thanos-gateway
 spec:
   host: thanos-gateway.thanos.svc.cluster.local
+  exportTo:
+    - "."
   trafficPolicy:
     tls:
       mode: DISABLE
-
 ---
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
 metadata:
-  name: prometheus-istio-thanos-gateway
+  name: thanos-minio
 spec:
-  hosts:
-    - thanos-gateway.thanos.svc.cluster.local
-  gateways:
-    - mesh
-  http:
-    - match:
-        - sourceLabels:
-            app.kubernetes.io/name: prometheus-istio
-      route:
-        - destination:
-            host: thanos-gateway.thanos.svc.cluster.local
+  host: thanos-minio.thanos.svc.cluster.local
+  exportTo:
+    - "."
+  trafficPolicy:
+    tls:
+      mode: DISABLE
