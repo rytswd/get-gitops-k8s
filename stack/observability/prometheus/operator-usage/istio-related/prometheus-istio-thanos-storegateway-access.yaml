@@ -8,7 +8,7 @@ metadata:
 spec:
   host: thanos-gateway.thanos.svc.cluster.local
   exportTo:
-    - "."
+    - "." # Make sure this DestinatiorRule only affects prometheus originated traffic
   trafficPolicy:
     tls:
       mode: DISABLE
@@ -20,7 +20,7 @@ metadata:
 spec:
   host: thanos-minio.thanos.svc.cluster.local
   exportTo:
-    - "."
+    - "." # Make sure this DestinatiorRule only affects prometheus originated traffic
   trafficPolicy:
     tls:
       mode: DISABLE
