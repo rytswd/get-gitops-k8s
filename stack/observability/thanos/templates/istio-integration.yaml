@@ -1,14 +1,14 @@
----
-# This setup makes sure no mTLS is used when talking to Prometheus.
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: prometheus-istio
-  namespace: thanos
-spec:
-  host: prometheus-istio.prometheus.svc.cluster.local
-  exportTo:
-    - "."
-  trafficPolicy:
-    tls:
-      mode: DISABLE
+# ---
+# # This setup makes sure no mTLS is used when talking to Prometheus.
+# apiVersion: networking.istio.io/v1beta1
+# kind: DestinationRule
+# metadata:
+#   name: prometheus-istio
+#   namespace: thanos
+# spec:
+#   host: prometheus-istio.prometheus.svc.cluster.local
+#   exportTo:
+#     - "."
+#   trafficPolicy:
+#     tls:
+#       mode: DISABLE
