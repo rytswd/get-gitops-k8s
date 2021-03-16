@@ -24,15 +24,15 @@ spec:
 
 # Thanos namespace should not be fully diasbled, and thus the mTLS control is
 # done by DestinationRule instead.
-# ---
-# apiVersion: security.istio.io/v1beta1
-# kind: PeerAuthentication
-# metadata:
-#   name: thanos-no-mtls
-#   namespace: thanos
-# spec:
-#   mtls:
-#     mode: DISABLE
-#   selector:
-#     matchLabels:
-#       app.kubernetes.io/instance: thanos
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: thanos-minio-no-mtls
+  namespace: thanos
+spec:
+  mtls:
+    mode: DISABLE
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: minio
