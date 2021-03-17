@@ -7,6 +7,12 @@
 #    --from-file=istio-scrape-configs.yaml \
 #    --dry-run -o yaml > istio-scrape-configs-secret.yaml
 #
+
+# ⚠️ WARNING ⚠️
+# There are too many data points in this scrape configs, and they should not be
+# a part of Istio metrics. This file is currently ignored in kustomization, and
+# should be split up into dedicated Prometheus setup.
+
 - job_name: prometheus
   static_configs:
     - targets:
