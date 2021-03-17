@@ -7,6 +7,7 @@ metadata:
   labels:
     monitoring: istio-proxies
     release: istio
+    app.kubernetes.io/name: prometheus-istio
 spec:
   selector:
     matchExpressions:
@@ -44,6 +45,7 @@ metadata:
   labels:
     monitoring: istio-components
     release: istio
+    app.kubernetes.io/name: prometheus-istio
 spec:
   jobLabel: istio
   targetLabels: [app]
