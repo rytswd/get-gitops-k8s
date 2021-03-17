@@ -59,3 +59,22 @@ spec:
   # additionalScrapeConfigs:
   #   key: istio-federation-scrape-configs.yaml
   #   name: istio-federation-scrape-configs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-istio-federation
+  labels:
+    app.kubernetes.io/name: istio-federation
+spec:
+  type: ClusterIP
+  ports:
+    - name: web
+      port: 9090
+      targetPort: 9090
+    - name: grpc
+      port: 10901
+      targetPort: 10901
+  selector:
+    app.kubernetes.io/name: istio-federation
