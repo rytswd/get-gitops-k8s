@@ -30,24 +30,25 @@ spec:
   retention: "2h"
   # portName: web
 
-  thanos:
-    baseImage: quay.io/thanos/thanos
-    version: v0.18.0
-    objectStorageConfig:
-      name: thanos-storage-config
-      key: thanos-storage.yaml
-    grpcServerTlsConfig:
-      caFile: /etc/prom-certs/root-cert.pem
-      certFile: /etc/prom-certs/cert-chain.pem
-      keyFile: /etc/prom-certs/key.pem
-      insecureSkipVerify: true # Prometheus does not support Istio security naming, thus skip verifying target pod ceritifcate
-  # Using the below configs are merged, making volumes available via this logic.
-  # Ref: https://github.com/prometheus-operator/prometheus-operator/issues/3464#issuecomment-768312782
-  containers:
-    - name: thanos-sidecar
-      volumeMounts:
-        - mountPath: /etc/prom-certs/
-          name: istio-certs
+  # Comment out Thanos integration for non-federated Prometheus
+  # thanos:
+  #   baseImage: quay.io/thanos/thanos
+  #   version: v0.18.0
+  #   objectStorageConfig:
+  #     name: thanos-storage-config
+  #     key: thanos-storage.yaml
+  #   grpcServerTlsConfig:
+  #     caFile: /etc/prom-certs/root-cert.pem
+  #     certFile: /etc/prom-certs/cert-chain.pem
+  #     keyFile: /etc/prom-certs/key.pem
+  #     insecureSkipVerify: true # Prometheus does not support Istio security naming, thus skip verifying target pod ceritifcate
+  # # Using the below configs are merged, making volumes available via this logic.
+  # # Ref: https://github.com/prometheus-operator/prometheus-operator/issues/3464#issuecomment-768312782
+  # containers:
+  #   - name: thanos-sidecar
+  #     volumeMounts:
+  #       - mountPath: /etc/prom-certs/
+  #         name: istio-certs
 
   serviceMonitorSelector:
     matchLabels:
@@ -58,10 +59,6 @@ spec:
   ruleSelector:
     matchLabels:
       app.kubernetes.io/name: prometheus-istio
-
-  # additionalScrapeConfigs:
-  #   key: istio-scrape-configs.yaml
-  #   name: istio-scrape-configs
 
   # Taken from https://istio.io/latest/docs/ops/integrations/prometheus/
   volumeMounts:
@@ -126,28 +123,3 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: prometheus-istio
-# # Ensure Thanos Querier will be connecting to Prometheus Pods without mTLS
-# ---
-# apiVersion: networking.istio.io/v1beta1
-# kind: DestinationRule
-# metadata:
-#   name: prometheus-istio-inbound
-# spec:
-#   host: prometheus-istio.prometheus.svc.cluster.local
-#   trafficPolicy:
-#     tls:
-#       mode: DISABLE
-# ---
-# apiVersion: networking.istio.io/v1alpha3
-# kind: VirtualService
-# metadata:
-#   name: prometheus-istio-inbound
-# spec:
-#   hosts:
-#     - prometheus-istio.prometheus.svc.cluster.local
-#   gateways:
-#     - mesh
-#   http:
-#     - route:
-#         - destination:
-#             host: prometheus-istio.prometheus.svc.cluster.local
