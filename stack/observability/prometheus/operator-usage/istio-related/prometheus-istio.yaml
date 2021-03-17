@@ -56,9 +56,9 @@ spec:
     matchLabels:
       release: istio
 
-  additionalScrapeConfigs:
-    key: istio-scrape-configs.yaml
-    name: istio-scrape-configs
+  # additionalScrapeConfigs:
+  #   key: istio-scrape-configs.yaml
+  #   name: istio-scrape-configs
 
   # Taken from https://istio.io/latest/docs/ops/integrations/prometheus/
   volumeMounts:
