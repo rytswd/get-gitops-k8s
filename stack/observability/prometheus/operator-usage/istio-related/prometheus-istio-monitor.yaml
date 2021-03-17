@@ -5,8 +5,6 @@ kind: PodMonitor
 metadata:
   name: envoy-stats-monitor
   labels:
-    monitoring: istio-proxies
-    release: istio
     app.kubernetes.io/name: prometheus-istio
 spec:
   selector:
@@ -43,8 +41,6 @@ kind: ServiceMonitor
 metadata:
   name: istio-component-monitor
   labels:
-    monitoring: istio-components
-    release: istio
     app.kubernetes.io/name: prometheus-istio
 spec:
   jobLabel: istio
