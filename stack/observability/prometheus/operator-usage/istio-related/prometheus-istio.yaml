@@ -27,7 +27,7 @@ spec:
 
   serviceAccountName: prometheus-istio
 
-  retention: "10d"
+  retention: "2h"
   # portName: web
 
   thanos:
@@ -49,10 +49,12 @@ spec:
         - mountPath: /etc/prom-certs/
           name: istio-certs
 
-  serviceMonitorNamespaceSelector: {} # auto discovers all service monitors across all namespaces
-  serviceMonitorSelector: {} # auto discovers all service monitors in namespaces configured one line above
-  ruleNamespaceSelector: {} # auto discovers all prometheus rules across all namespaces
-  ruleSelector: {} # auto discovers all prometheus rules in namespaces configured one line above
+  serviceMonitorSelector:
+    matchLabels:
+      release: istio
+  ruleSelector:
+    matchLabels:
+      release: istio
 
   additionalScrapeConfigs:
     key: istio-scrape-configs.yaml
