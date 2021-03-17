@@ -19,7 +19,7 @@ spec:
         "match[]":
           - '{__name__=~"workload:(.*)"}'
           - '{__name__=~"pilot(.*)"}'
-      path: /federate
+      path: /prometheus/federate
       targetPort: 9090
       honorLabels: true
       metricRelabelings:
