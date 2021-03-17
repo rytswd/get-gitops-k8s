@@ -1,7 +1,7 @@
 - job_name: "federate"
   scrape_interval: 10s
   honor_labels: true
-  metrics_path: "/federate"
+  metrics_path: "/prometheus/federate"
   params:
     "match[]":
       - '{__name__=~"federate:(.*)"}'
