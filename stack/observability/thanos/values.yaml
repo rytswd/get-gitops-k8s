@@ -10,7 +10,7 @@ thanos:
   query:
     replicaCount: 2
     dnsDiscovery:
-      sidecarsService: prometheus-istio
+      sidecarsService: prometheus-istio-federation
       sidecarsNamespace: prometheus
 
   storegateway:
