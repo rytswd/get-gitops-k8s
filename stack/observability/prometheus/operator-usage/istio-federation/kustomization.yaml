@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Because Istio sidecar needs to be placed with Prometheus, this needs to be
+# some namespace with Istio sidecar enablement.
+namespace: prometheus
+
+secretGenerator:
+  # - name: istio-scrape-configs
+  #   files:
+  #     - ./istio-scrape-configs.yaml
+  - name: thanos-storage-config
+    files:
+      - ./thanos-storage.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  - istio-federation.yaml
+  - istio-federation-rbac.yaml
+  - istio-federation-monitor.yaml
+  - istio-sidecar.yaml

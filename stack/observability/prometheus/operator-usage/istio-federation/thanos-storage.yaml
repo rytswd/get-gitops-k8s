@@ -1,0 +1,10 @@
+# Ref: https://thanos.io/tip/thanos/storage.md/
+type: s3
+config:
+  bucket: thanos-test-bucket-with-minio-for-federation
+  endpoint: thanos-minio.thanos.svc.cluster.local:9000
+  # access_key: bWluaW8= # minio
+  # secret_key: bWluaW8xMjM= # minio123
+  access_key: minio
+  secret_key: minio123
+  insecure: true

@@ -1,0 +1,56 @@
+---
+# Ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: istio-federation
+spec:
+  replicas: 2
+  podMetadata:
+    labels:
+      app.kubernetes.io/name: istio-federation
+    # Taken from https://istio.io/latest/docs/ops/integrations/prometheus/
+    annotations:
+      sidecar.istio.io/inject: "true"
+      traffic.sidecar.istio.io/includeInboundPorts: "" # do not intercept any inbound ports
+      traffic.sidecar.istio.io/includeOutboundIPRanges: "" # do not intercept any outbound traffic
+      proxy.istio.io/config:
+        | # configure an env variable `OUTPUT_CERTS` to write certificates to the given folder
+        proxyMetadata:
+          OUTPUT_CERTS: /etc/istio-output-certs
+      sidecar.istio.io/userVolume: '[{"name": "istio-certs", "emptyDir": {"medium":"Memory"}}]' # mount the shared volume
+      sidecar.istio.io/userVolumeMount: '[{"name": "istio-certs", "mountPath": "/etc/istio-output-certs"}]'
+
+  # TODO: Configure DNS and ingress to be able to connect
+  externalUrl: http://localhost
+  routePrefix: "/prometheus"
+
+  serviceAccountName: istio-federation
+
+  retention: "2h"
+  # portName: web
+
+  thanos:
+    baseImage: quay.io/thanos/thanos
+    version: v0.18.0
+    objectStorageConfig:
+      name: thanos-storage-config
+      key: thanos-storage.yaml
+    grpcServerTlsConfig:
+      caFile: /etc/prom-certs/root-cert.pem
+      certFile: /etc/prom-certs/cert-chain.pem
+      keyFile: /etc/prom-certs/key.pem
+      insecureSkipVerify: true # Prometheus does not support Istio security naming, thus skip verifying target pod ceritifcate
+  # Using the below configs are merged, making volumes available via this logic.
+  # Ref: https://github.com/prometheus-operator/prometheus-operator/issues/3464#issuecomment-768312782
+  containers:
+    - name: thanos-sidecar
+      volumeMounts:
+        - mountPath: /etc/prom-certs/
+          name: istio-certs
+
+  # Limit the scope of selector references
+  serviceMonitorSelector:
+    app.kubernetes.io/name: istio-federation
+  ruleSelector:
+    app.kubernetes.io/name: istio-federation

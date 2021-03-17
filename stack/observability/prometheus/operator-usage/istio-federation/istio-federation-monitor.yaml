@@ -1,0 +1,29 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: istio-federation
+  labels:
+    app.kubernetes.io/name: istio-federation
+spec:
+  namespaceSelector:
+    matchNames:
+      - prometheus
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-istio
+  endpoints:
+    - interval: 10s
+      scrapeTimeout: 10s
+      params:
+        "match[]":
+          - '{__name__=~"workload:(.*)"}'
+          - '{__name__=~"pilot(.*)"}'
+      path: /federate
+      targetPort: 9090
+      honorLabels: true
+      metricRelabelings:
+        - sourceLabels: ["__name__"]
+          regex: "workload:(.*)"
+          targetLabel: "__name__"
+          action: replace
