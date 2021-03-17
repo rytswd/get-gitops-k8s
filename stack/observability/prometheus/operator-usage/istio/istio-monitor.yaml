@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/name: prometheus-istio
 spec:
   selector:
+    matchLabels:
+      security.istio.io/tlsMode: "istio"
     matchExpressions:
     - {key: istio-prometheus-ignore, operator: DoesNotExist}
   namespaceSelector:
