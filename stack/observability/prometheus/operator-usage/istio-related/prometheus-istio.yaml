@@ -51,10 +51,10 @@ spec:
 
   serviceMonitorSelector:
     matchLabels:
-      release: istio
+      app.kubernetes.io/name: prometheus-istio
   ruleSelector:
     matchLabels:
-      release: istio
+      app.kubernetes.io/name: prometheus-istio
 
   # additionalScrapeConfigs:
   #   key: istio-scrape-configs.yaml
