@@ -56,3 +56,7 @@ spec:
   ruleSelector:
     matchLabels:
       app.kubernetes.io/name: istio-federation
+
+  additionalScrapeConfigs:
+    key: istio-federation-scrape-configs.yaml
+    name: istio-federation-scrape-configs
