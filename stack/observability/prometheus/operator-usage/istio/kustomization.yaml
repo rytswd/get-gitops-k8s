@@ -5,14 +5,6 @@ kind: Kustomization
 # some namespace with Istio sidecar enablement.
 namespace: prometheus
 
-# secretGenerator:
-#   - name: thanos-storage-config
-#     files:
-#       - ./thanos-storage.yaml
-
-# generatorOptions:
-#   disableNameSuffixHash: true
-
 resources:
   - istio.yaml
   - istio-rbac.yaml
