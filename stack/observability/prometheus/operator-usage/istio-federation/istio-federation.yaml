@@ -51,6 +51,8 @@ spec:
 
   # Limit the scope of selector references
   serviceMonitorSelector:
-    app.kubernetes.io/name: istio-federation
+    matchLabels:
+      app.kubernetes.io/name: istio-federation
   ruleSelector:
-    app.kubernetes.io/name: istio-federation
+    matchLabels:
+      app.kubernetes.io/name: istio-federation
