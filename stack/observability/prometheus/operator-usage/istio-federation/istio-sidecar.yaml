@@ -1,11 +1,11 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
-  name: prometheus
+  name: istio-federation
 spec:
   egress:
     - hosts:
         - istio-system/istiod.istio-system.svc.cluster.local
   workloadSelector:
     labels:
-      app.kubernetes.io/name: prometheus-istio
+      app.kubernetes.io/name: istio-federation
