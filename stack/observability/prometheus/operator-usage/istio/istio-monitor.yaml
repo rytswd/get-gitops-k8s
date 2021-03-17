@@ -1,4 +1,7 @@
+# Mostly taken from Istio's sample configurations.
 # Ref: https://github.com/istio/istio/blob/master/samples/addons/extras/prometheus-operator.yaml
+#
+# The only changes are around label handling and interval.
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -8,16 +11,14 @@ metadata:
     app.kubernetes.io/name: prometheus-istio
 spec:
   selector:
-    matchLabels:
-      security.istio.io/tlsMode: "istio"
-    # matchExpressions:
-    # - {key: istio-prometheus-ignore, operator: DoesNotExist}
+    matchExpressions:
+    - {key: istio-prometheus-ignore, operator: DoesNotExist}
   namespaceSelector:
     any: true
   jobLabel: envoy-stats
   podMetricsEndpoints:
   - path: /stats/prometheus
-    interval: 15s
+    interval: 10s
     relabelings:
     - action: keep
       sourceLabels: [__meta_kubernetes_pod_container_name]
@@ -54,4 +55,4 @@ spec:
     any: true
   endpoints:
   - port: http-monitoring
-    interval: 15s
+    interval: 10s
