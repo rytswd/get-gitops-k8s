@@ -52,6 +52,9 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       app.kubernetes.io/name: prometheus-istio
+  podMonitorSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-istio
   ruleSelector:
     matchLabels:
       app.kubernetes.io/name: prometheus-istio
