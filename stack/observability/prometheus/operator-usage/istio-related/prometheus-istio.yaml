@@ -49,12 +49,12 @@ spec:
         - mountPath: /etc/prom-certs/
           name: istio-certs
 
-  serviceMonitorSelector:
-    matchLabels:
-      release: istio
-  ruleSelector:
-    matchLabels:
-      release: istio
+  serviceMonitorSelector: {}
+    # matchLabels:
+    #   release: istio
+  ruleSelector: {}
+    # matchLabels:
+    #   release: istio
 
   additionalScrapeConfigs:
     key: istio-scrape-configs.yaml
