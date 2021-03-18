@@ -4,6 +4,3 @@ kind: Kustomization
 bases:
   - ./federation/
   - ./istio/
-# resources:
-#   - simple-prometheus.yaml
-#   - simple-prometheus-rbac.yaml
