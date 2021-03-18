@@ -10,6 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: federation
 
+    # TODO: Check if this is necessary, we may not want this
     # Taken from https://istio.io/latest/docs/ops/integrations/prometheus/
     annotations:
       sidecar.istio.io/inject: "true"
