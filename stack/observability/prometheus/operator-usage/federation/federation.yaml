@@ -3,12 +3,13 @@
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
-  name: istio-federation
+  name: federation
 spec:
   replicas: 1
   podMetadata:
     labels:
-      app.kubernetes.io/name: istio-federation
+      app.kubernetes.io/name: federation
+
     # Taken from https://istio.io/latest/docs/ops/integrations/prometheus/
     annotations:
       sidecar.istio.io/inject: "true"
@@ -25,9 +26,9 @@ spec:
   externalUrl: http://localhost
   routePrefix: "/prometheus"
 
-  serviceAccountName: istio-federation
+  serviceAccountName: federation
 
-  retention: "2h"
+  retention: "4h" # Could be as short as 2 hours if Thanos can retain the data correctly.
   # portName: web
 
   thanos:
@@ -52,21 +53,18 @@ spec:
   # Limit the scope of selector references
   serviceMonitorSelector:
     matchLabels:
-      app.kubernetes.io/name: istio-federation
+      app.kubernetes.io/name: federation
   ruleSelector:
     matchLabels:
-      app.kubernetes.io/name: istio-federation
-  # additionalScrapeConfigs:
-  #   key: istio-federation-scrape-configs.yaml
-  #   name: istio-federation-scrape-configs
+      app.kubernetes.io/name: federation
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: prometheus-istio-federation
+  name: prometheus-federation
   labels:
-    app.kubernetes.io/name: istio-federation
+    app.kubernetes.io/name: federation
 spec:
   type: ClusterIP
   ports:
@@ -77,4 +75,4 @@ spec:
       port: 10901
       targetPort: 10901
   selector:
-    app.kubernetes.io/name: istio-federation
+    app.kubernetes.io/name: federation

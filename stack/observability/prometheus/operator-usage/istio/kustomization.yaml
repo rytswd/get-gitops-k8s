@@ -10,4 +10,5 @@ resources:
   - istio-rbac.yaml
   - istio-monitor.yaml
   - istio-prometheus-rule.yaml
+  - istio-federation-prometheus-rule.yaml
   - istio-sidecar.yaml

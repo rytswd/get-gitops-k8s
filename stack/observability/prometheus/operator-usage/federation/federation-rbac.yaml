@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: istio-federation
+  name: federation
 rules:
   - apiGroups: [""]
     resources:
@@ -27,17 +27,17 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: istio-federation
+  name: federation
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: istio-federation
+  name: federation
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istio-federation
+  name: federation
 subjects:
   - kind: ServiceAccount
-    name: istio-federation
+    name: federation
     namespace: prometheus
