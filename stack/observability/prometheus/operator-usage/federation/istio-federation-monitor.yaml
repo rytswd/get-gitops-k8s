@@ -20,7 +20,7 @@ spec:
           # - '{__name__=~"workload:(.*)"}'
           # - '{__name__=~"pilot(.*)"}'
           - '{__name__=~"federate:(.*)"}'
-      path: /prometheus/federate
+      path: /prometheus-istio/federate
       targetPort: 9090
       honorLabels: true
       metricRelabelings:

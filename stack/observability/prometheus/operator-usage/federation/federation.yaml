@@ -8,7 +8,7 @@ spec:
   replicas: 1
   podMetadata:
     labels:
-      app.kubernetes.io/name: federation
+      app.kubernetes.io/name: prometheus-federation
 
     # TODO: Check if this is necessary, we may not want this
     # Taken from https://istio.io/latest/docs/ops/integrations/prometheus/
@@ -24,10 +24,10 @@ spec:
       sidecar.istio.io/userVolumeMount: '[{"name": "istio-certs", "mountPath": "/etc/istio-output-certs"}]'
 
   # TODO: Configure DNS and ingress to be able to connect
-  externalUrl: http://localhost
-  routePrefix: "/prometheus"
+  externalUrl: http://localhost/prometheus-federation
+  routePrefix: "/prometheus-federation/"
 
-  serviceAccountName: federation
+  serviceAccountName: prometheus-federation
 
   retention: "4h" # Could be as short as 2 hours if Thanos can retain the data correctly.
   # portName: web
@@ -57,7 +57,7 @@ spec:
       app.kubernetes.io/name: istio-federation
   ruleSelector:
     matchLabels:
-      app.kubernetes.io/name: federation
+      app.kubernetes.io/name: federation # TODO: not used at the moment, correct this
 
 ---
 apiVersion: v1
@@ -65,7 +65,7 @@ kind: Service
 metadata:
   name: prometheus-federation
   labels:
-    app.kubernetes.io/name: federation
+    app.kubernetes.io/name: prometheus-federation
 spec:
   type: ClusterIP
   ports:
@@ -76,4 +76,4 @@ spec:
       port: 10901
       targetPort: 10901
   selector:
-    app.kubernetes.io/name: federation
+    app.kubernetes.io/name: prometheus-federation

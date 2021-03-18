@@ -22,8 +22,8 @@ spec:
       sidecar.istio.io/userVolumeMount: '[{"name": "istio-certs", "mountPath": "/etc/istio-output-certs"}]'
 
   # TODO: Configure DNS and ingress to be able to connect
-  externalUrl: http://localhost
-  routePrefix: "/prometheus"
+  externalUrl: http://localhost/prometheus-istio/
+  routePrefix: "/prometheus-istio/"
 
   serviceAccountName: prometheus-istio
 

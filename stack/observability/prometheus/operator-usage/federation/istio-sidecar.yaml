@@ -8,4 +8,4 @@ spec:
         - istio-system/istiod.istio-system.svc.cluster.local
   workloadSelector:
     labels:
-      app.kubernetes.io/name: istio-federation
+      app.kubernetes.io/name: prometheus-federation
