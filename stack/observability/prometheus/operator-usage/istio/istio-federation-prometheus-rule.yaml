@@ -7,7 +7,7 @@ kind: PrometheusRule
 metadata:
   name: istio-federation
   labels:
-    app.kubernetes.io/name: istio-federation
+    app.kubernetes.io/name: prometheus-istio
 spec:
   groups:
     # These sum(irate()) functions are in separate groups, so they run in parallel
