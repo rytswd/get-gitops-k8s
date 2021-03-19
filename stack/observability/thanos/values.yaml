@@ -14,7 +14,7 @@ thanos:
       sidecarsNamespace: prometheus
 
     extraFlags:
-      - '--web.external-prefix="/thanos"'
+      - "--web.external-prefix=/thanos"
 
   queryFrontend:
     replicaCount: 1
