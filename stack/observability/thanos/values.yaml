@@ -15,7 +15,7 @@ thanos:
 
   queryFrontend:
     extraFlags:
-      - '--web.route-prefix="/thanos-query-frontend/"'
+      - '--web.external-prefix="/thanos-query-frontend/"'
 
   storegateway:
     enabled: true
