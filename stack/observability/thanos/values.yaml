@@ -18,8 +18,6 @@ thanos:
 
   queryFrontend:
     replicaCount: 1
-    # extraFlags:
-    #   - '--query-frontend.downstream-url="http://thanos-query:9090/thanos"'
 
   storegateway:
     enabled: true
