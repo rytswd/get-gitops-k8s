@@ -3,3 +3,5 @@ kind: Kustomization
 
 resources:
   - istio-install.yaml
+  - istio-install-1.8.3-dupe-commented.yaml # Using processed YAML file in order to avoid conflict
+  - istio-traffic-policies.yaml

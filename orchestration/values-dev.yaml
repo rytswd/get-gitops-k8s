@@ -72,22 +72,23 @@ apps:
     namespace: jaeger-operator
     loadPath: stack/observability/jaeger/operator-install
   - name: kiali
-    enabled: false
+    enabled: true
     loadPath: stack/observability/kiali/operator-usage
   - name: kiali-operator
-    enabled: false
+    enabled: true
     namespace: kiali-operator
     loadPath: stack/observability/kiali/operator-install
   - name: prometheus
-    enabled: false
+    enabled: true
     namespace: prometheus
     istioSidecar: true
+    istioRevision: 1-8-3
     loadPath: stack/observability/prometheus/operator-usage
   - name: prometheus-operator
-    enabled: false
+    enabled: true
     loadPath: stack/observability/prometheus/operator-install
   - name: thanos
-    enabled: false
+    enabled: true
     namespace: thanos
     istioSidecar: true
     loadPath: stack/observability/thanos
@@ -109,7 +110,7 @@ apps:
 
   # Service Mesh related
   - name: istio
-    enabled: false
+    enabled: true
     namespace: istio-system
     loadPath: stack/service-mesh/istio
     ignoreDifferences:
@@ -152,7 +153,7 @@ apps:
 
   # Other
   - name: playground-alice
-    enabled: true
+    enabled: false
     namespace: playground
     loadPath: stack/playground/alice
     istioSidecar: true
@@ -172,7 +173,7 @@ metadata:
 spec:
   source:
     gitRepoUrl: https://github.com/rytswd/get-gitops-k8s.git
-    targetRevision: main
+    targetRevision: dev
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:

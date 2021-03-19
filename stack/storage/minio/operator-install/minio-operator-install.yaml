@@ -1433,6 +1433,10 @@ spec:
                     type: object
                   diskCapacityGB:
                     type: integer
+                  image:
+                    type: string
+                  initimage:
+                    type: string
                   labels:
                     additionalProperties:
                       type: string
@@ -1522,6 +1526,8 @@ spec:
                             type: string
                         type: object
                     type: object
+                  sidecarimage:
+                    type: string
                 type: object
               requestAutoCert:
                 type: boolean
@@ -5382,6 +5388,10 @@ spec:
                     type: object
                   diskCapacityGB:
                     type: integer
+                  image:
+                    type: string
+                  initimage:
+                    type: string
                   labels:
                     additionalProperties:
                       type: string
@@ -5471,6 +5481,8 @@ spec:
                             type: string
                         type: object
                     type: object
+                  sidecarimage:
+                    type: string
                 type: object
               requestAutoCert:
                 type: boolean
@@ -7296,13 +7308,13 @@ spec:
         env:
         - name: CONSOLE_OPERATOR_MODE
           value: "on"
-        image: minio/console:v0.6.0
+        image: minio/console:v0.6.3
         imagePullPolicy: IfNotPresent
         name: console
         ports:
         - containerPort: 9090
           name: http
-        - containerPort: 9433
+        - containerPort: 9443
           name: https
       serviceAccountName: console-sa
 ---
@@ -7330,7 +7342,7 @@ spec:
         name: minio-operator
     spec:
       containers:
-      - image: minio/operator:v4.0.0
+      - image: minio/operator:v4.0.1
         imagePullPolicy: IfNotPresent
         name: minio-operator
         resources:

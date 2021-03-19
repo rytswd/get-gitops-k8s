@@ -6,9 +6,6 @@ kind: Kustomization
 namespace: prometheus
 
 secretGenerator:
-  - name: istio-scrape-configs
-    files:
-      - ./istio-scrape-configs.yaml
   - name: thanos-storage-config
     files:
       - ./thanos-storage.yaml
@@ -17,7 +14,6 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
-  - prometheus-istio.yaml
-  - prometheus-istio-rbac.yaml
-  - prometheus-istio-monitor.yaml
-  # - istio-scrape-configs-secret.yaml
+  - federation.yaml
+  - federation-rbac.yaml
+  - istio-federation-monitor.yaml

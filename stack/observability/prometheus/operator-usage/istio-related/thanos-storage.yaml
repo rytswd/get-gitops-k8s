@@ -1,7 +1,0 @@
-type: s3
-config:
-  bucket: minio
-  endpoint: minio
-  access_key: bWluaW8=
-  secret_key: bWluaW8xMjM=
-  insecure: true

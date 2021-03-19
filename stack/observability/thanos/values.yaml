@@ -1,3 +1,6 @@
+# Ref:
+#   https://artifacthub.io/packages/helm/bitnami/thanos
+#   https://github.com/bitnami/charts/blob/master/bitnami/thanos/values.yaml
 thanos:
   image:
     registry: quay.io/thanos
@@ -5,6 +8,36 @@ thanos:
     tag: v0.18.0
 
   query:
+    replicaCount: 2
     dnsDiscovery:
-      sidecarsService: prometheus-istio
+      sidecarsService: prometheus-federation
       sidecarsNamespace: prometheus
+
+    extraFlags:
+      - "--web.external-prefix=/thanos"
+
+  queryFrontend:
+    replicaCount: 1
+
+  storegateway:
+    enabled: true
+    logLevel: debug
+
+  objstoreConfig:
+    # Ref: https://thanos.io/tip/thanos/storage.md/
+    type: s3
+    config:
+      bucket: thanos-test-bucket-with-minio
+      # endpoint: minio:9000
+      endpoint: thanos-minio:9000
+      access_key: minio
+      secret_key: minio123
+      insecure: true
+
+  minio:
+    enabled: true
+    accessKey:
+      password: "minio"
+    secretKey:
+      password: "minio123"
+    defaultBuckets: "thanos-test-bucket-with-minio"

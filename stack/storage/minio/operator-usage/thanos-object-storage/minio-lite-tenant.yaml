@@ -1,3 +1,8 @@
+# Ref: https://github.com/minio/operator/tree/master/examples
+#
+#
+
+---
 ## Secret to be used as MinIO Root Credentials
 apiVersion: v1
 kind: Secret
@@ -26,15 +31,13 @@ data:
   ## MinIO User Secret Key (used for Console Login), base64 encoded (echo -n 'YOURCONSOLESECRET' | base64)
   CONSOLE_SECRET_KEY: WU9VUkNPTlNPTEVTRUNSRVQ=
 ---
-## MinIO Tenant Definition
+# Ref: https://github.com/minio/operator/blob/master/docs/crd.adoc#k8s-api-github-com-minio-operator-pkg-apis-minio-min-io-v2-tenantspec
 apiVersion: minio.min.io/v2
 kind: Tenant
 metadata:
   name: minio
-  ## Optionally pass labels to be applied to the statefulset pods
   labels:
     app: minio
-  ## Annotations for MinIO Tenant Pods
   annotations:
     prometheus.io/path: /minio/prometheus/metrics
     prometheus.io/port: "9000"
@@ -46,12 +49,9 @@ metadata:
 #  name: my-custom-scheduler
 
 spec:
-  ## Registry location and Tag to download MinIO Server image
   image: minio/minio:RELEASE.2021-03-01T04-20-55Z
   imagePullPolicy: IfNotPresent
 
-  ## Secret with credentials to be used by MinIO Tenant.
-  ## Refers to the secret object created above.
   credsSecret:
     name: minio-creds-secret
 
@@ -60,10 +60,10 @@ spec:
     ## Servers specifies the number of MinIO Tenant Pods / Servers in this pool.
     ## For standalone mode, supply 1. For distributed mode, supply 4 or more.
     ## Note that the operator does not support upgrading from standalone to distributed mode.
-    - servers: 4
+    - servers: 1
 
       ## volumesPerServer specifies the number of volumes attached per MinIO Tenant Pod / Server.
-      volumesPerServer: 2
+      volumesPerServer: 1
 
       ## This VolumeClaimTemplate is used across all the volumes provisioned for MinIO Tenant in this
       ## Pool.
@@ -75,34 +75,7 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 100Gi
-
-      ## Used to specify a toleration for a pod
-      # tolerations:
-      #  - effect: NoSchedule
-      #    key: dedicated
-      #    operator: Equal
-      #    value: storage
-
-      ## nodeSelector parameters for MinIO Pods. It specifies a map of key-value pairs. For the pod to be
-      ## eligible to run on a node, the node must have each of the
-      ## indicated key-value pairs as labels.
-      ## Read more here: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-      # nodeSelector:
-      #   disktype: ssd
-
-      ## Affinity settings for MinIO pods. Read more about affinity
-      ## here: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity.
-      # affinity:
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #       - matchExpressions:
-      #         - key: kubernetes.io/hostname
-      #           operator: In
-      #           values:
-      #           - hostname1
-      #           - hostname2
+              storage: 3Gi
 
       ## Configure resource requests and limits for MinIO containers
       # resources:
@@ -182,7 +155,7 @@ spec:
   ## Refer https://github.com/minio/console
   console:
     image: minio/console:v0.6.3
-    replicas: 2
+    replicas: 1
     consoleSecret:
       name: console-secret
     securityContext:

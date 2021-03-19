@@ -1,0 +1,29 @@
+# NOTE: This setup is not needed.
+# Ref: https://github.com/prometheus-operator/prometheus-operator/issues/3464#issuecomment-768312782
+
+# Ensure Thanos Store Gateway and MinIO are accessible from Prometheus Pod.
+# Unlike Prometheus, Thanos cannot use TLS setup, and thus this workaround is needed.
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: thanos-gateway
+spec:
+  host: thanos-gateway.thanos.svc.cluster.local
+  exportTo:
+    - "." # Make sure this DestinatiorRule only affects prometheus originated traffic
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: thanos-minio
+spec:
+  host: thanos-minio.thanos.svc.cluster.local
+  exportTo:
+    - "." # Make sure this DestinatiorRule only affects prometheus originated traffic
+  trafficPolicy:
+    tls:
+      mode: DISABLE

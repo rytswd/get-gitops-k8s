@@ -1,9 +1,11 @@
+---
+# Ref: https://istio.io/latest/docs/ops/best-practices/observability/#workload-level-aggregation-via-recording-rules
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: istio-metrics-aggregation
   labels:
-    app.kubernetes.io/name: istio-prometheus
+    app.kubernetes.io/name: prometheus-istio
 spec:
   groups:
     - name: "istio.metricsAggregation-rules"

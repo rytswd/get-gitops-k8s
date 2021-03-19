@@ -5,7 +5,7 @@ kind: Prometheus
 metadata:
   name: istio
 spec:
-  replicas: 1
+  replicas: 2
   podMetadata:
     labels:
       app.kubernetes.io/name: prometheus-istio
@@ -21,47 +21,61 @@ spec:
       sidecar.istio.io/userVolume: '[{"name": "istio-certs", "emptyDir": {"medium":"Memory"}}]' # mount the shared volume
       sidecar.istio.io/userVolumeMount: '[{"name": "istio-certs", "mountPath": "/etc/istio-output-certs"}]'
 
-  # TODO: Configure DNS and ingress to be able to connect
-  externalUrl: http://localhost
-  routePrefix: "/prometheus"
-
-  serviceAccountName: prometheus-istio
-
-  retention: "10d"
-  # portName: web
-
-  thanos:
-    baseImage: quay.io/thanos/thanos
-    version: v0.18.0
-    # objectStorageConfig:
-    #   name: thanos-storage-config
-    #   key: thanos-storage.yaml
-
-  serviceMonitorNamespaceSelector: {} # auto discovers all service monitors across all namespaces
-  serviceMonitorSelector: {} # auto discovers all service monitors in namespaces configured one line above
-  ruleNamespaceSelector: {} # auto discovers all prometheus rules across all namespaces
-  ruleSelector: {} # auto discovers all prometheus rules in namespaces configured one line above
-
-  additionalScrapeConfigs:
-    key: istio-scrape-configs.yaml
-    name: istio-scrape-configs
-
   # Taken from https://istio.io/latest/docs/ops/integrations/prometheus/
   volumeMounts:
     - mountPath: /etc/prom-certs/
       name: istio-certs
-
   volumes:
     - name: istio-certs
       emptyDir: {}
 
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - topologyKey: kubernetes.io/hostname
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: prometheus-istio
+  # TODO: Configure DNS and ingress to be able to connect
+  externalUrl: http://localhost/prometheus-istio/
+  routePrefix: "/prometheus-istio/"
+
+  serviceAccountName: prometheus-istio
+
+  retention: "2h"
+  # portName: web
+
+  # Comment out Thanos integration for non-federated Prometheus
+  # thanos:
+  #   baseImage: quay.io/thanos/thanos
+  #   version: v0.18.0
+  #   objectStorageConfig:
+  #     name: thanos-storage-config
+  #     key: thanos-storage.yaml
+  #   grpcServerTlsConfig:
+  #     caFile: /etc/prom-certs/root-cert.pem
+  #     certFile: /etc/prom-certs/cert-chain.pem
+  #     keyFile: /etc/prom-certs/key.pem
+  #     insecureSkipVerify: true # Prometheus does not support Istio security naming, thus skip verifying target pod ceritifcate
+  # # Using the below configs are merged, making volumes available via this logic.
+  # # Ref: https://github.com/prometheus-operator/prometheus-operator/issues/3464#issuecomment-768312782
+  # containers:
+  #   - name: thanos-sidecar
+  #     volumeMounts:
+  #       - mountPath: /etc/prom-certs/
+  #         name: istio-certs
+
+  serviceMonitorSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-istio
+  podMonitorSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-istio
+  ruleSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-istio
+
+  # affinity:
+  #   podAntiAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       - topologyKey: kubernetes.io/hostname
+  #         labelSelector:
+  #           matchLabels:
+  #             app.kubernetes.io/name: prometheus-istio
+
 # ---
 # apiVersion: monitoring.coreos.com/v1
 # kind: ThanosRuler
@@ -91,6 +105,9 @@ spec:
     - name: web
       port: 9090
       targetPort: 9090
+    - name: grpc
+      port: 10901
+      targetPort: 10901
   selector:
     app.kubernetes.io/name: prometheus-istio
 ---

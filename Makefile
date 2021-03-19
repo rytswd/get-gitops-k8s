@@ -83,7 +83,7 @@ argocd-app-dev:
 	@echo "$(boldGreen)4. Set up Argo CD with \`stack\` folder$(normal)"
 	@echo
 	kubectl apply -f ./init/argo-cd-project.yaml
-	kubectl apply -f ./init/argo-cd-application.yaml
+	kubectl apply -f ./init/argo-cd-application-dev.yaml
 	@echo
 	@read -r -p "completed."
 
