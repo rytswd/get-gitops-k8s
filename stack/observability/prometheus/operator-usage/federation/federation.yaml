@@ -23,6 +23,14 @@ spec:
       sidecar.istio.io/userVolume: '[{"name": "istio-certs", "emptyDir": {"medium":"Memory"}}]' # mount the shared volume
       sidecar.istio.io/userVolumeMount: '[{"name": "istio-certs", "mountPath": "/etc/istio-output-certs"}]'
 
+  # Taken from https://istio.io/latest/docs/ops/integrations/prometheus/
+  volumeMounts:
+    - mountPath: /etc/prom-certs/
+      name: istio-certs
+  volumes:
+    - name: istio-certs
+      emptyDir: {}
+
   # TODO: Configure DNS and ingress to be able to connect
   externalUrl: http://localhost/prometheus-federation
   routePrefix: "/prometheus-federation/"
