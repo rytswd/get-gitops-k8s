@@ -14,8 +14,7 @@ thanos:
       sidecarsNamespace: prometheus
 
   queryFrontend:
-    extraFlags:
-      - '--web.external-prefix="/thanos-query-frontend/"'
+    replicaCount: 1
 
   storegateway:
     enabled: true
