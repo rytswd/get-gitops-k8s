@@ -13,6 +13,10 @@ thanos:
       sidecarsService: prometheus-federation
       sidecarsNamespace: prometheus
 
+  queryFrontend:
+    extraFlags:
+      - '--web.route-prefix="/thanos-query-frontend/"'
+
   storegateway:
     enabled: true
     logLevel: debug
