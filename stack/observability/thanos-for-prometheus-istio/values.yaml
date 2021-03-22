@@ -1,0 +1,19 @@
+# Ref:
+#   https://artifacthub.io/packages/helm/bitnami/thanos
+#   https://github.com/bitnami/charts/blob/master/bitnami/thanos/values.yaml
+thanos:
+  image:
+    registry: quay.io/thanos
+    repository: thanos
+    tag: v0.18.0
+
+  # Only using Query components for deduplication
+  query:
+    replicaCount: 1
+    dnsDiscovery:
+      sidecarsService: prometheus-istio
+      sidecarsNamespace: prometheus
+    extraFlags:
+      - "--web.external-prefix=/thanos"
+  queryFrontend:
+    replicaCount: 1
