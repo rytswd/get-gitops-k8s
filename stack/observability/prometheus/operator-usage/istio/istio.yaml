@@ -38,25 +38,24 @@ spec:
   retention: "2h"
   # portName: web
 
-  # Comment out Thanos integration for non-federated Prometheus
-  # thanos:
-  #   baseImage: quay.io/thanos/thanos
-  #   version: v0.18.0
-  #   objectStorageConfig:
-  #     name: thanos-storage-config
-  #     key: thanos-storage.yaml
-  #   grpcServerTlsConfig:
-  #     caFile: /etc/prom-certs/root-cert.pem
-  #     certFile: /etc/prom-certs/cert-chain.pem
-  #     keyFile: /etc/prom-certs/key.pem
-  #     insecureSkipVerify: true # Prometheus does not support Istio security naming, thus skip verifying target pod ceritifcate
-  # # Using the below configs are merged, making volumes available via this logic.
-  # # Ref: https://github.com/prometheus-operator/prometheus-operator/issues/3464#issuecomment-768312782
-  # containers:
-  #   - name: thanos-sidecar
-  #     volumeMounts:
-  #       - mountPath: /etc/prom-certs/
-  #         name: istio-certs
+  thanos:
+    baseImage: quay.io/thanos/thanos
+    version: v0.18.0
+    objectStorageConfig:
+      name: thanos-storage-config
+      key: thanos-storage.yaml
+    grpcServerTlsConfig:
+      caFile: /etc/prom-certs/root-cert.pem
+      certFile: /etc/prom-certs/cert-chain.pem
+      keyFile: /etc/prom-certs/key.pem
+      insecureSkipVerify: true # Prometheus does not support Istio security naming, thus skip verifying target pod ceritifcate
+  # Using the below configs are merged, making volumes available via this logic.
+  # Ref: https://github.com/prometheus-operator/prometheus-operator/issues/3464#issuecomment-768312782
+  containers:
+    - name: thanos-sidecar
+      volumeMounts:
+        - mountPath: /etc/prom-certs/
+          name: istio-certs
 
   serviceMonitorSelector:
     matchLabels:
