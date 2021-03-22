@@ -5,7 +5,7 @@ kind: Prometheus
 metadata:
   name: federation
 spec:
-  replicas: 1
+  replicas: 2
   podMetadata:
     labels:
       app.kubernetes.io/name: prometheus-federation
