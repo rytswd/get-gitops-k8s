@@ -92,6 +92,11 @@ apps:
     namespace: thanos
     istioSidecar: true
     loadPath: stack/observability/thanos
+  - name: thanos-for-prometheus-istio
+    enabled: true
+    namespace: thanos
+    istioSidecar: true
+    loadPath: stack/observability/thanos-for-prometheus-istio
   - name: vector
     enabled: false
     namespace: vector
