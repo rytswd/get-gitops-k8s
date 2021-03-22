@@ -9,6 +9,9 @@ thanos:
 
   query:
     replicaCount: 2
+    replicaLabel:
+      - replica
+      - pod
     dnsDiscovery:
       sidecarsService: prometheus-federation
       sidecarsNamespace: prometheus
