@@ -7,31 +7,3 @@ metadata:
 spec:
   mtls:
     mode: STRICT
-# This doesn't seem to work, because the Istio sidecar is not a part of the Envoy cluster.
-# ---
-# apiVersion: security.istio.io/v1beta1
-# kind: PeerAuthentication
-# metadata:
-#   name: prometheus-no-mtls
-#   namespace: prometheus
-# spec:
-#   selector:
-#     matchLabels:
-#       app.kubernetes.io/name: prometheus-istio
-#   mtls:
-#     mode: DISABLE
-
-# Thanos namespace should not be fully diasbled, and thus the mTLS control is
-# done by DestinationRule instead.
-# ---
-# apiVersion: security.istio.io/v1beta1
-# kind: PeerAuthentication
-# metadata:
-#   name: thanos-no-mtls
-#   namespace: thanos
-# spec:
-#   mtls:
-#     mode: DISABLE
-#   selector:
-#     matchLabels:
-#       app.kubernetes.io/instance: thanos
