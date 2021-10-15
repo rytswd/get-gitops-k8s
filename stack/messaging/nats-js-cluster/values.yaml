@@ -17,5 +17,5 @@ nats:
   cluster:
     enabled: true
     # Cluster name is required, by default will be release name.
-    name: "nats"
+    # name: "nats"
     replicas: 3
