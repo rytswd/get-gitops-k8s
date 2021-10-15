@@ -47,7 +47,7 @@ apps:
 
   # Messaging related
   - name: nats-js-cluster-tester
-    enabled: false
+    enabled: true
     loadPath: stack/messaging/nats-js-cluster
   - name: nats-jetstream
     enabled: false
