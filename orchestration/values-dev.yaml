@@ -46,6 +46,9 @@ apps:
     loadPath: stack/key-management/vault
 
   # Messaging related
+  - name: nats-js-cluster-tester
+    enabled: false
+    loadPath: stack/messaging/nats-js-cluster
   - name: nats-jetstream
     enabled: false
     loadPath: stack/messaging/nats-jetstream
